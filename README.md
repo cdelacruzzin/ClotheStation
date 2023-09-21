@@ -19,18 +19,28 @@ In this group project we [...]. You can access it from the [Deployment](#deploym
 ## User-Story
 
 ```
-AS AN ...
-I WANT to ...
-SO THAT I can ...
-```
+AS A new clothing brand owner
+I WANT an e-commerce platform
+SO THAT I can upload my new collections and customers can purchase those from my platform.
 
 
 ## Acceptance-Criteria
 
 ```
-GIVEN a ...
-WHEN I ...
-THEN I ...
+GIVEN a e-commerce platform let's users purchase clothing
+WHEN I load the e-commerce platform
+THEN I am presented with a homepage, that includes a header with navbar, searchbar and a cart, a main part with the brand description, a carousel with products, featured product cards and a footer with a sign up option for the newsletter and contact information.
+WHEN I click on the search for products searchbar option, I could type in a specific productname and will be redirected to the corresponding product page
+WHEN I click on the Login/Signup menu option
+THEN a modal appears on the screen with a toggle between the option to log in or sign up
+WHEN the toggle is set to Signup
+THEN I am presented with three inputs for a username, an email address, and a password, and a signup button
+WHEN the toggle is set to Login
+THEN I am presented with two inputs for an email address and a password and login button
+WHEN I enter a valid email address and create a password and click on the signup button
+THEN my user account is created and I am logged in to the site
+WHEN I enter my account’s email address and password and click on the login button
+THEN I the modal closes and I am logged in to the site
 
 ```
 
