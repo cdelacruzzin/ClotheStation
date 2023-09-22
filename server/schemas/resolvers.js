@@ -1,7 +1,9 @@
+// import authentificationerror , usermodel and signToken
 const { AuthentificationError } = require("apollo-server-express");
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
 
+// resolver to query current logged_in user
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
