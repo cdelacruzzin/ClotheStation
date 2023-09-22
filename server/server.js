@@ -28,3 +28,18 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (req, res) => {  //defines a router for the "/" endpoint
     res.sendFile(path.join(__dirname, '../client/build/index.html'));   //acts as an entry point. Once hit, send back the "index.html" from the build directopry
 });
+
+//creates a new instance of the Apollo Server with the graphql schema
+const startApolloServer = async () => { //async function to start the Apollo server and apply its middlewares
+    await server.start();   //starts the Apollo Server
+    server.applyMiddleware({ app });  // attaches the apollo server middlewares to the express app
+  
+    db.once('open', () => {
+      app.listen(PORT, () => {
+        console.log(`API server running on port ${PORT}!`);
+        console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+      });
+    });
+  }
+  
+  startApolloServer();
