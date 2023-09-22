@@ -22,7 +22,7 @@ In this group project we [...]. You can access it from the [Deployment](#deploym
 AS A new clothing brand owner
 I WANT an e-commerce platform
 SO THAT I can upload my new collections and customers can purchase those from my platform.
-
+```
 
 ## Acceptance-Criteria
 
