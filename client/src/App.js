@@ -1,6 +1,6 @@
 import React from "react";
 import {ApolloClient, InMemoryCache, ApplloProvider, createHttpLink} from '@apollo/client';
-import {BrowserRouter as Roouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {setContext} from '@apollo/client/link/context';     //utility from apollo client which lets modify the request context, when sending a request/ recieving a response.
 //import necessary react and apollo packages\
 
@@ -20,7 +20,6 @@ const authLink = setContext((_, {headers}) =>{
     //setting the JWT to local storage will be when the user logs in or signs up
     const token = localStorage.getItem('id_token');     
 
-
     return {
         //returns a modified headers. the returned headers is an new object containing a shallow copy of the headers object,
         // and modifies the "authorization" property to include the token if it exists. 
@@ -33,5 +32,23 @@ const authLink = setContext((_, {headers}) =>{
 });
 
 
+//initialize a new Apollo Client instance to interact with GraphQL
+const client = ApolloClient({
+    //authLink attaches the JWT token to every request in the headers. the JWT ensures whether the user is authorized or not.
+    //httpLink sends requests to the graphql server
+    //since we concat "httpLink" is concatenated after "authLink", authLink will be executed first, to attach JWT before each request
+    link: authLink.concat(httpLink),
+    cache: InMemoryCache(),
+})
 
-
+function App() {
+    return(
+        <ApplloProvider client={client}>
+            <Router>
+                <Routes>
+                    <Route></Route>
+                </Routes>
+            </Router>
+        </ApplloProvider>
+    )
+}
