@@ -3,13 +3,13 @@ import { useMutation } from '@apollo/client';
 import ADD_USER from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
-const signupForm = () => {
+
+
+
+
+const SignupForm = () => {
     //set the initial form data state
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-
-
-
-
     /**Invokes the useMutation hook from apollo client.
      * "addUser" is a function to trigger the ADD_USER mutation from graphql
      * the {error, data} is the response we get from calling "addUser".
@@ -28,10 +28,6 @@ const signupForm = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-
-
-
         try {
             /** calls the "addUser" function to trigger the mutation.
  * passes in a shallow copy of the userFormData as its variables.
@@ -40,6 +36,8 @@ const signupForm = () => {
             const { data } = await addUser({
                 variables: { ...userFormData },
             });
+            
+            //TODO: use the Auth.login() to add the JWT to local storage
         } catch (error) {
             console.log(error)
         }
@@ -79,3 +77,4 @@ const signupForm = () => {
         </>
     )
 }
+export default SignupForm;
