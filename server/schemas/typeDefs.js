@@ -35,7 +35,7 @@ const typeDefs = gql`
 
   # Auth type to handle returning data from a profile creating or user login
   type Auth {
-    token: ID!
+    token: String!
     user: User
   }
 
