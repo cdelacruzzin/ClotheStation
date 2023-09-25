@@ -12,17 +12,37 @@ const signupForm = () => {
 
     /**Invokes the useMutation hook from apollo client.
      * "addUser" is a function to trigger the ADD_USER mutation from graphql
-    */
-    const [addUser, { error }] = useMutation(ADD_USER);
+     * the {error, data} is the response we get from calling "addUser".
+     * */
+    const [addUser, { error, data }] = useMutation(ADD_USER);
 
-    const handleChange = (e) =>{
-        const {name, value} = e.target  //destructs the e.target to extract only the name and value. 
+    const handleChange = (e) => {
+        const { name, value } = e.target  //destructs the e.target to extract only the name and value. 
 
         //calls the function to modify the userFormData state
         setUserFormData({
             ...userFormData,    //creates a shallow copy of the current userFormData state(creates a new object with the same properties & values as the userFormData state)
             [name]: value   //changes the property of the shallow copy(username/email/password) with the value of the target
         })
+    }
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+
+
+
+        try {
+            /** calls the "addUser" function to trigger the mutation.
+ * passes in a shallow copy of the userFormData as its variables.
+ * {data} destructs the response to only extract the "data" property.
+ */
+            const { data } = await addUser({
+                variables: { ...userFormData },
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -36,7 +56,7 @@ const signupForm = () => {
                     name="username"
                     onChange={handleChange}
                     placeholder="Enter a username">
-                    
+
 
                 </input>
                 <input
