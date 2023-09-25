@@ -1,8 +1,8 @@
 
 ## Components
 1. navbar
-2. login form
-3. signup form
+2. login form (not an actual page. it should be a modal component within a page)
+3. signup form (not an actual page. it should be a modal component within a page)
 4. 
 
 ## Pages
