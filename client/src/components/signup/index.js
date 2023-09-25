@@ -4,8 +4,26 @@ import ADD_USER from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const signupForm = () => {
+    //set the initial form data state
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+
+
+
+
+    /**Invokes the useMutation hook from apollo client.
+     * "addUser" is a function to trigger the ADD_USER mutation from graphql
+    */
     const [addUser, { error }] = useMutation(ADD_USER);
+
+    const handleChange = (e) =>{
+        const {name, value} = e.target  //destructs the e.target to extract only the name and value. 
+
+        //calls the function to modify the userFormData state
+        setUserFormData({
+            ...userFormData,    //creates a shallow copy of the current userFormData state(creates a new object with the same properties & values as the userFormData state)
+            [name]: value   //changes the property of the shallow copy(username/email/password) with the value of the target
+        })
+    }
 
 
 
