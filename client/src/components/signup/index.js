@@ -32,12 +32,16 @@ const SignupForm = () => {
             /** calls the "addUser" function to trigger the mutation.
  * passes in a shallow copy of the userFormData as its variables.
  * {data} destructs the response to only extract the "data" property.
- */
+ * the "data" property of the response object are the fields that ADD_USER returns. in this case, it returns
+ * 1. token
+ * 2. user{ _id, username}*/
             const { data } = await addUser({
                 variables: { ...userFormData },
             });
-            
-            //TODO: use the Auth.login() to add the JWT to local storage
+
+
+            //calls the login function from Auth, which takes in a token id as parameters.
+            Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
         } catch (error) {
             console.log(error)
         }
