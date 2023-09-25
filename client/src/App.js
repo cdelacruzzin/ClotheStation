@@ -38,8 +38,8 @@ const client = ApolloClient({
     //httpLink sends requests to the graphql server
     //since we concat "httpLink" is concatenated after "authLink", authLink will be executed first, to attach JWT before each request
     link: authLink.concat(httpLink),
-    cache: InMemoryCache(),
-})
+    cache: new InMemoryCache(),
+});
 
 function App() {
     return(
@@ -50,7 +50,7 @@ function App() {
                 </Routes>
             </Router>
         </ApolloProvider>
-    )
+    );
 }
 
 export default App;

@@ -1,6 +1,6 @@
 // import authentificationerror , usermodel and signToken
 const { AuthentificationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Category, Comment, Product } = require("../models");
 const { signToken } = require("../utils/auth");
 
 // resolver to query current logged_in user
@@ -11,6 +11,18 @@ const resolvers = {
         return User.findOne({ _id: context.user._id }).populate("products");
       }
       throw new AuthentificationError("You need to be logged in!");
+    },
+    allCategories: async () => {
+      return await Category.find({});
+    },
+    allProducts: async () => {
+      return await Product.find({});
+    },
+    allUsers: async () => {
+      return await User.find({});
+    },
+    allComments: async () => {
+      return await Comment.find({});
     },
   },
 
