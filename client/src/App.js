@@ -1,5 +1,5 @@
 import React from "react";
-import {ApolloClient, InMemoryCache, ApplloProvider, createHttpLink} from '@apollo/client';
+import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {setContext} from '@apollo/client/link/context';     //utility from apollo client which lets modify the request context, when sending a request/ recieving a response.
 //import necessary react and apollo packages\
@@ -43,12 +43,14 @@ const client = ApolloClient({
 
 function App() {
     return(
-        <ApplloProvider client={client}>
+        <ApolloProvider client={client}>
             <Router>
                 <Routes>
                     <Route></Route>
                 </Routes>
             </Router>
-        </ApplloProvider>
+        </ApolloProvider>
     )
 }
+
+export default App;
