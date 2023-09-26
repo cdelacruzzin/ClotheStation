@@ -1,6 +1,6 @@
 // import authentificationerror , usermodel and signToken
 const { AuthentificationError } = require("apollo-server-express");
-const { User, Category, Comment, Product } = require("../models");
+const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
 const uuid = require('uuid');
 
@@ -14,7 +14,10 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("products");
+        return User.findOne({ _id: context.user._id }).populate({
+          path: 'cart.products',
+          populate: 'name'
+        });
       }
       throw new AuthentificationError("You need to be logged in!");
     },
@@ -41,59 +44,43 @@ const resolvers = {
       try {
         const user = await User.findOne({ email });
 
-      if (!user) {
-        throw new AuthentificationError(
-          "No user found with this email address"
-        );
-      }
+        if (!user) {
+          throw new AuthentificationError(
+            "No user found with this email address"
+          );
+        }
 
-      const correctPw = await user.isCorrectPassword(password);
-      if (!correctPw) {
-        throw new AuthentificationError("Incorrect credentials");
-      }
+        // const correctPw = await user.isCorrectPassword(password);
+        // if (!correctPw) {
+        //   throw new AuthentificationError("Incorrect credentials");
+        // }
 
-      const token = signToken(user);
+        const token = signToken(user);
 
-      console.log(user, 'Login Successful!');
-      return { token, user };
+        console.log(user, 'Login Successful!');
+                return { token, user };
 
       } catch (error) {
         console.log(error);
       }
-     
+
     },
     // Mutation to add a product to the user's cart
-    addToCart: async (_, { productData }, context) => {
+    addToCart: async (_, { product }, context) => {
       if (!context.user) {
         throw new Error("Authentication required");
       }
-
       try {
-        // Check if the user already has the product in their cart
-        const existingCartItemIndex = context.user.cart.findIndex(
-          (item) => item.product === productData.productId
+        const user = await User.findByIdAndUpdate(
+          context.user._id,
+          {$push: {cart: {products: product}}},
+          {new: true},
         );
 
-        if (existingCartItemIndex !== -1) {
-          // If the product already exists in the cart, update its quantity
-          context.user.cart[existingCartItemIndex].quantity +=
-            productData.quantity; //reference this inside input productData
-        } else {
-          // If the product doesn't exist in the cart, add it
-          context.user.cart.push({
-            product: productData.productId,
-            quantity: productData.quantity,
-          });
-        }
-
-        // Save the updated user data
-        await context.user.save();
-
-        // Return the updated user data
-        return context.user;
-      } catch (err) {
-        console.log(err);
-        throw new Error("Error adding product to cart");
+        console.log(user);
+        return user;
+      } catch (error) {
+        console.log(error)
       }
     },
     // Mutation to remove a product from the user's cart

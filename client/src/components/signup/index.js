@@ -40,7 +40,7 @@ const SignupForm = () => {
             });
 
             //calls the login function from Auth, which takes in a token id as parameters.
-            // Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
+            Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
         } catch (error) {
             console.log(error)
         }

@@ -41,8 +41,8 @@ const Login = (props) => {
 
         // empty form after submit
         setUserFormData({
-            email: '',
-            password: '',
+        email: '',
+        password: '',
         });
     };
 
@@ -65,6 +65,7 @@ const Login = (props) => {
                 required
             />
             <button type='submit'>Login</button>
+            <button onClick={Auth.logout}>logout</button>
         </form>
 
     )
