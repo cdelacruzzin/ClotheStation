@@ -19,14 +19,14 @@ const userSchema = new Schema(
 )
 
 // hash user password
-userSchema.pre('save', async function (next) {
-    if (this.isNew || history.isModified('password')) {
-        const saltRounds = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds);
-    } 
+// userSchema.pre('save', async function (next) {
+//     if (this.isNew || history.isModified('password')) {
+//         const saltRounds = 10;
+//         this.password = await bcrypt.hash(this.password, saltRounds);
+//     } 
 
-    next();
-});
+//     next();
+// });
 
 // custom method to validate password at login
 userSchema.methods.isCorrectPassword = async function (password) {
