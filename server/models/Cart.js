@@ -4,12 +4,18 @@ const CartItem = require('./CartItem');
 
 const cartSchema = new Schema(
     {
-        User: [{ type: Schema.Types.ObjectId , ref: 'User', required: true }],
-        Items: [CartItem]
+        purchaseDate: {
+            type: Date,
+            default: Date.now
+          },
+          products: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'Product'
+            }
+          ]
     },
 );
-
-
 const Cart = model('Cart', cartSchema);
 
 module.exports = Cart;
