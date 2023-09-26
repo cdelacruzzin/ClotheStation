@@ -6,6 +6,7 @@ import { setContext } from '@apollo/client/link/context';     //utility from apo
 
 //TODO: import modules for the main app
 import SignupForm from './components/signup';
+import Login from './pages/Login';
 
 
 
@@ -46,11 +47,14 @@ function App() {
     return (
         <ApolloProvider client={client}>
             <Router>
-                <SignupForm/>
                 <Routes>
                     <Route
                     path="/signup"
                     element={<SignupForm/>}
+                    />
+                    <Route
+                    path="/login"
+                    element={<Login/>}
                     />
                 </Routes>
             </Router>
