@@ -14,7 +14,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate({
+        return User.findOne({ _id: context.user._id }).populate({   //populates the user's cart.products path
           path: 'cart.products',
           populate: 'name'
         });
@@ -68,16 +68,14 @@ const resolvers = {
     // Mutation to add a product to the user's cart
     addToCart: async (_, { product }, context) => {
       if (!context.user) {
-        throw new Error("Authentication required");
+        throw new Error("Authentication required");   //throws an error if user is not authenticated
       }
       try {
         const user = await User.findByIdAndUpdate(
-          context.user._id,
-          {$push: {cart: {products: product}}},
-          {new: true},
+          context.user._id,   //finds a user document by the _id
+          {$push: {cart: {products: product}}},   // Pushes the provided product into the user's cart's products array.
+          {new: true}, // returns the updated user document
         );
-
-        console.log(user);
         return user;
       } catch (error) {
         console.log(error)
