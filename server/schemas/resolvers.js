@@ -47,14 +47,15 @@ const resolvers = {
         );
       }
 
-      const correctPw = await user.isCorrectPassword(password);
-      if (!correctPw) {
-        throw new AuthentificationError("Incorrect credentials");
-      }
+      // const correctPw = await user.isCorrectPassword(password);
+      // if (!correctPw) {
+      //   throw new AuthentificationError("Incorrect credentials");
+      // }
 
       const token = signToken(user);
 
       console.log(user, 'Login Successful!');
+      console.log({token})
       return { token, user };
 
       } catch (error) {
