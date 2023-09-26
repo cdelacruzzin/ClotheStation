@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/client';
-import {ADD_USER} from '../../utils/mutations';
+import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 
@@ -35,13 +35,15 @@ const SignupForm = () => {
  * the "data" property of the response object are the fields that ADD_USER returns. in this case, it returns
  * 1. token
  * 2. user{ _id, username}*/
+
+            console.log(userFormData);
             const { data } = await addUser({
                 variables: { ...userFormData },
             });
-
+            console.log(data);
 
             //calls the login function from Auth, which takes in a token id as parameters.
-            Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
+            // Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
         } catch (error) {
             console.log(error)
         }
@@ -50,33 +52,33 @@ const SignupForm = () => {
 
 
     return (
-            <form onSubmit={handleFormSubmit}>
-                <input
-                    value={userFormData.username}
-                    type="text"
-                    name="username"
-                    onChange={handleChange}
-                    placeholder="Enter a username">
+        <form onSubmit={handleFormSubmit}>
+            <input
+                value={userFormData.username}
+                type="text"
+                name="username"
+                onChange={handleChange}
+                placeholder="Enter a username">
 
 
-                </input>
-                <input
-                    placeholder="Enter an email"
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
-                    value={userFormData.email}>
+            </input>
+            <input
+                placeholder="Enter an email"
+                type="email"
+                name="email"
+                onChange={handleChange}
+                value={userFormData.email}>
 
-                </input>
-                <input
-                    placeholder="Enter a password"
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    value={userFormData.password}>
-                </input>
-                <button type="submit">submit</button>
-            </form>
+            </input>
+            <input
+                placeholder="Enter a password"
+                type="password"
+                name="password"
+                onChange={handleChange}
+                value={userFormData.password}>
+            </input>
+            <button type="submit">submit</button>
+        </form>
     )
 }
 export default SignupForm;
