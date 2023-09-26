@@ -38,7 +38,8 @@ const resolvers = {
       }
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      try {
+        const user = await User.findOne({ email });
 
       if (!user) {
         throw new AuthentificationError(
@@ -47,14 +48,19 @@ const resolvers = {
       }
 
       const correctPw = await user.isCorrectPassword(password);
-
       if (!correctPw) {
         throw new AuthentificationError("Incorrect credentials");
       }
 
       const token = signToken(user);
 
+      console.log(user, 'Login Successful!');
       return { token, user };
+
+      } catch (error) {
+        console.log(error);
+      }
+     
     },
     // Mutation to add a product to the user's cart
     addToCart: async (_, { productData }, context) => {
