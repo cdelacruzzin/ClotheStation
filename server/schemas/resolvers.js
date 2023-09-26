@@ -2,6 +2,12 @@
 const { AuthentificationError } = require("apollo-server-express");
 const { User, Category, Comment, Product } = require("../models");
 const { signToken } = require("../utils/auth");
+const uuid = require('uuid');
+
+// Example function to generate a unique comment ID (you would implement this)
+function generateUniqueCommentId() {
+  return uuid.v4();
+}
 
 // resolver to query current logged_in user
 const resolvers = {
@@ -18,13 +24,6 @@ const resolvers = {
     allProducts: async () => {
       return await Product.find({});
     },
-    /*
-    allUsers: async () => {
-      return await User.find({});
-    },
-    allComments: async () => {
-      return await Comment.find({});
-    },*/
   },
 
   Mutation: {
@@ -137,6 +136,27 @@ const resolvers = {
         throw new Error("Error clearing cart");
       }
     },
+    addComment: async (_, { productId, commentData }, context) => {
+      // Check if the product with the specified ID exists
+      const product = productsDatabase.products.find((product) => product.id === productId);
+    
+      if (!product) {
+        throw new Error('Product not found');
+      }
+    
+      // Create a new comment
+      const newComment = {
+        id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
+        ...commentData,
+        timestamp: new Date().toISOString(), // Generate timestamp
+      };
+    
+      // Add the new comment to the product's comments array
+      product.comments.push(newComment);
+    
+      // Return the updated product, including the new comment
+      return product;
+    }
   },
   User: {
     // Resolver function for the "cartCount" field

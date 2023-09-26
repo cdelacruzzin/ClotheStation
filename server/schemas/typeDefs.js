@@ -6,8 +6,13 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    productCount: Int! #items in cart at the time
-    cart: [Product]!
+    cartCount: Int! #items in cart at the time
+    cart: [CartItem]!
+  }
+
+  type CartItem {
+    product: Product!
+    quantity: Int!
   }
 
   type Product {
@@ -24,8 +29,7 @@ const typeDefs = gql`
     price: Float!
     quantity: Int!
     description: String!
-    category: [String!]!
-    comment: [Comment!]!
+    category: [ID!]! #reference category through IDs
   }
 
   type Category {
@@ -40,6 +44,11 @@ const typeDefs = gql`
     username: String!
     text: String!
     timestamp: String!
+  }
+
+  input CommentData {
+    username: String!
+    text: String!
   }
 
   # Auth type to handle returning data from a profile creating or user login
@@ -59,8 +68,10 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addToCart(Product: ProductData!): User
-    removeFromCart(ProductId: String!): User
+    addToCart(product: ProductData!): User
+    removeFromCart(productId: String!): User
+    addComment(productId: ID!, comment: CommentData!): Product
+    clearCart: User
   }
 `;
 
