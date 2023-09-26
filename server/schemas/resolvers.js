@@ -28,9 +28,14 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
+      try {
+        console.log({ username, email, password });
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.log(error);
+      }
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -139,21 +144,21 @@ const resolvers = {
     addComment: async (_, { productId, commentData }, context) => {
       // Check if the product with the specified ID exists
       const product = productsDatabase.products.find((product) => product.id === productId);
-    
+
       if (!product) {
         throw new Error('Product not found');
       }
-    
+
       // Create a new comment
       const newComment = {
         id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
         ...commentData,
         timestamp: new Date().toISOString(), // Generate timestamp
       };
-    
+
       // Add the new comment to the product's comments array
       product.comments.push(newComment);
-    
+
       // Return the updated product, including the new comment
       return product;
     }
