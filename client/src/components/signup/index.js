@@ -35,12 +35,9 @@ const SignupForm = () => {
  * the "data" property of the response object are the fields that ADD_USER returns. in this case, it returns
  * 1. token
  * 2. user{ _id, username}*/
-
-            console.log(userFormData);
             const { data } = await addUser({
                 variables: { ...userFormData },
             });
-            console.log(data);
 
             //calls the login function from Auth, which takes in a token id as parameters.
             // Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
