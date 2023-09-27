@@ -75,7 +75,11 @@ const resolvers = {
           context.user._id,   //finds a user document by the _id
           {$push: {cart: {products: product}}},   // Pushes the provided product into the user's cart's products array.
           {new: true}, // returns the updated user document
-        );
+        )
+        .populate({   //populates the user's cart.products path
+          path: 'cart.products',
+          populate: 'name'
+        });
         return user;
       } catch (error) {
         console.log(error)
