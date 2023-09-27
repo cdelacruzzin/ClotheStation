@@ -18,3 +18,34 @@ const StoreContext = createContext();
 const { Provider } = StoreContext;
 /** extracts the "Provider" propertry from the StoreContext. This "Provider" will be used to WRAP the component tree where you want components to have access to the react context.*/
 
+const StoreProvider = ({ value = [], ...props }) => {
+    /**StoreProvider is a custom component that will be a component that provides the context to the app's global state.
+     * The StoreProvider component uses the "useProductReducer" hook to manage the global state, and make both the current state and dispatch function available to the child components.
+     * 
+     * 1) "value" is a prop that provides initial values. it defaults to [] if the value is not provided.
+     * 2) "...props":  collects any other props passed down to "StoreProvider" into an object. This allows the props passed to "StoreProvider" to also be available to child components. */
+    const [state, dispatch] = useProductReducer({
+        /** useProductReducer is a custom hook which internally uses the `useReducer` hook from React to manage the application state based on actions dispatched.
+         * It takes an "InitialState" object as a parameter, which sets the default states for our global context.
+         * It returns the return value of the useReducer hook, which is an array of "state" - the current global state of the app, and "dispatch" - a function to dispatch actions to modify the global state.*/
+        products: [],
+        cart: [],
+        categories: [],
+        currentCategory: '',
+    });
+
+    return <Provider value={[state, dispatch]} {...props} />;
+    //by wrapping components with this "StoreProvider", the nested components will have access to the global state("state"), and a function to modify it("dispatch"), using the "useContext" hook.
+};
+
+
+const useStoreContext = () => {
+    //Without this custom hook, every component that wants to access the context would need to import both `useContext` 
+    //from React and `StoreContext`. With this hook, they only need to import `useStoreContext`.
+    return useContext(StoreContext);
+    //returns whatever value is held in the "StoreContext". As set up in "StoreProvider", 
+    //it is an array containing the global state ("state"), and the dispatch function ("dispatch")
+}
+
+
+export { StoreProvider, useStoreContext };
