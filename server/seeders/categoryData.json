@@ -1,14 +1,14 @@
 [
     {
-        "name": "T-Shirt"
+      "_id": "category1",
+      "name": "Electronics",
+      "description": "Electronic products",
+      "products": ["product1", "product2"] 
     },
     {
-        "name": "Panths"
-    },
-    {
-        "name": "Socks"
-    },
-    {
-        "name": "Shoes"
+      "_id": "category2",
+      "name": "Clothing",
+      "description": "Apparel and fashion",
+      "products": ["product3"] 
     }
-]
+  ]

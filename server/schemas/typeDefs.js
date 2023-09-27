@@ -15,21 +15,18 @@ const typeDefs = gql`
     quantity: Int!
   }
 
+  input AddToCartData {
+    productId: ID!
+    quantity: Int!
+  }
+
   type Product {
     _id: ID!
     name: String!
     price: Float!
     description: String!
-    category: [String!]!
+    category: [Category!]!
     comment: [Comment!]!
-  }
-
-  input ProductData {
-    name: String!
-    price: Float!
-    quantity: Int!
-    description: String!
-    category: [ID!]! #reference category through IDs
   }
 
   type Category {
@@ -68,7 +65,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addToCart(product: ProductData!): User
+    addToCart(product: AddToCartData!): User!
     removeFromCart(productId: String!): User
     addComment(productId: ID!, comment: CommentData!): Product
     clearCart: User

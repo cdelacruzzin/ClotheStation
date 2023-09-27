@@ -71,15 +71,37 @@ const resolvers = {
         throw new Error("Authentication required");   //throws an error if user is not authenticated
       }
       try {
-        const user = await User.findByIdAndUpdate(
-          context.user._id,   //finds a user document by the _id
-          {$push: {cart: {products: product}}},   // Pushes the provided product into the user's cart's products array.
-          {new: true}, // returns the updated user document
-        )
-        .populate({   
-          path: 'cart.products', //populates the user's cart.products path
-          populate: 'name' // Populates the 'name' field of the products in the cart
-        });
+        // Find the user by their _id
+        const user = await User.findById(context.user._id);
+
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        // Find the product by its _id
+        const product = await Product.findById(product.productId);
+
+        if (!product) {
+          throw new Error('Product not found');
+        }
+        // Check if the product is already in the cart
+        const existingCartItem = user.cart.find(
+          (item) => item.product.toString() === product.productId
+        );
+
+        if (existingCartItem) {
+          // If the product already exists in the cart, update its quantity
+          existingCartItem.quantity += product.quantity;
+        } else {
+          // If the product doesn't exist in the cart, add it as a new cart item
+          user.cart.push({
+            product: product.productId,
+            quantity: product.quantity,
+          });
+        }
+
+        // Save the updated user document with the cart
+        await user.save();
         
         return user;
       } catch (error) {
