@@ -3,6 +3,7 @@ const { AuthentificationError } = require("apollo-server-express");
 const { User, Category, Comment, Product } = require("../models");
 const { signToken } = require("../utils/auth");
 const uuid = require('uuid');
+const stripe = require('stripe')('sk')
 
 // Example function to generate a unique comment ID (you would implement this)
 function generateUniqueCommentId() {
