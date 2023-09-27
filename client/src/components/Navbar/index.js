@@ -37,6 +37,7 @@ const Navbar = () => {
                     <Tab label="Item Two" />
                     <Tab label="Item Three" />
                 </Tabs>
+                <button onClick={Auth.logout}>logout</button>
 
 
                 <div>
