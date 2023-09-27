@@ -25,8 +25,8 @@ const typeDefs = gql`
     name: String!
     price: Float!
     description: String!
-    category: [Category!]!
-    comment: [Comment!]!
+    category: [Category]
+    comment: [Comment]
   }
 
   type Category {
