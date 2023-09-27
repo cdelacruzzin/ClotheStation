@@ -1,6 +1,6 @@
 // import authentificationerror , usermodel and signToken
 const { AuthentificationError } = require("apollo-server-express");
-const { User, Category, Comment, Product } = require("../models");
+const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
 const uuid = require('uuid');
 
@@ -14,7 +14,10 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("products");
+        return User.findOne({ _id: context.user._id }).populate({   //populates the user's cart.products path
+          path: 'cart.products',
+          populate: 'name'
+        });
       }
       throw new AuthentificationError("You need to be logged in!");
     },
@@ -28,61 +31,59 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
+      try {
+        console.log({ username, email, password });
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.log(error);
+      }
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        throw new AuthentificationError(
-          "No user found with this email address"
-        );
-      }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthentificationError("Incorrect credentials");
-      }
-
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    // Mutation to add a product to the user's cart
-    addToCart: async (_, { productData }, context) => {
-      if (!context.user) {
-        throw new Error("Authentication required");
-      }
-
       try {
-        // Check if the user already has the product in their cart
-        const existingCartItemIndex = context.user.cart.findIndex(
-          (item) => item.product === productData.productId
-        );
+        const user = await User.findOne({ email });
 
-        if (existingCartItemIndex !== -1) {
-          // If the product already exists in the cart, update its quantity
-          context.user.cart[existingCartItemIndex].quantity +=
-            productData.quantity; //reference this inside input productData
-        } else {
-          // If the product doesn't exist in the cart, add it
-          context.user.cart.push({
-            product: productData.productId,
-            quantity: productData.quantity,
-          });
+        if (!user) {
+          throw new AuthentificationError(
+            "No user found with this email address"
+          );
         }
 
-        // Save the updated user data
-        await context.user.save();
+        // const correctPw = await user.isCorrectPassword(password);
+        // if (!correctPw) {
+        //   throw new AuthentificationError("Incorrect credentials");
+        // }
 
-        // Return the updated user data
-        return context.user;
-      } catch (err) {
-        console.log(err);
-        throw new Error("Error adding product to cart");
+        const token = signToken(user);
+
+        console.log(user, 'Login Successful!');
+                return { token, user };
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+    // Mutation to add a product to the user's cart
+    addToCart: async (_, { product }, context) => {
+      if (!context.user) {
+        throw new Error("Authentication required");   //throws an error if user is not authenticated
+      }
+      try {
+        const user = await User.findByIdAndUpdate(
+          context.user._id,   //finds a user document by the _id
+          {$push: {cart: {products: product}}},   // Pushes the provided product into the user's cart's products array.
+          {new: true}, // returns the updated user document
+        )
+        .populate({   
+          path: 'cart.products', //populates the user's cart.products path
+          populate: 'name' // Populates the 'name' field of the products in the cart
+        });
+        
+        return user;
+      } catch (error) {
+        console.log(error)
       }
     },
     // Mutation to remove a product from the user's cart
@@ -139,21 +140,21 @@ const resolvers = {
     addComment: async (_, { productId, commentData }, context) => {
       // Check if the product with the specified ID exists
       const product = productsDatabase.products.find((product) => product.id === productId);
-    
+
       if (!product) {
         throw new Error('Product not found');
       }
-    
+
       // Create a new comment
       const newComment = {
         id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
         ...commentData,
         timestamp: new Date().toISOString(), // Generate timestamp
       };
-    
+
       // Add the new comment to the product's comments array
       product.comments.push(newComment);
-    
+
       // Return the updated product, including the new comment
       return product;
     }
