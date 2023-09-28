@@ -2,14 +2,18 @@ const { Schema, model } = require('mongoose');
 
 const commentSchema = new Schema(
     {
-        title: {
+        username: {
             type: String,
             required: true,
-        },
-        description: {
-            type: Number,
+          },
+          text: {
+            type: String,
             required: true,
-        },
+          },
+          timestamp: {
+            type: String,
+            default: () => new Date().toISOString(), // Set the default value to the current date and time
+          },
     }
 )
 

@@ -7,28 +7,28 @@ const { productData } = require("./productData");
 
 db.once("open", async () => {
   try {
-    //reset the database
+    // Reset the database
     await User.deleteMany({});
     await Category.deleteMany({});
     await Product.deleteMany({});
 
     const user = await User.insertMany(userData);
     const category = await Category.insertMany(categoryData);
-    const product = await Product.create(productData);
 
-    // Loop through productData and add products to categories
-    productData.forEach((product) => {
-      //store the array of id
-      const categoryId = product.category;
-      //find category object that matches the product's category ID
-      const category = categoryData.find((category) => category._id === categoryId);
-      
-      //if category matching category is found
-      if (category) {
-        //push the product's ID, to the products array of the found category
+    // Create or update products in the database
+    const savedProducts = await Product.create(productData);
+
+    for (const product of savedProducts) {
+      const categoryIds = product.categories || [];
+      const matchingCategories = categoryData.filter((cat) =>
+        categoryIds.includes(cat._id.toString())
+      );
+
+      for (const category of matchingCategories) {
         category.products.push(product._id);
+        await category.save();
       }
-    });
+    }
 
     console.table("Users seeded!");
     console.table("Categories seeded!");

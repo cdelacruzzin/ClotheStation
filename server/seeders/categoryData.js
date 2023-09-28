@@ -1,4 +1,4 @@
-const generateUniqueId = require('../utils/uuid4')
+const generateUniqueId = require("../utils/uuid4");
 
 // Generate unique IDs for categories
 const categoryId1 = generateUniqueId();
@@ -10,19 +10,19 @@ const categoryIds = {
   sweater: categoryId2,
 };
 
-[
-    {
-      "_id": categoryId1,
-      "name": "Shirt",
-      "description": "Shirt",
-      "products": [] 
-    },
-    {
-      "_id": categoryId2,
-      "name": "Sweater",
-      "description": "Sweater",
-      "products": [] 
-    }
-  ]
-  
-  module.exports = { categoryData, categoryIds };
+const categoryData = [
+  {
+    _id: categoryId1,
+    name: "Shirt",
+    description: "Shirt",
+    products: [],
+  },
+  {
+    _id: categoryId2,
+    name: "Sweater",
+    description: "Sweater",
+    products: [],
+  },
+];
+
+module.exports = { categoryData, categoryIds };

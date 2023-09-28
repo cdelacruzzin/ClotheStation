@@ -1,7 +1,9 @@
 const generateUniqueId = require('../utils/uuid4');
 const { categoryIds } = require('./categoryData'); // Import the categoryIds
 
-[
+//console.log('shirt category id:' + categoryIds.shirt)
+
+const productData =  [
     {
       "_id": generateUniqueId(),
       "name": "Shirt",
@@ -27,3 +29,5 @@ const { categoryIds } = require('./categoryData'); // Import the categoryIds
       "comment": []
     }
   ]
+
+  module.exports = { productData };

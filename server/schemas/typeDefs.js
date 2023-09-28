@@ -3,44 +3,45 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   # user that takes id, username, email, password and products in an array
   type User {
-    _id: ID!
-    username: String!
-    email: String!
-    cartCount: Int! #items in cart at the time
-    cart: [CartItem]!
+    _id: String
+    username: String
+    email: String
+    cartCount: Int
+    cart: [CartItem]
   }
 
   type CartItem {
-    product: Product!
-    quantity: Int!
+    product: Product
+    quantity: Int
   }
 
   input AddToCartData {
-    productId: ID!
+    productId: String!
     quantity: Int!
   }
 
   type Product {
-    _id: ID!
-    name: String!
-    price: Float!
-    description: String!
+    _id: String
+    name: String
+    price: Float
+    description: String
+    imageSource: String
     category: [Category]
     comment: [Comment]
   }
 
   type Category {
-    id: ID!
-    name: String!
-    products: [Product!]! # A list of products in this category
+    _id: String
+    name: String
+    products: [Product]
   }
 
   #timestamp needs to be set to current time
   type Comment {
-    id: ID!
-    username: String!
-    text: String!
-    timestamp: String!
+    _id: ID
+    username: String
+    text: String
+    timestamp: String
   }
 
   input CommentData {
@@ -50,15 +51,15 @@ const typeDefs = gql`
 
   # Auth type to handle returning data from a profile creating or user login
   type Auth {
-    token: String!
+    token: String
     user: User
   }
 
   # query to look for current user
   type Query {
     me: User
-    allCategories: [Category!]!
-    allProducts: [Product!]!
+    allCategories: [Category]
+    allProducts: [Product]
   }
 
   # add new user and login user
