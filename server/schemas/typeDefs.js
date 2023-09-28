@@ -55,6 +55,7 @@ const typeDefs = gql`
     text: String!
   }
 
+  #product input for the checkout
   input ProductInput {
     _id: ID
     purchaseQuantity: Int
@@ -70,7 +71,7 @@ const typeDefs = gql`
     user: User
   }
 
-  # query to look for current user
+  # query to look for current user, all categories, products, and checkout
   type Query {
     me: User
     allCategories: [Category!]!

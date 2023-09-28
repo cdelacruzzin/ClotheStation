@@ -3,6 +3,7 @@ const { AuthentificationError } = require("apollo-server-express");
 const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
 const uuid = require('uuid');
+// import stripe and use stripe api for testing
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 // Example function to generate a unique comment ID (you would implement this)
@@ -25,10 +26,11 @@ const resolvers = {
     allProducts: async () => {
       return await Product.find({});
     },
-    order: async (parent, { _id }, context ) => {
+    // get products tye categories of the carts products for a single user
+    cart: async (parent, { _id }, context ) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
+          path: 'carts.products',
           populate: 'category',
         });
 
@@ -39,13 +41,16 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      await Cart.create({ items: args.items.map(({ _id }) => _id) });
+      // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
+      await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
 
-      for (const product of args.items) {
+      for (const product of args.products) {
         line_items.push({
           price_data: {
+            // display price in cad
             currency: 'cad',
+            // fill with current product data
             product_data: {
               name: product.name,
               description: product.description,
@@ -53,14 +58,19 @@ const resolvers = {
             },
             unit_amount: product.price * 100,
           },
+          // display quantity of products
           quantity: product.quantity,
         });
       }
 
+      // checkout with stripe and create a new stripe checkout session
       const session = await stripe.checkout.sessions.create({
+        // use card as payment method
         payment_method_types: ['card'],
+        // line ordered items for payment
         line_items,
         mode: 'payment',
+        // create success and cancel urls
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
       });
