@@ -10,6 +10,10 @@ const typeDefs = gql`
     cart: [CartItem]!
   }
 
+  type Checkout {
+    session: ID
+  }
+
   type CartItem {
     product: Product!
     quantity: Int!
@@ -51,17 +55,28 @@ const typeDefs = gql`
     text: String!
   }
 
+  #product input for the checkout
+  input ProductInput {
+    _id: ID
+    purchaseQuantity: Int
+    name: String
+    image: String
+    price: float
+    quantity: Int
+  }
+
   # Auth type to handle returning data from a profile creating or user login
   type Auth {
     token: String!
     user: User
   }
 
-  # query to look for current user
+  # query to look for current user, all categories, products, and checkout
   type Query {
     me: User
     allCategories: [Category!]!
     allProducts: [Product!]!
+    checkout(products: [ProductInput]): Checkout
   }
 
   # add new user and login user

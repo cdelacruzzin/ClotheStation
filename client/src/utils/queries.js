@@ -10,3 +10,10 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_CHECKOUT = gql`
+  query getCheckout($products: [ProductInput]) {
+    checkout(products: $products) {
+      session
+    }
+  }`

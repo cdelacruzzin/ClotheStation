@@ -1,5 +1,8 @@
 import { useReducer } from "react";
 //TODO: import actions.
+import {
+    ADD_MULTIPLE_TO_CART, REMOVE_FROM_CART, TOGGLE_CART, UPDATE_CART_QUANTITY,
+} from "./actions";
 
 
 /**this reducer function is the main function to manage the global state based on dispatch actions.
@@ -15,6 +18,42 @@ import { useReducer } from "react";
 export const reducer = (state, action) =>{
 
     switch(action.type) {
+        // lets user add multiple products to the cart array
+        case ADD_MULTIPLE_TO_CART:
+            return {
+                ...state,
+                cart: [...state.cart, ...action.products],
+            };
+        // toggle cart open
+        case TOGGLE_CART: 
+        return {
+            ...state,
+            cartOpen: !state.cartOpen
+        }
+        // remove item from cart based on product id
+        case REMOVE_FROM_CART:
+            let newState = state.cart.filter(product => {
+                return product._id !== action._id;
+            });
+
+            // return new state and display new cart as open if more than 0 items
+            return {
+                ...state,
+                cartOpen: newState.length > 0,
+                cart: newState
+            };
+        // update quantity of items in the cart to resemble purchasequantity
+        case UPDATE_CART_QUANTITY:
+            return {
+                ...state, 
+                cartOpen: true,
+                cart: state.cart.map(product => {
+                    if (action._id === product._id) {
+                        product.purchaseQuantity = action.purchaseQuantity
+                    }
+                    return product
+                })
+            };
         default:
             return state;
     }
