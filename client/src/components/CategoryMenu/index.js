@@ -35,20 +35,19 @@ function CategoryMenu() {
 
 
     console.log(categories)
+    
     return (
         <>
-
-
-            <Tabs centered>
                 {categories.map((item) => (
+
                     <button
-                    key={item.id}
+                        key={item.id}
                     >
                         {item.name}
                     </button>
-                ))}
 
-            </Tabs>
+
+                ))}
 
         </>
     )

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Auth from '../../utils/auth';
 import { Link as RouterLink } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import { Tabs, Tab, Link as MuiLink } from '@mui/material';
 
 const Navbar = () => {
 
-
+    const [value, setValue] = useState(0);  // Start with first tab
     return (
         <header>
             <Box sx={{
@@ -32,10 +32,10 @@ const Navbar = () => {
                 </MuiLink>
 
 
-                <Tabs centered>
-                    <Tab label="Item One" />
-                    <Tab label="Item Two" />
-                    <Tab label="Item Three" />
+                <Tabs centered value={value} onChange={(e, newValue) => setValue(newValue)}>
+                    <Tab label="page One" />
+                    <Tab label="page Two" />
+                    <Tab label="page Three" />
                 </Tabs>
                 <button onClick={Auth.logout}>logout</button>
 
