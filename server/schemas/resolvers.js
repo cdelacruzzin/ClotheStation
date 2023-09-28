@@ -17,7 +17,7 @@ const resolvers = {
       throw new AuthentificationError("You need to be logged in!");
     },
     allCategories: async () => {
-      return await Category.find({});
+      return await Category.find({}).populate('products');
     },
     allProducts: async () => {
       return await Product.find({});
@@ -66,7 +66,7 @@ const resolvers = {
       try {
         // Find the user by their _id
         const user = await User.findById(context.user._id).populate({
-          path: 'cart.products',
+          path: 'cart.product',
           select: '_id name description price'
         });
 

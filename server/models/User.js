@@ -26,6 +26,12 @@ const userSchema = new Schema({
         },
     }
   ],
+  'cart.product': [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    }
+  ]
 });
 
 const User = model("User", userSchema);
