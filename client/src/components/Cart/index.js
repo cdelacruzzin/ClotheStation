@@ -8,15 +8,17 @@ import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/globalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../..utils/actions';
 
-// use stripePromise for testing
+// use stripePromise for testing and insert api key in loadStripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
     const [state, dispatch] = useStoreContext();
+    // execute query when user wants to execute query
     const [getCheckout, {data}] = useLazyQuery(QUERY_CHECKOUT);
 
     useEffect(() => {
         if (data) {
+            // once data received load stripe and then redirect to checkout
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: data.checkout.session });
             });
@@ -25,6 +27,7 @@ const Cart = () => {
 
     useEffect(() => {
         async function getCart() {
+            // get cart items from index db
             const cart = await idbPromise('cart', 'get');
             dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
         }
