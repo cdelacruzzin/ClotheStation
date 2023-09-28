@@ -183,25 +183,29 @@ const resolvers = {
       if (!context.user) {
         throw new Error("Authentication required"); // Throw an error if the user is not authenticated
       }
+      try {
+        // Check if the product with the specified ID exists
+        const product = await Product.findById(productId);
+        if (!product) {
+          throw new Error("Product not found");
+        }
+        console.log(commentData);
+        // Create a new comment
+        const newComment = {
+          username: context.user.username,
+          text: commentData.text,
+        };
 
-      // Check if the product with the specified ID exists
-      const product = await Product.findById(productId);
-      if (!product) {
-        throw new Error("Product not found");
+        console.log("newComment Value", newComment);
+        // Add the new comment to the product's comments array
+        product.comment.push(newComment);
+
+        // Return the updated product, including the new comment
+        return product;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error adding comment");
       }
-
-      // Create a new comment
-      const newComment = {
-        userId: context.user.id,
-        ...commentData,
-        timestamp: new Date().toISOString(),
-      };
-
-      // Add the new comment to the product's comments array
-      product.comment.push(newComment);
-
-      // Return the updated product, including the new comment
-      return product;
     },
   },
   User: {

@@ -39,13 +39,12 @@ const typeDefs = gql`
   #timestamp needs to be set to current time
   type Comment {
     _id: ID
-    username: String
+    user: User
     text: String
     timestamp: String
   }
 
   input CommentData {
-    username: String!
     text: String!
   }
 
