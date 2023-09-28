@@ -38,6 +38,10 @@ const Navbar = () => {
                     <Tab label="page Three" />
                 </Tabs>
                 <button onClick={Auth.logout}>logout</button>
+                <button>
+                <a href='/login' className='button-style'>login</a>
+
+                </button>
 
 
                 <div>

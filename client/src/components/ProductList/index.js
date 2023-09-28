@@ -21,16 +21,28 @@ function ProductList() {
 
     }, [productData])
 
-    console.log(products);
+
+
+    const { currentCategory } = state;
+
+    
+    function selectCategory() {
+        if (!currentCategory) {
+            return state.products;
+        } else {
+            //TODO: for this to work, we need to have a category reference id in the product model
+            return state.products.filter((item) => item.category === currentCategory);
+        }
+    }
+
+    console.log(selectCategory())
     return (
         <>
-            {products.map((item) => (
-                <div style={{ background: 'red' }}
-                key={item._id}>
+            {selectCategory().map((item) => (
+                <div style={{ background: 'red' }} key={item._id}>
                     <h2>{item.name}</h2>
                     <p>{item.description}</p>
                     <p>Price: ${item.price}</p>
-                    {/* Displaying the ID might not be necessary for users, but if you need it for debugging: */}
                     <small>ID: {item._id}</small>
                 </div>
             ))}

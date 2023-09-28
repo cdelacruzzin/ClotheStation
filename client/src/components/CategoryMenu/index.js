@@ -15,7 +15,7 @@ function CategoryMenu() {
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
     const [state, dispatch] = useStoreContext();
-    const { categories } = state;
+    const { categories, currentCategory } = state;
     useEffect(() => {
         if (categoryData) {
             dispatch({
@@ -33,9 +33,14 @@ function CategoryMenu() {
         });
      };
 
-    
+    console.log({currentCategory})
     return (
         <>
+                {!currentCategory? (
+                    <p>home</p>
+                ): (
+                    <p>{currentCategory}</p>
+                )}
                 {categories.map((item) => (
 
                     <button
