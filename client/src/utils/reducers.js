@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 //TODO: import actions.
 import {
-    ADD_MULTIPLE_TO_CART, TOGGLE_CART,
+    ADD_MULTIPLE_TO_CART, REMOVE_FROM_CART, TOGGLE_CART,
 } from "./actions";
 
 
@@ -30,6 +30,18 @@ export const reducer = (state, action) =>{
             ...state,
             cartOpen: !state.cartOpen
         }
+        // remove item from cart based on product id
+        case REMOVE_FROM_CART:
+            let newState = state.cart.filter(product => {
+                return product._id !== action._id;
+            });
+
+            // return new state and display new cart as open if more than 0 items
+            return {
+                ...state,
+                cartOpen: newState.length > 0,
+                cart: newState
+            };
 
         default:
             return state;
