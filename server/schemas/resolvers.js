@@ -78,25 +78,22 @@ const resolvers = {
         if (!foundProduct) {
           throw new Error("Product not found");
         }
-
+        /*
         console.log("product information", product);
-        //console.log('user',user)
-        //console.log('foundProduct',foundProduct)
-
-        console.log(user.cart); //empty array, makes sense since there are no items inside the cart
-        // Check if the product is already in the cart
-        // Check if the product is already in the cart
-        /*const existingCartItem = user.cart.some(
-          (cartItem) =>
-            cartItem.product &&
-            cartItem.product._id &&
-            cartItem.product._id.toString() === product.product._id
-        );*/
+        console.log('user',user)
+        console.log('foundProduct',foundProduct)
+        console.log('product.productId', product.productId)
+        console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
 
         //returns false when just cartItem.product
-        console.log(existingCartItem); //returns undefined all the time
+        //console.log('existingCartItem',existingCartItem); //returns undefined all the time
         //console.log(product.productId); returning correctly
         //console.log(product.quantity); returning correctly
+
+        const existingCartItem = user.cart.find(function(cartItem) {
+          return cartItem.product._id.toString() === product.productId;
+      })
+
 
         if (existingCartItem) {
           // If the product already exists in the cart, update its quantity
@@ -104,7 +101,7 @@ const resolvers = {
         } else {
           // If the product doesn't exist in the cart, add it as a new cart item
           user.cart.push({
-            product: foundProduct._id, // Use the actual product object here
+            product: foundProduct, // Use the actual product object here
             quantity: product.quantity || 1,
           });
         }

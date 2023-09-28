@@ -11,7 +11,7 @@ const typeDefs = gql`
   }
 
   type CartItem {
-    product: [Product]
+    product: Product
     quantity: Int
   }
 
