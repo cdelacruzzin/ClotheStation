@@ -12,6 +12,8 @@ db.once("open", async () => {
     await Category.deleteMany({});
     await Product.deleteMany({});
 
+    console.log(userData)
+
     const user = await User.insertMany(userData);
     const category = await Category.insertMany(categoryData);
     const product = await Product.create(productData);
@@ -47,7 +49,7 @@ db.once("open", async () => {
         // Create or update products in the database
         const savedProducts = Product.create(productData);
 
-        console.log(savedProducts)
+        console.log(savedProducts) //returning promise { pending}
 
         matchingCategories.forEach(async (category) => {
             // Update the category.products array in memory

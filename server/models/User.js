@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const CartItem = require("./CartItem");
 
 const userSchema = new Schema({
   username: {
@@ -13,7 +14,15 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // You can set a default value if needed
   },
-  cart: [cartItemSchema],
+  cart: [
+    {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: 'Product',
+        },
+        quantity: Number,
+    },
+  ],
 });
 
 const User = model("User", userSchema);
