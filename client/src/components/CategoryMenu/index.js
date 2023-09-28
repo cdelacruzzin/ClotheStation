@@ -29,18 +29,11 @@ function CategoryMenu() {
      const selectCategory = (item)=>{
 
         const {id, name} = item;
-        console.log(name)
-        console.log(id)
-        // console.log(categoryData)
-        // console.log({currentCategory})
-        // console.log(state)
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
             currentCategory: {id: id, name: name}
         });
      };
-
-    console.log({currentCategory})
     return (
         <>
                 {!currentCategory? (

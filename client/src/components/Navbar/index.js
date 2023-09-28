@@ -1,15 +1,27 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Auth from '../../utils/auth';
 import { Link as RouterLink } from "react-router-dom";
 
 import { Box } from "@mui/system";
 import { Tabs, Tab, Link as MuiLink } from '@mui/material';
+import { useStoreContext } from "../../utils/globalState";
+import {UPDATE_CURRENT_CATEGORY} from '../../utils/actions';
 
 
 
 const Navbar = () => {
 
     const [value, setValue] = useState(0);  // Start with first tab
+    const [state, dispatch] = useStoreContext();
+
+
+    function resetCategory() {
+        console.log(state)
+        dispatch({
+            type: UPDATE_CURRENT_CATEGORY,
+            currentCategory: {id:'', name:''}
+        })
+    }
     return (
         <header>
             <Box sx={{
@@ -26,6 +38,7 @@ const Navbar = () => {
                     component={RouterLink}
                     to='/'
                     underline='none'
+                    onClick={resetCategory}
                 >
                     <span className="logo"></span>
                     URBAN SK8
@@ -39,7 +52,7 @@ const Navbar = () => {
                 </Tabs>
                 <button onClick={Auth.logout}>logout</button>
                 <button>
-                <a href='/login' className='button-style'>login</a>
+                    <a href='/login' className='button-style'>login</a>
 
                 </button>
 
