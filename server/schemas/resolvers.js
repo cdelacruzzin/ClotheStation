@@ -90,10 +90,10 @@ const resolvers = {
         //console.log(product.productId); returning correctly
         //console.log(product.quantity); returning correctly
 
+        //restructuring the function solved hte issues
         const existingCartItem = user.cart.find(function(cartItem) {
           return cartItem.product._id.toString() === product.productId;
       })
-
 
         if (existingCartItem) {
           // If the product already exists in the cart, update its quantity
@@ -164,14 +164,15 @@ const resolvers = {
       }
 
       try {
+        const user = await User.findById(context.user._id);
         // Clear the user's cart by setting it to an empty array
-        context.user.cart = [];
+        user.cart = [];
 
         // Save the updated user data
-        await context.user.save();
+        await user.save();
 
         // Return the updated user data
-        return context.user;
+        return user;
       } catch (err) {
         console.log(err);
         throw new Error("Error clearing cart");
