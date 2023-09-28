@@ -178,27 +178,30 @@ const resolvers = {
         throw new Error("Error clearing cart");
       }
     },
-    addComment: async (_, { productId, commentData }, context) => {
-      //check for user authentication
+    addComment: async (_, { productId, comment }, context) => {
+      // Check for user authentication
       if (!context.user) {
-        throw new Error("Authentication required"); // Throw an error if the user is not authenticated
+        throw new Error("Authentication required");
       }
+
       try {
-        // Check if the product with the specified ID exists
+        // Fetch the product by its productId
         const product = await Product.findById(productId);
         if (!product) {
           throw new Error("Product not found");
         }
-        console.log(commentData);
+        console.log(commentData)
         // Create a new comment
-        const newComment = {
-          username: context.user.username,
+        const newComment = new Comment({
+          user: context.user._id, // Assuming you have a user associated with the comment
           text: commentData.text,
-        };
+        });
 
-        console.log("newComment Value", newComment);
-        // Add the new comment to the product's comments array
+        // Add the new comment to the product's comment array
         product.comment.push(newComment);
+
+        // Save the updated product
+        await product.save();
 
         // Return the updated product, including the new comment
         return product;

@@ -28,7 +28,7 @@ const productSchema = new Schema({
   ],
   comment: [
     {
-        username: String,
+        user: String,
         text: String,
         timestamp: {
             type: Date,
