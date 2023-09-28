@@ -34,6 +34,14 @@ function CategoryMenu() {
     //the onclick function will change the state to display only the category of which was clicked
 
 
+     const selectCategory = (id)=>{
+        console.log(id);
+        dispatch({
+            type: UPDATE_CURRENT_CATEGORY,
+            currentCategory: id
+        });
+     };
+
     console.log(categories)
     
     return (
@@ -42,6 +50,9 @@ function CategoryMenu() {
 
                     <button
                         key={item.id}
+                        onClick={()=>{
+                            selectCategory(item.id);
+                        }}
                     >
                         {item.name}
                     </button>
