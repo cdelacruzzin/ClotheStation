@@ -3,11 +3,11 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   # user that takes id, username, email, password and products in an array
   type User {
-    _id: ID!
-    username: String!
-    email: String!
-    cartCount: Int! #items in cart at the time
-    cart: [CartItem]!
+    _id: ID
+    username: String
+    email: String
+    cartCount: Int #items in cart at the time
+    cart: [CartItem]
   }
 
   type Checkout {
@@ -15,39 +15,39 @@ const typeDefs = gql`
   }
 
   type CartItem {
-    product: Product!
-    quantity: Int!
+    product: Product
+    quantity: Int
   }
 
   type Product {
-    _id: ID!
-    name: String!
-    price: Float!
-    description: String!
-    category: [String!]!
-    comment: [Comment!]!
+    _id: ID
+    name: String
+    price: Float
+    description: String
+    category: [String]
+    comment: [Comment]
   }
 
   input ProductData {
     name: String!
     price: Float!
     quantity: Int!
-    description: String!
+    description: String
     category: [ID!]! #reference category through IDs
   }
 
   type Category {
-    id: ID!
-    name: String!
-    products: [Product!]! # A list of products in this category
+    id: ID
+    name: String
+    products: [Product] # A list of products in this category
   }
 
   #timestamp needs to be set to current time
   type Comment {
-    id: ID!
-    username: String!
-    text: String!
-    timestamp: String!
+    id: ID
+    username: String
+    text: String
+    timestamp: String
   }
 
   input CommentData {
@@ -74,9 +74,14 @@ const typeDefs = gql`
   # query to look for current user, all categories, products, and checkout
   type Query {
     me: User
+<<<<<<< HEAD
+    allCategories: [Category]
+    allProducts: [Product]
+=======
     allCategories: [Category!]!
     allProducts: [Product!]!
     checkout(products: [ProductInput]): Checkout
+>>>>>>> 7a572a8f4787a8473846014ea8b1e747abd6f935
   }
 
   # add new user and login user

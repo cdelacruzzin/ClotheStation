@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';     //utility from apollo client which lets modify the request context, when sending a request/ recieving a response.
 //import necessary react and apollo packages\
 
-import StoreProvider from './utils/globalState';
-
+import { StoreProvider } from './utils/globalState';
+import './styles/index.css';
 //TODO: import modules for the main app
 import SignupForm from './components/signup';
 import Login from './pages/Login';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
 
 
 
@@ -51,7 +53,12 @@ function App() {
 
             <Router>
                 <StoreProvider>
+                    <Navbar />
                     <Routes>
+                        <Route
+                            path="/"
+                            element={<Home/>}
+                        />
                         <Route
                             path="/signup"
                             element={<SignupForm />}

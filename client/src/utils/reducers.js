@@ -1,6 +1,9 @@
 import { useReducer } from "react";
 //TODO: import actions.
 import {
+    UPDATE_CATEGORIES,
+    UPDATE_CURRENT_CATEGORY,
+    UPDATE_PRODUCTS,
     ADD_MULTIPLE_TO_CART, REMOVE_FROM_CART, TOGGLE_CART, UPDATE_CART_QUANTITY,
 } from "./actions";
 
@@ -15,9 +18,26 @@ import {
  *  - it may contain 2 parameters:
  *      *type: this property is the modification type you want to apply.
  *      * an additional property: additional data to determine how the state should change*/
-export const reducer = (state, action) =>{
+export const reducer = (state, action) => {
+console.log(action)
+    switch (action.type) {
 
-    switch(action.type) {
+        case UPDATE_CATEGORIES:
+            return {
+                ...state,
+                categories: [...action.categories]
+            }
+        case UPDATE_CURRENT_CATEGORY:
+            return {
+                ...state,
+                currentCategory: action.currentCategory
+            }
+            
+            case UPDATE_PRODUCTS:
+                return {
+                    ...state,
+                    products: action.products
+                }
         // lets user add multiple products to the cart array
         case ADD_MULTIPLE_TO_CART:
             return {
@@ -59,16 +79,16 @@ export const reducer = (state, action) =>{
     }
 }
 
-export function useProductReducer(initialState){
-    
-  // The `useReducer` function accepts a reducer function and an initial state as its arguments.
-  /** 1) Reducer function:
-   * a function that takes the current state and an action object, and returns the new state
-   *  2) initialState:
-   * the starting state for the app component. it's the state before any actions have been dispatched
-   * 
-   * the useReducer hook returns an array of two elements:
-   *    -the current state(based on all the actions that have been dispatched)
-   *    - the dispatch function, which is used to dispatch actions to modify the state*/
+export function useProductReducer(initialState) {
+
+    // The `useReducer` function accepts a reducer function and an initial state as its arguments.
+    /** 1) Reducer function:
+     * a function that takes the current state and an action object, and returns the new state
+     *  2) initialState:
+     * the starting state for the app component. it's the state before any actions have been dispatched
+     * 
+     * the useReducer hook returns an array of two elements:
+     *    -the current state(based on all the actions that have been dispatched)
+     *    - the dispatch function, which is used to dispatch actions to modify the state*/
     return useReducer(reducer, initialState);
 }

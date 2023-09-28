@@ -17,3 +17,34 @@ export const QUERY_CHECKOUT = gql`
       session
     }
   }`
+
+export const QUERY_CATEGORIES =gql`
+query Query {
+  allCategories {
+    id
+    name
+    products {
+      price
+      name
+      description
+      _id
+      comment {
+        username
+        timestamp
+        text
+        id
+      }
+      category
+    }
+  }
+}`;
+
+export const QUERY_ALL_PRODUCTS = gql`
+query AllProducts {
+  allProducts {
+    _id
+    price
+    name
+    description
+  }
+}`;
