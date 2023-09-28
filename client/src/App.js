@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';     //utility from apollo client which lets modify the request context, when sending a request/ recieving a response.
 //import necessary react and apollo packages\
 
+import StoreProvider from './utils/globalState';
+
 //TODO: import modules for the main app
 import SignupForm from './components/signup';
 import Login from './pages/Login';
@@ -46,18 +48,22 @@ const client = new ApolloClient({
 function App() {
     return (
         <ApolloProvider client={client}>
+
             <Router>
-                <Routes>
-                    <Route
-                    path="/signup"
-                    element={<SignupForm/>}
-                    />
-                    <Route
-                    path="/login"
-                    element={<Login/>}
-                    />
-                </Routes>
+                <StoreProvider>
+                    <Routes>
+                        <Route
+                            path="/signup"
+                            element={<SignupForm />}
+                        />
+                        <Route
+                            path="/login"
+                            element={<Login />}
+                        />
+                    </Routes>
+                </StoreProvider>
             </Router>
+
         </ApolloProvider>
     );
 }
