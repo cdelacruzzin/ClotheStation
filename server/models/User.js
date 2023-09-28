@@ -1,5 +1,7 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+// const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
     {
@@ -29,10 +31,10 @@ const userSchema = new Schema(
 // });
 
 // custom method to validate password at login
-userSchema.methods.isCorrectPassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-}
+// userSchema.methods.isCorrectPassword = async function (password) {
+//     return bcrypt.compare(password, this.password);
+// }
 
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
