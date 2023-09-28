@@ -18,6 +18,7 @@ const userSchema = new Schema({
     {
         product: {
           type: Schema.Types.ObjectId, 
+          ref: 'Product',
           required: true,
         },
         quantity: {
@@ -26,12 +27,6 @@ const userSchema = new Schema({
         },
     }
   ],
-  'cart.product': [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    }
-  ]
 });
 
 const User = model("User", userSchema);
