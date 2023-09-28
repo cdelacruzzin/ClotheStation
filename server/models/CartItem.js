@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const cartItemSchema = new Schema({
     product: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Product', // Reference to the Product model
     },
     quantity: Number,

@@ -26,7 +26,7 @@ const productSchema = new Schema(
         },
         category: [
             {
-              type: Schema.Types.ObjectId,
+              type: String,
               ref: "Category", // Reference to the Category model
             },
           ],

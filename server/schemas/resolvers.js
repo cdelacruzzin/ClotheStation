@@ -2,21 +2,16 @@
 const { AuthentificationError } = require("apollo-server-express");
 const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
-const uuid = require('uuid');
-
-// Example function to generate a unique comment ID (you would implement this)
-function generateUniqueCommentId() {
-  return uuid.v4();
-}
 
 // resolver to query current logged_in user
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate({   //populates the user's cart.products path
-          path: 'cart.products',
-          populate: 'name'
+        return User.findOne({ _id: context.user._id }).populate({
+          //populates the user's cart.products path
+          path: "cart.products",
+          populate: "name",
         });
       }
       throw new AuthentificationError("You need to be logged in!");
@@ -57,55 +52,65 @@ const resolvers = {
 
         const token = signToken(user);
 
-        console.log(user, 'Login Successful!');
-                return { token, user };
-
+        console.log(user, "Login Successful!");
+        return { token, user };
       } catch (error) {
         console.log(error);
       }
-
     },
     // Mutation to add a product to the user's cart
-    addToCart: async (_, { product }, context) => {
+    addToCart: async (_, { product, quantity }, context) => {
       if (!context.user) {
-        throw new Error("Authentication required");   //throws an error if user is not authenticated
+        throw new Error("Authentication required"); //throws an error if user is not authenticated
       }
       try {
         // Find the user by their _id
-        const user = await User.findById(context.user._id);
+        const user = await User.findById(context.user._id).populate({
+          path: 'cart.products',
+          select: '_id name description price'
+        });
 
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
 
         // Find the product by its _id
-        const product = await Product.findById(product.productId);
+        const foundProduct = await Product.findById(product.productId);
 
-        if (!product) {
-          throw new Error('Product not found');
+        if (!foundProduct) {
+          throw new Error("Product not found");
         }
+
+        // Define the quantity variable based on the input
+        const cartQuantity = quantity || 1; // Default to 1 if quantity is not provided
+
         // Check if the product is already in the cart
-        const existingCartItem = user.cart.find(
-          (item) => item.product.toString() === product.productId
+        const existingCartItemIndex = user.cart.findIndex(
+          (item) => item.product.toString() === foundProduct._id.toString()
         );
 
-        if (existingCartItem) {
+        // Create a new cart item object with the product's ObjectId and quantity
+        const newCartItem = {
+          product: foundProduct._id,
+          quantity: cartQuantity,
+        };
+
+        console.log(newCartItem)
+
+        if (existingCartItemIndex !== -1) {
           // If the product already exists in the cart, update its quantity
-          existingCartItem.quantity += product.quantity;
+          user.cart[existingCartItemIndex].quantity += cartQuantity;
         } else {
           // If the product doesn't exist in the cart, add it as a new cart item
-          user.cart.push({
-            product: product.productId,
-            quantity: product.quantity,
-          });
+          user.cart.push(newCartItem);
         }
 
         // Save the updated user document with the cart
         await user.save();
-        
+
         return user;
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     // Mutation to remove a product from the user's cart
@@ -126,6 +131,8 @@ const resolvers = {
 
           // Save the updated user data
           await context.user.save();
+
+          
 
           // Return the updated user data
           return context.user;
@@ -161,10 +168,12 @@ const resolvers = {
     },
     addComment: async (_, { productId, commentData }, context) => {
       // Check if the product with the specified ID exists
-      const product = productsDatabase.products.find((product) => product.id === productId);
+      const product = productsDatabase.products.find(
+        (product) => product.id === productId
+      );
 
       if (!product) {
-        throw new Error('Product not found');
+        throw new Error("Product not found");
       }
 
       // Create a new comment
@@ -179,7 +188,7 @@ const resolvers = {
 
       // Return the updated product, including the new comment
       return product;
-    }
+    },
   },
   User: {
     // Resolver function for the "cartCount" field
