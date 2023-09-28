@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 //TODO: import actions.
 import {
-    ADD_MULTIPLE_TO_CART, REMOVE_FROM_CART, TOGGLE_CART,
+    ADD_MULTIPLE_TO_CART, REMOVE_FROM_CART, TOGGLE_CART, UPDATE_CART_QUANTITY,
 } from "./actions";
 
 
@@ -42,7 +42,18 @@ export const reducer = (state, action) =>{
                 cartOpen: newState.length > 0,
                 cart: newState
             };
-
+        // update quantity of items in the cart to resemble purchasequantity
+        case UPDATE_CART_QUANTITY:
+            return {
+                ...state, 
+                cartOpen: true,
+                cart: state.cart.map(product => {
+                    if (action._id === product._id) {
+                        product.purchaseQuantity = action.purchaseQuantity
+                    }
+                    return product
+                })
+            };
         default:
             return state;
     }
