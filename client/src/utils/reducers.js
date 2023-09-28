@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 //TODO: import actions.
 import {
-    ADD_MULTIPLE_TO_CART,
+    ADD_MULTIPLE_TO_CART, TOGGLE_CART,
 } from "./actions";
 
 
@@ -23,7 +23,13 @@ export const reducer = (state, action) =>{
             return {
                 ...state,
                 cart: [...state.cart, ...action.products],
-            }
+            };
+        // toggle cart open
+        case TOGGLE_CART: 
+        return {
+            ...state,
+            cartOpen: !state.cartOpen
+        }
 
         default:
             return state;
