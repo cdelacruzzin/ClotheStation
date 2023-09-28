@@ -34,7 +34,73 @@ const Cart = () => {
         }
     }, [state.cart.length, dispatch]);
 
+    // execute toggle cart action
     function toggleCart() {
         dispatch({ type: TOGGLE_CART});
     }
-}
+
+    // calculate total price of products inside cart
+    function calculateTotal() {
+        getCheckout({
+            variables: {
+                products: [...state.cart],
+            },
+        });
+    }
+
+    // submit Checkout function
+    function submitCheckout() {
+        getCheckout({
+            variables: {
+                products: [...state.cart],
+            },
+        });
+    }
+
+    if (!state.cartOpen) {
+        return (
+            // toggle Cart to open once it's closed
+            <div className="cart-closed" onClick={toggleCart}>
+                <span role="img" aria-label="trash">
+                   🛒
+                </span>
+            </div>
+        );
+    }
+
+    return (
+        <div className="cart">
+            <div className='close' onClick={toggleCart}>
+                [close]
+            </div>
+            <h2>Cart</h2>
+            {state.cart.length ? (
+                <div>
+                    {state.cart.map((item) => (
+                        <CartItem key={item._id} item={item}/>
+                    ))}
+
+
+                    <div>
+                        <strong>Total: ${calculateTotal()}</strong>
+
+                        {Auth.loggedIn() ? (
+                            <button onClick={submitCheckout}></button>
+                        ) : (
+                            <span>(log in to check out)</span>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <h3>
+                    <span role='img' aria-label="prohibited">
+                      🚫
+                    </span>
+                    You haven't added anything to your cart yet!
+                </h3>
+            )}
+        </div>
+    );
+};
+
+export default Cart;
