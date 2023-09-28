@@ -2,7 +2,8 @@ import { useReducer } from "react";
 //TODO: import actions.
 import {
     UPDATE_CATEGORIES,
-    UPDATE_CURRENT_CATEGORY
+    UPDATE_CURRENT_CATEGORY,
+    UPDATE_PRODUCTS
 } from './actions';
 
 
@@ -31,6 +32,12 @@ export const reducer = (state, action) => {
                 ...state,
                 currentCategory: action.currentCategory
             }
+            
+            case UPDATE_PRODUCTS:
+                return {
+                    ...state,
+                    products: action.products
+                }
         default:
             return state;
     }
