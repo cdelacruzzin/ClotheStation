@@ -1,5 +1,8 @@
 import { useReducer } from "react";
 //TODO: import actions.
+import {
+    ADD_MULTIPLE_TO_CART,
+} from "./actions";
 
 
 /**this reducer function is the main function to manage the global state based on dispatch actions.
@@ -15,6 +18,13 @@ import { useReducer } from "react";
 export const reducer = (state, action) =>{
 
     switch(action.type) {
+        // lets user add multiple products to the cart array
+        case ADD_MULTIPLE_TO_CART:
+            return {
+                ...state,
+                cart: [...state.cart, ...action.products],
+            }
+
         default:
             return state;
     }

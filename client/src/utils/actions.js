@@ -1,0 +1,1 @@
+export const ADD_MULTIPLE_TO_CART = "ADD_MULTIPLE_TO_CART";
