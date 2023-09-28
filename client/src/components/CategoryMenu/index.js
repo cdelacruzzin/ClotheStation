@@ -7,7 +7,7 @@ import { Tabs, Tab, Link as MuiLink } from '@mui/material';
 
 import { useStoreContext } from "../../utils/globalState";
 
-import { QUERY_CATEGORIES } from '../../utils/queries';
+import { QUERY_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../../utils/queries';
 import {
     UPDATE_CATEGORIES
 } from '../../utils/actions';
