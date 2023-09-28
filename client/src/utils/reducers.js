@@ -18,7 +18,7 @@ import {
  *      * an additional property: additional data to determine how the state should change*/
 export const reducer = (state, action) => {
     // console.log(state)
-    // console.log(action)
+    console.log(action)
     switch (action.type) {
 
         case UPDATE_CATEGORIES:
@@ -29,7 +29,7 @@ export const reducer = (state, action) => {
         case UPDATE_CURRENT_CATEGORY:
             return {
                 ...state,
-                // currentcategory: action.id
+                currentCategory: action.currentCategory
             }
         default:
             return state;
