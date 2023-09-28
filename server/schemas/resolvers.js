@@ -166,12 +166,16 @@ const resolvers = {
         throw new Error("Error clearing cart");
       }
     },
-    addComment: async (_, { productId, commentData }, context) => {
+    addComment: async (_, { productId, commentData, userId }, context) => {
+      //check for user authentication
+      if (!context.user) {
+        throw new Error("Authentication required"); // Throw an error if the user is not authenticated
+      }
+
       // Check if the product with the specified ID exists
       const product = productsDatabase.products.find(
         (product) => product.id === productId
       );
-
       if (!product) {
         throw new Error("Product not found");
       }
@@ -179,6 +183,7 @@ const resolvers = {
       // Create a new comment
       const newComment = {
         id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
+        userId:context.user.id,
         ...commentData,
         timestamp: new Date().toISOString(), // Generate timestamp
       };
