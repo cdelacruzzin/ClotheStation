@@ -68,7 +68,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addToCart(product: AddToCartData!): User
     removeFromCart(productId: ID!): User
-    addComment(productId: ID!, comment: CommentData!, userId: ID!): Product
+    addComment(productId: ID!, comment: CommentData!): Product
+    removeComment(comment: ID!): Product
     clearCart: User
   }
 `;

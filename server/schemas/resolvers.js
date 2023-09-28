@@ -91,9 +91,9 @@ const resolvers = {
         //console.log(product.quantity); returning correctly
 
         //restructuring the function solved hte issues
-        const existingCartItem = user.cart.find(function(cartItem) {
+        const existingCartItem = user.cart.find(function (cartItem) {
           return cartItem.product._id.toString() === product.productId;
-      })
+        });
 
         if (existingCartItem) {
           // If the product already exists in the cart, update its quantity
@@ -120,7 +120,7 @@ const resolvers = {
     },
     removeFromCart: async (_, { productId }, context) => {
       if (!context.user) {
-        throw new Error('Authentication required');
+        throw new Error("Authentication required");
       }
 
       try {
@@ -128,7 +128,7 @@ const resolvers = {
         const user = await User.findById(context.user._id);
 
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
 
         // Find the index of the cart item with the specified productId
@@ -137,7 +137,7 @@ const resolvers = {
         );
 
         if (indexToRemove === -1) {
-          throw new Error('Product not found in the cart');
+          throw new Error("Product not found in the cart");
         }
 
         // Remove the cart item from the user's cart
@@ -151,7 +151,7 @@ const resolvers = {
 
         return user;
       } catch (error) {
-        console.error('Error in removeFromCart resolver:', error);
+        console.error("Error in removeFromCart resolver:", error);
         throw error;
       }
     },
@@ -178,30 +178,27 @@ const resolvers = {
         throw new Error("Error clearing cart");
       }
     },
-    addComment: async (_, { productId, commentData, userId }, context) => {
+    addComment: async (_, { productId, commentData }, context) => {
       //check for user authentication
       if (!context.user) {
         throw new Error("Authentication required"); // Throw an error if the user is not authenticated
       }
 
       // Check if the product with the specified ID exists
-      const product = productsDatabase.products.find(
-        (product) => product.id === productId
-      );
+      const product = await Product.findById(productId);
       if (!product) {
         throw new Error("Product not found");
       }
 
       // Create a new comment
       const newComment = {
-        id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
         userId: context.user.id,
         ...commentData,
-        timestamp: new Date().toISOString(), // Generate timestamp
+        timestamp: new Date().toISOString(),
       };
 
       // Add the new comment to the product's comments array
-      product.comments.push(newComment);
+      product.comment.push(newComment);
 
       // Return the updated product, including the new comment
       return product;
