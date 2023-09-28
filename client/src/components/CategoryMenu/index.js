@@ -15,9 +15,7 @@ function CategoryMenu() {
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
     const [state, dispatch] = useStoreContext();
-    // console.log(state)
     const { categories } = state;
-    // console.log({ categories });
     useEffect(() => {
         if (categoryData) {
             dispatch({
@@ -29,14 +27,12 @@ function CategoryMenu() {
 
 
      const selectCategory = (id)=>{
-        // console.log(id);
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
             currentCategory: id
         });
      };
 
-    console.log(state)
     
     return (
         <>

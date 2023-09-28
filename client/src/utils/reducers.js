@@ -17,7 +17,7 @@ import {
  *      *type: this property is the modification type you want to apply.
  *      * an additional property: additional data to determine how the state should change*/
 export const reducer = (state, action) => {
-    // console.log(state)
+    console.log(state)
     console.log(action)
     switch (action.type) {
 

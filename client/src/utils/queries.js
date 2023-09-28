@@ -31,4 +31,14 @@ query Query {
       category
     }
   }
-}`
+}`;
+
+export const QUERY_ALL_PRODUCTS = gql`
+query AllProducts {
+  allProducts {
+    _id
+    price
+    name
+    description
+  }
+}`;
