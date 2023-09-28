@@ -8,6 +8,9 @@ import { Tabs, Tab, Link as MuiLink } from '@mui/material';
 import { useStoreContext } from "../../utils/globalState";
 
 import { QUERY_CATEGORIES } from '../../utils/queries';
+import {
+    UPDATE_CATEGORIES
+} from '../../utils/actions';
 
 
 function CategoryMenu() {
@@ -16,33 +19,34 @@ function CategoryMenu() {
     const [state, dispatch] = useStoreContext();
     // console.log(state)
     const { categories } = state;
-
-
-
     // console.log({ categories });
-
     useEffect(() => {
-        console.log(categoryData);
-        if(categoryData){
+        if (categoryData) {
             dispatch({
-                
+                type: UPDATE_CATEGORIES,
+                categories: categoryData.allCategories
             })
         }
     }, [categoryData])
 
+    //TODO: create an on click event to update current category
+    // when a category is clicked, the onClick event will take the category id as parameter.
+    //the onclick function will change the state to display only the category of which was clicked
 
 
+    console.log(categories)
     return (
         <>
 
 
             <Tabs centered>
-                {categories.map((item)=>(
+                {categories.map((item) => (
                     <button
-                    key={item.name}>
-
+                    key={item.id}
+                    >
+                        {item.name}
                     </button>
-                ) ) }
+                ))}
 
             </Tabs>
 
