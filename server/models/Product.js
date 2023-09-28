@@ -2,9 +2,6 @@ const { Schema, model } = require('mongoose');
 
 const productSchema = new Schema(
     {
-        _id: {
-            type: String
-        },
         name: {
             type: String,
             required: true,
@@ -26,7 +23,7 @@ const productSchema = new Schema(
         },
         category: [
             {
-              type: String,
+              type: Schema.Types.ObjectId,
               ref: "Category", // Reference to the Category model
             },
           ],

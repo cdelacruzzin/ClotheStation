@@ -17,7 +17,7 @@ const userSchema = new Schema({
   cart: [
     {
         product: {
-          type: String, // Assuming your product ID is a string (UUID)
+          type: Schema.Types.ObjectId, 
           required: true,
         },
         quantity: {
