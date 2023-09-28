@@ -26,10 +26,17 @@ function CategoryMenu() {
     }, [categoryData])
 
 
-     const selectCategory = (id)=>{
+     const selectCategory = (item)=>{
+
+        const {id, name} = item;
+        console.log(name)
+        console.log(id)
+        // console.log(categoryData)
+        // console.log({currentCategory})
+        // console.log(state)
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
-            currentCategory: id
+            currentCategory: {id: id, name: name}
         });
      };
 
@@ -39,14 +46,14 @@ function CategoryMenu() {
                 {!currentCategory? (
                     <p>home</p>
                 ): (
-                    <p>{currentCategory}</p>
+                    <p>{currentCategory.name}</p>
                 )}
                 {categories.map((item) => (
 
                     <button
                         key={item.id}
                         onClick={()=>{
-                            selectCategory(item.id);
+                            selectCategory(item);
                         }}
                     >
                         {item.name}

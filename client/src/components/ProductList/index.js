@@ -25,7 +25,7 @@ function ProductList() {
 
     const { currentCategory } = state;
 
-    
+
     function selectCategory() {
         if (!currentCategory) {
             return state.products;
@@ -35,7 +35,7 @@ function ProductList() {
         }
     }
 
-    console.log(selectCategory())
+
     return (
         <>
             {selectCategory().map((item) => (
