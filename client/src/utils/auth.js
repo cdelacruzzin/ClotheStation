@@ -33,7 +33,7 @@ class AuthService {
 //   set id token in localstrage if logged in
   login(idToken) {
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/");
+    // window.location.assign("/");
   }
 
 //   after loggin out remove id token
