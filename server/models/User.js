@@ -17,7 +17,7 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // You can set a default value if needed
   },
-  cart:
+  // cart:
   // {
   //   product: {
   //     type: Schema.Types.ObjectId,
@@ -30,26 +30,43 @@ const userSchema = new Schema({
   //   },
   //  [Cart.schema]
   // },
- 
-  
-[
-    {
+
+
+  // [
+  //     {
+  //     purchaseDate: {
+  //       type: Date,
+  //       default: Date.now,
+  //     },
+  //     product: [
+  //       {
+  //         type: Schema.Types.ObjectId,
+  //         ref: "Product",
+  //         quantity: {
+  //           type: Number,
+  //           required: true,
+  //         }
+  //       },
+  //     ],
+  //   }
+  // ]
+  cart: [{
     purchaseDate: {
       type: Date,
-      default: Date.now,
+      default: Date.now
     },
-    product: [
-      {
+    quantity: {
+      type: Number,
+      required: true
+    },
+    product:  {
         type: Schema.Types.ObjectId,
         ref: "Product",
-        quantity: {
-          type: Number,
-          required: true,
-        }
+        required: true
       },
-    ],
-  }
-]
+  }]
+
+
 
 });
 

@@ -126,16 +126,19 @@ const resolvers = {
 
       try {
         // Find the user by their _id
-        const user = await User.findById(context.user._id).populate({
-          path: "cart.product",
-          select: "_id name description price",
-        });
+        const user = await User.findById(context.user._id)
+
+
+        // console.log(user)
         if (!user) {
           throw new Error("User not found");
         }
 
         // Find the product by its _id
         const foundProduct = await Product.findById(product.productId);
+        // console.log(foundProduct)
+        // console.log("")
+        // console.log(product.productId)
         if (!foundProduct) {
           throw new Error("Product not found");
         }
@@ -153,47 +156,33 @@ const resolvers = {
 
         //restructuring the function solved hte issues
 
-        // console.log(user)
-        const existingCartItem = user.cart.find(function (cartItem) {
-          // console.log({cartItem})
-          // console.log(cartItem._id.toString());
-          // console.log(product.productId)
-          return cartItem._id.toString() === product.productId;
-        });
+        const cartItemIndex = user.cart.findIndex(cartItem => cartItem.product.toString() === product.productId);
 
-        // console.log(existingCartItem)
-
-        if (existingCartItem) {
-          // If the product already exists in the cart, update its quantity
-          existingCartItem.quantity += product.quantity || 1;
+        if (cartItemIndex !== -1) {
+          user.cart[cartItemIndex].quantity += product.quantity || 1;
         } else {
-          // If the product doesn't exist in the cart, add it as a new cart item
           user.cart.push({
-            product: foundProduct, // Use the actual product object here
+            product: foundProduct._id,
             quantity: product.quantity || 1,
           });
         }
-
         // Update the cart count based on the quantity added
         user.cartCount += product.quantity || 1;
 
-        // Save the updated user document with the cart
         await user.save();
 
-        const newuser = await User.findById(context.user._id)
-        .populate({
-            path: 'cart.product',
-            select: '_id name description price',
-            populate: {
-                path: 'category',
-                select: 'name description'
-            }
+        // Fetch and populate the user again
+        const populatedUser = await User.findById(user._id).populate({
+          path: 'cart.product',
+          select: '_id name description price',
+          populate: {
+            path: 'category',
+            select: 'name'
+          }
         });
-    
 
-        console.log(newuser)
-
-        // return user;
+        console.log(JSON.stringify(populatedUser, null, 3));
+        return populatedUser;
       } catch (error) {
         console.error("Error in addToCart resolver:", error);
         throw error;
