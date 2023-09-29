@@ -17,36 +17,29 @@ db.once("open", async () => {
     console.table("Users seeded!");
 
     // Seed categories
-    await Category.insertMany(categoryData);
+    const insertedCategories = await Category.insertMany(categoryData);
     console.log("Categories seeded!");
 
     // Seed products
-    await Product.create(productData);
+    const insertedProducts = await Product.insertMany(productData);
     console.log("Products seeded!");
 
-    // Fetch all categories and products from the database after insertion
-    const allCategories = await Category.find({});
-    const allProducts = await Product.find({});
-    
-    // Associate products with categories and vice versa
-    for (const product of allProducts) {
-        for (const category of allCategories) {
-            if (product.name.includes(category.name)) {
-                console.log(`${category.name}: ${category._id}  ${product.name}: ${product._id}`);
-                
-                // Update product with category id
-                await Product.findByIdAndUpdate(product._id, { $push: { categories: category._id } });
-                
-                // Update category with product id
-                await Category.findByIdAndUpdate(category._id, { $push: { products: product._id } });
-            }
-        }
-    }
-    
-    const newProd = await Product.find();
+    // Associate products with categories based on product name
+    for (const product of insertedProducts) {
+      for (const category of insertedCategories) {
+        if (product.name.includes(category.name)) {
+          // Update product with category id
+          await Product.findByIdAndUpdate(product._id, { $push: { category: category._id } });
+          // console.log(await Product.findByIdAndUpdate(product._id, { $push: { category: category._id } }))
 
-    console.log(newProd)
-    console.log("Categories updated with products!");
+          // Update category with product id
+          await Category.findByIdAndUpdate(category._id, { $push: { products: product._id } });
+        }
+      }
+    }
+    console.log("Products associated with categories and vice-versa!");
+
+
     process.exit(0);
   } catch (err) {
     console.error(err);
