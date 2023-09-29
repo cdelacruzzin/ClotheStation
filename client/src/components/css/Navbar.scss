@@ -1,0 +1,206 @@
+@import "../../styles/mixins.scss";
+
+.Navbar {
+  width: 100%;
+  height: 55px;
+
+  @include flex();
+
+  position: relative;
+
+  #nav--logo-container {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include flex(row);
+    gap: 0 0.75rem;
+
+    h1 {
+      transform: translateY(2.5px);
+
+      white-space: nowrap;
+      color: var(--coral-1);
+      text-transform: uppercase;
+      letter-spacing: 0.15rem;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    img {
+      transform: translateY(5px);
+    }
+  }
+
+  #nav--links-container {
+    @include flex(row);
+    gap: 0 2.75rem;
+
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+
+    #shop-link {
+      @include flex(row);
+      gap: 0.5rem;
+    }
+
+    a {
+      color: var(--black-1);
+      text-decoration: none;
+      
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+
+      position: relative;
+
+      &::after {
+        @include pseudo(100%, 3px, var(--coral-1), 0, 1, -3px);
+        transform: scaleX(0);
+        transition: transform 300ms ease;
+      }
+
+      &:hover &::after {
+        transform: scaleX(1);
+        transition: transform 300ms ease;
+      }
+
+      &.selected {
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  #nav--icon-container {
+    @include flex(row);
+    gap: 0 1rem;
+
+    width: fit-content;
+
+    position: absolute;
+    right: 1rem; top: 50%;
+    transform: translateY(-50%);
+
+    svg{
+      transition: fill 150ms ease;
+      &:hover { fill: var(--black-1); }
+    }
+
+    #nav--links-toggle {
+      display: none !important;
+      @include flex;
+      gap: 0.5rem 0;
+
+      cursor: pointer;
+
+      svg {
+        width: 32px;
+        height: 32px;
+        color: var(--black-1);
+      }
+    }
+
+    .account-dropdown {
+      display: none !important;
+
+      $padding: 0.5rem;
+      height: fit-content;
+      overflow: hidden;
+
+      background-color: whitesmoke;
+      border-radius: 9px;
+
+      position: absolute;
+      right: 0;
+      bottom: calc(-55px - calc($padding * 5));
+
+      @include flex();
+
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--black-1);
+
+      button, a{
+        padding: 0.5rem 4rem;
+        background-color: inherit;
+        transition: filter 150ms ease;;
+        &:hover { filter: brightness(0.95); }
+      }
+
+    }
+    .account-dropdown.open { display: flex !important; }
+  }
+
+  &::after {
+    $width: 7.5cqw;
+    @include pseudo($width, 0.3rem, var(--coral-1), 0, 1, -0.3rem);
+    box-shadow: var(--coral-2) $width 0, var(--coral-3) $width * 2 0;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #nav--logo-container {
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      h1 {
+        font-size: clamp(20px, 2.5cqw, 2.5cqw);
+      }
+    }
+
+    #nav--links-container {
+      width: 100%;
+      height: 0;
+
+      position: absolute;
+
+      @include flex();
+      gap: 1rem 0;
+
+      top: 60px;
+      background-color: white;
+
+      overflow: hidden;
+      z-index: 999;
+
+      #shop-link svg {
+        display: none;
+      }
+      a {
+        width: 100%;
+        padding: 0 0 1rem 0;
+
+        font-size: clamp(12px, 1.5vw, 1.5vw);
+        border: solid rgba(0, 0, 0, 0.1) 1px;
+        border-width: 0 0 1px 0;
+        text-align: center;
+
+        &::after {
+          display: none !important;
+        }
+        &:nth-of-type(1) {
+          padding-top: 1rem;
+          border-width: 1px 0;
+        }
+      }
+
+      &.opened {
+        height: fit-content;
+      }
+    }
+
+    #nav--icon-container #nav--links-toggle { display: block !important; }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    #nav--logo-container {
+      left: 6rem;
+      h1 { font-size: 12px; }
+    }
+  }
+}
