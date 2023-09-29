@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const categorySchema = new Schema(
     {
-        _id: {
-            type: String
-        },
+        // _id: {
+        //     type: String
+        // },
         name: {
             type: String,
             required: true,
