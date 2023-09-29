@@ -25,7 +25,7 @@ function ProductList() {
     const { currentCategory } = state;
     function selectCategory() {
         console.log(state)
-        if (!currentCategory.id) {
+        if (!currentCategory._id) {
             return state.products;
         } else {
             //TODO: for this to work, we need to have a category reference id in the product model

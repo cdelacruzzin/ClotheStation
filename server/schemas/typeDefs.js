@@ -7,16 +7,23 @@ const typeDefs = gql`
     username: String
     email: String
     cartCount: Int #items in cart at the time
-    cart: [CartItem]
+    cart: [Cart]
   }
 
   type Checkout {
     session: ID
   }
 
-  type CartItem {
+  type Cart {
+    _id: ID
+    
     product: Product
     quantity: Int
+  }
+
+  input AddToCartData {
+    productId: ID!
+    quantity: Int!
   }
 
   type Product {
@@ -24,10 +31,10 @@ const typeDefs = gql`
     name: String
     price: Float
     description: String
-    category: [String]
+    imageSource: String
+    category: [Category]
     comment: [Comment]
   }
-
   input ProductData {
     name: String!
     price: Float!
@@ -37,21 +44,20 @@ const typeDefs = gql`
   }
 
   type Category {
-    id: ID
+    _id: ID
     name: String
-    products: [Product] # A list of products in this category
+    products: [Product]
   }
 
   #timestamp needs to be set to current time
   type Comment {
-    id: ID
-    username: String
+    _id: ID
+    user: User
     text: String
     timestamp: String
   }
 
   input CommentData {
-    username: String!
     text: String!
   }
 
@@ -61,36 +67,33 @@ const typeDefs = gql`
     purchaseQuantity: Int
     name: String
     image: String
-    price: float
+    price: Float
     quantity: Int
   }
 
   # Auth type to handle returning data from a profile creating or user login
   type Auth {
-    token: String!
+    token: String
     user: User
   }
 
   # query to look for current user, all categories, products, and checkout
   type Query {
     me: User
-<<<<<<< HEAD
-    allCategories: [Category]
-    allProducts: [Product]
-=======
     allCategories: [Category!]!
     allProducts: [Product!]!
     checkout(products: [ProductInput]): Checkout
->>>>>>> 7a572a8f4787a8473846014ea8b1e747abd6f935
+    cart(_id: ID!):Cart
   }
 
   # add new user and login user
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addToCart(product: ProductData!): User
-    removeFromCart(productId: String!): User
+    addToCart(product: AddToCartData!): User
+    removeFromCart(productId: ID!): User
     addComment(productId: ID!, comment: CommentData!): Product
+    removeComment(comment: ID!): Product
     clearCart: User
   }
 `;

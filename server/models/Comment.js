@@ -1,28 +1,19 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-const commentSchema = new Schema(
-    {
-        title: {
-            type: String,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref:'User',
-            required: true
-        },
-        product: {
-            type: Schema.Types.ObjectId,
-            ref: 'Product',
-            required: true
-        }
-    }
-)
+const commentSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId, // This field should store the user's ID
+    ref: "User", // This refers to the "User" model
+  },
+  text: {
+    type: String,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now, // Set the default value to the current date and time
+  },
+});
 
-const Comment = model('Comment', commentSchema);
+const Comment = model("Comment", commentSchema);
 
 module.exports = Comment;

@@ -21,20 +21,32 @@ export const QUERY_CHECKOUT = gql`
 export const QUERY_CATEGORIES =gql`
 query Query {
   allCategories {
-    id
+    _id
     name
     products {
       price
       name
       description
       _id
-      comment {
-        username
-        timestamp
-        text
-        id
+     # comment {
+        #user{
+
+        #}
+        #timestamp
+        #text
+        #id
+      #}
+      category{
+        _id
+        name
+        products{
+          _id
+          name
+          price
+          description
+          imageSource
+        }
       }
-      category
     }
   }
 }`;

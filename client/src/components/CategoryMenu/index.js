@@ -28,10 +28,10 @@ function CategoryMenu() {
 
      const selectCategory = (item)=>{
 
-        const {id, name} = item;
+        const {_id, name} = item;
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
-            currentCategory: {id: id, name: name}
+            currentCategory: {id: _id, name: name}
         });
      };
     return (
@@ -44,7 +44,7 @@ function CategoryMenu() {
                 {categories.map((item) => (
 
                     <button
-                        key={item.id}
+                        key={item._id}
                         onClick={()=>{
                             selectCategory(item);
                         }}

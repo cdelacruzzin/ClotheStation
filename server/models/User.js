@@ -4,23 +4,34 @@ const { Schema } = mongoose;
 // const bcrypt = require('bcrypt');
 const Cart = require('./Cart');
 
-const userSchema = new Schema(
-    {
-        username: {
-            type: String,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        carts: [Cart.schema]
-    }
-)
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cartCount: {
+    type: Number,
+    default: 0, // You can set a default value if needed
+  },
+  cart: 
+    // {
+    //   product: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Product',
+    //     required: true,
+    //   },
+    //   quantity: {
+    //     type: Number,
+    //     required: true,
+    //   },
+       [Cart.schema]
+    // },
+  ,
+});
 
 // hash user password
 // userSchema.pre('save', async function (next) {

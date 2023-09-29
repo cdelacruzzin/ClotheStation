@@ -6,35 +6,37 @@ const uuid = require('uuid');
 // import stripe and use stripe api for testing
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
-// Example function to generate a unique comment ID (you would implement this)
-function generateUniqueCommentId() {
-  return uuid.v4();
-}
-
 // resolver to query current logged_in user
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("products");
+        return User.findOne({ _id: context.user._id }).populate({
+          //populates the user's cart.products path
+          path: "cart.product",
+          populate: "name",
+        });
       }
       throw new AuthentificationError("You need to be logged in!");
     },
     allCategories: async () => {
-      return await Category.find({});
+      return await Category.find({}).populate("products");
     },
     allProducts: async () => {
       return await Product.find({});
     },
     // get products tye categories of the carts products for a single user
-    cart: async (parent, { _id }, context ) => {
+    // cart: async (parent, { _id }, context) => {
+      cart: async (parent, args, context) => {
+
+        // TODO: use try catch
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'carts.products',
+          path: 'cart.product',
           populate: 'category',
         });
 
-        return user.orders.id(_id);
+        return user.cart.id(_id);
       }
 
       throw new AuthentificationError('Not logged in');
@@ -78,120 +80,157 @@ const resolvers = {
       return { session: session.id };
     },
   },
-  Mutation: {
-    addUser: async (parent, { username, email, password }) => {
+
+Mutation: {
+  addUser: async (parent, { username, email, password }) => {
+    try {
+      console.log({ username, email, password });
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+    login: async (parent, { email, password }) => {
       try {
-        console.log({ username, email, password });
-        const user = await User.create({ username, email, password });
+        const user = await User.findOne({ email });
+
+        if (!user) {
+          throw new AuthentificationError(
+            "No user found with this email address"
+          );
+        }
+
+        // const correctPw = await user.isCorrectPassword(password);
+
+        // if (!correctPw) {
+        //   throw new AuthentificationError("Incorrect credentials");
+        // }
+
         const token = signToken(user);
+        console.log(user)
+        console.log({token})
+
         return { token, user };
       } catch (error) {
         console.log(error);
       }
     },
-    login: async (parent, { email, password }) => {
-      try {
-        const user = await User.findOne({ email });
+      
+  
+      addToCart: async (_, { product }, context) => {
+        if (!context.user) {
+          throw new Error("Authentication required");
+        }
 
-      if (!user) {
-        throw new AuthentificationError(
-          "No user found with this email address"
-        );
-      }
-
-      // const correctPw = await user.isCorrectPassword(password);
-      // if (!correctPw) {
-      //   throw new AuthentificationError("Incorrect credentials");
-      // }
-
-      const token = signToken(user);
-
-      console.log(user, 'Login Successful!');
-      console.log({token})
-      return { token, user };
-
-      } catch (error) {
-        console.log(error);
-      }
-     
-    },
-    // Mutation to add a product to the user's cart
-    addToCart: async (_, { productData }, context) => {
-      if (!context.user) {
-        throw new Error("Authentication required");
-      }
-
-      try {
-        // Check if the user already has the product in their cart
-        const existingCartItemIndex = context.user.cart.findIndex(
-          (item) => item.product === productData.productId
-        );
-
-        if (existingCartItemIndex !== -1) {
-          // If the product already exists in the cart, update its quantity
-          context.user.cart[existingCartItemIndex].quantity +=
-            productData.quantity; //reference this inside input productData
-        } else {
-          // If the product doesn't exist in the cart, add it
-          context.user.cart.push({
-            product: productData.productId,
-            quantity: productData.quantity,
+        try {
+          // Find the user by their _id
+          const user = await User.findById(context.user._id).populate({
+            path: "cart.product",
+            select: "_id name description price",
           });
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          // Find the product by its _id
+          const foundProduct = await Product.findById(product.productId);
+          if (!foundProduct) {
+            throw new Error("Product not found");
+          }
+          /*
+          console.log("product information", product);
+          console.log('user',user)
+          console.log('foundProduct',foundProduct)
+          console.log('product.productId', product.productId)
+          console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
+
+          //returns false when just cartItem.product
+          //console.log('existingCartItem',existingCartItem); //returns undefined all the time
+          //console.log(product.productId); returning correctly
+          //console.log(product.quantity); returning correctly
+
+          //restructuring the function solved hte issues
+          const existingCartItem = user.cart.find(function (cartItem) {
+            return cartItem.product._id.toString() === product.productId;
+          });
+
+          if (existingCartItem) {
+            // If the product already exists in the cart, update its quantity
+            existingCartItem.quantity += product.quantity || 1;
+          } else {
+            // If the product doesn't exist in the cart, add it as a new cart item
+            user.cart.push({
+              product: foundProduct, // Use the actual product object here
+              quantity: product.quantity || 1,
+            });
+          }
+
+          // Update the cart count based on the quantity added
+          user.cartCount += product.quantity || 1;
+
+          // Save the updated user document with the cart
+          await user.save();
+
+          return user;
+        } catch (error) {
+          console.error("Error in addToCart resolver:", error);
+          throw error;
         }
+      },
+        removeFromCart: async (_, { productId }, context) => {
+          if (!context.user) {
+            throw new Error("Authentication required");
+          }
 
-        // Save the updated user data
-        await context.user.save();
+          try {
+            // Find the user by their _id
+            const user = await User.findById(context.user._id);
 
-        // Return the updated user data
-        return context.user;
-      } catch (err) {
-        console.log(err);
-        throw new Error("Error adding product to cart");
-      }
-    },
-    // Mutation to remove a product from the user's cart
-    removeFromCart: async (_, { productId }, context) => {
-      if (!context.user) {
-        throw new Error("Authentication required");
-      }
+            if (!user) {
+              throw new Error("User not found");
+            }
 
-      try {
-        // Find the index of the product in the user's cart
-        const cartItemIndex = context.user.cart.findIndex(
-          (item) => item.product === productId
-        );
+            // Find the index of the cart item with the specified productId
+            const indexToRemove = user.cart.findIndex(
+              (item) => item.product && item.product.toString() === productId
+            );
 
-        if (cartItemIndex !== -1) {
-          // Remove the product from the cart
-          context.user.cart.splice(cartItemIndex, 1);
+            if (indexToRemove === -1) {
+              throw new Error("Product not found in the cart");
+            }
 
-          // Save the updated user data
-          await context.user.save();
+            // Remove the cart item from the user's cart
+            user.cart.splice(indexToRemove, 1);
 
-          // Return the updated user data
-          return context.user;
-        } else {
-          throw new Error("Product not found in cart");
-        }
-      } catch (err) {
-        console.log(err);
-        throw new Error("Error removing product from cart");
-      }
-    },
-    //mutation to clear the cart after purchase :)
-    clearCart: async (_, __, context) => {
-      //check for authentication
-      //if were implementing userless checkout this needs to be changed
-      if (!context.user) {
-        throw new Error("Authentication required");
-      }
+            // Update the cart count based on the removal
+            user.cartCount--;
 
-      try {
-        // Clear the user's cart by setting it to an empty array
-        context.user.cart = [];
+            // Save the updated user document with the cart removed
+            await user.save();
 
-        // Save the updated user data
-        await context.user.save();
+            return user;
+          } catch (error) {
+            console.error("Error in removeFromCart resolver:", error);
+            throw error;
+          }
+        },
+          //mutation to clear the cart after purchase :)
+          clearCart: async (_, __, context) => {
+            //check for authentication
+            //if were implementing userless checkout this needs to be changed
+            if (!context.user) {
+              throw new Error("Authentication required");
+            }
+
+            try {
+              const user = await User.findById(context.user._id);
+              // Clear the user's cart by setting it to an empty array
+              user.cart = [];
+
+              // Save the updated user data
+              await user.save();
 
         // Return the updated user data
         return context.user;
@@ -200,27 +239,38 @@ const resolvers = {
         throw new Error("Error clearing cart");
       }
     },
-    addComment: async (_, { productId, commentData }, context) => {
-      // Check if the product with the specified ID exists
-      const product = productsDatabase.products.find((product) => product.id === productId);
-
-      if (!product) {
-        throw new Error('Product not found');
+    addComment: async (_, { productId, comment }, context) => {
+      // Check for user authentication
+      if (!context.user) {
+        throw new Error("Authentication required");
       }
 
-      // Create a new comment
-      const newComment = {
-        id: generateUniqueCommentId(), // You'll need a function to generate unique comment IDs
-        ...commentData,
-        timestamp: new Date().toISOString(), // Generate timestamp
-      };
+      try {
+        // Fetch the product by its productId
+        const product = await Product.findById(productId);
+        if (!product) {
+          throw new Error("Product not found");
+        }
+        console.log(comment)
+        // Create a new comment
+        const newComment = new Comment({
+          user: context.user._id, // Assuming you have a user associated with the comment
+          text: comment.text,
+        });
 
-      // Add the new comment to the product's comments array
-      product.comments.push(newComment);
+        // Add the new comment to the product's comment array
+        product.comment.push(newComment);
 
-      // Return the updated product, including the new comment
-      return product;
-    }
+        // Save the updated product
+        await product.save();
+
+        // Return the updated product, including the new comment
+        return product;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error adding comment");
+      }
+    },
   },
   User: {
     // Resolver function for the "cartCount" field
