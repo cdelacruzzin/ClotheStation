@@ -28,9 +28,14 @@ const productSchema = new Schema({
   ],
   comment: [
     {
-        user: String,
-        text: String,
-        timestamp: {
+        user: {
+            type: Schema.Types.ObjectId, // This field should store the user's ID
+            ref: "User", // This refers to the "User" model
+          },
+          text: {
+            type: String,
+          },
+          timestamp: {
             type: Date,
             default: Date.now, // Set the default value to the current date and time
           },
