@@ -1,0 +1,107 @@
+@import "../../styles/mixins";
+
+.Home {
+  #home-header {
+    margin: 2rem 0;
+
+    @include flex;
+
+    #header--hero {
+      position: relative;
+      
+      #hero--image-container {
+        width: fit-content;
+
+        @include flex(row, center, center);
+        gap: 0 0.5cqw;
+
+        .hero-image {
+          height: 39cqw;
+          $offset: 1.5cqw;
+
+          &:nth-of-type(1) { transform: translateY(-$offset * 1.25); }
+          &:nth-of-type(2) { height: 44.25cqw; }
+          &:nth-of-type(3) { transform: translateY($offset); }
+        }
+      }
+      
+      #hero--text-container {
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+
+        div {
+          width: fit-content;
+          height: fit-content;
+
+          color: white;
+          font-family: "Montserrat", sans-serif;
+          font-size: 6vw;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 1cqw;
+
+          &:nth-of-type(1) {
+            transform: translateX(72%);
+            div {
+              height: 4.5cqw;
+              
+              @include flex(row);
+              gap: 0 1.5cqw;
+              
+              transform: translateX(1cqw);
+
+              button {
+                padding: 0.5cqw 2.5cqw;
+                background-color: var(--coral-1);
+                color: white;
+                font-weight: 500;
+                font-size: 0.75cqw;
+                border-bottom: solid var(--coral-2) 4px;
+              }
+            }
+          }
+          &:nth-of-type(2) {
+            transform: translate(50cqw, 12cqw);
+            img { background-size: contain; width: 19cqw; }
+          }
+        }
+      }
+    
+      @media screen and (max-width: 550px) {
+        #hero--image-container {
+          width: 80vw;
+          height: 15rem;
+
+          .hero-image {
+            height: 100% !important;
+            transform: translate(0, 0) !important;
+          }
+        }
+        #hero--text-container {
+          div {
+            position: absolute;
+            font-size: clamp(2.5rem, 11cqw, 11cqw);
+
+            &:nth-of-type(1) {
+              left: 0;
+              transform: translate(-5cqw, 0);
+
+              button {
+                padding: 0.45rem 1.5rem !important;
+                font-size: 0.6rem !important;
+              }
+            }
+            &:nth-of-type(2) {
+              bottom: 0; right: 0;
+              transform: translate(0, -10cqw);
+              img { width: 9.5rem; }
+            }
+          }
+        }
+      }
+    }
+  }
+}
