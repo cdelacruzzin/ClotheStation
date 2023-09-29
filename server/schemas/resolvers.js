@@ -185,16 +185,23 @@ const resolvers = {
       }
 
       try {
+        // Fetch the user data for the authenticated user
+        const user = await User.findById(context.user._id);
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
         // Fetch the product by its productId
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productId).populate('comment.user');
         if (!product) {
           throw new Error("Product not found");
         }
-        console.log(commentData)
+
         // Create a new comment
         const newComment = new Comment({
-          user: context.user._id, // Assuming you have a user associated with the comment
-          text: commentData.text,
+          user: context.user, // Assuming you have a user associated with the comment
+          text: comment.text,
         });
 
         // Add the new comment to the product's comment array
