@@ -11,6 +11,7 @@ const typeDefs = gql`
   }
 
   type CartItem {
+
     product: Product
     quantity: Int
   }
@@ -68,7 +69,7 @@ const typeDefs = gql`
     addToCart(product: AddToCartData!): User
     removeFromCart(productId: ID!): User
     addComment(productId: ID!, comment: CommentData!): Product
-    removeComment(comment: ID!): Product
+    removeComment(commentId: ID!): Product
     clearCart: User
   }
 `;

@@ -217,6 +217,49 @@ const resolvers = {
         throw new Error("Error adding comment");
       }
     },
+    removeComment: async (_, { commentId }, context) => {
+      // Check for user authentication
+      if (!context.user) {
+        throw new Error("Authentication required");
+      }
+    
+      try {
+        // Fetch the product by its productId
+        const product = await Product.findOne({ 'comment._id': commentId });
+    
+        if (!product) {
+          throw new Error("Product not found");
+        }
+    
+        // Find the index of the comment to remove
+        const commentIndex = product.comment.findIndex(
+          (comment) => comment._id.toString() === commentId
+        );
+    
+        if (commentIndex === -1) {
+          throw new Error("Comment not found");
+        }
+    
+        // Ensure that the user making the request matches the user who created the comment
+        if (product.comment[commentIndex].user.toString() !== context.user._id.toString()) {
+          throw new Error("Unauthorized to remove this comment");
+        }
+    
+        // Remove the comment from the product's comment array
+        product.comment.splice(commentIndex, 1);
+    
+        // Save the updated product
+        await product.save();
+    
+        // Return the updated product
+        return product;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error removing comment");
+      }
+    },
+    
+    
   },
   User: {
     // Resolver function for the "cartCount" field
@@ -224,6 +267,7 @@ const resolvers = {
       return user.cart.length;
     },
   },
+  
 };
 
 module.exports = resolvers;
