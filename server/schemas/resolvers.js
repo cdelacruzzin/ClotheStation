@@ -23,13 +23,13 @@ const resolvers = {
       return await Category.find({}).populate("products");
     },
     allProducts: async () => {
-      return await Product.find({});
+      return await Product.find({}).populate('category');
     },
     // get products tye categories of the carts products for a single user
     // cart: async (parent, { _id }, context) => {
-      cart: async (parent, args, context) => {
+    cart: async (parent, args, context) => {
 
-        // TODO: use try catch
+      // TODO: use try catch
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
           path: 'cart.product',
@@ -81,17 +81,17 @@ const resolvers = {
     },
   },
 
-Mutation: {
-  addUser: async (parent, { username, email, password }) => {
-    try {
-      console.log({ username, email, password });
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  Mutation: {
+    addUser: async (parent, { username, email, password }) => {
+      try {
+        console.log({ username, email, password });
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.log(error);
+      }
+    },
     login: async (parent, { email, password }) => {
       try {
         const user = await User.findOne({ email });
@@ -110,127 +110,136 @@ Mutation: {
 
         const token = signToken(user);
         console.log(user)
-        console.log({token})
+        console.log({ token })
 
         return { token, user };
       } catch (error) {
         console.log(error);
       }
     },
-      
-  
-      addToCart: async (_, { product }, context) => {
-        if (!context.user) {
-          throw new Error("Authentication required");
+
+
+    addToCart: async (_, { product }, context) => {
+      if (!context.user) {
+        throw new Error("Authentication required");
+      }
+
+      try {
+        // Find the user by their _id
+        const user = await User.findById(context.user._id)
+
+
+        // console.log(user)
+        if (!user) {
+          throw new Error("User not found");
         }
 
-        try {
-          // Find the user by their _id
-          const user = await User.findById(context.user._id).populate({
-            path: "cart.product",
-            select: "_id name description price",
-          });
-          if (!user) {
-            throw new Error("User not found");
-          }
-
-          // Find the product by its _id
-          const foundProduct = await Product.findById(product.productId);
-          if (!foundProduct) {
-            throw new Error("Product not found");
-          }
-          /*
-          console.log("product information", product);
-          console.log('user',user)
-          console.log('foundProduct',foundProduct)
-          console.log('product.productId', product.productId)
-          console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
-
-          //returns false when just cartItem.product
-          //console.log('existingCartItem',existingCartItem); //returns undefined all the time
-          //console.log(product.productId); returning correctly
-          //console.log(product.quantity); returning correctly
-
-          //restructuring the function solved hte issues
-          const existingCartItem = user.cart.find(function (cartItem) {
-            return cartItem.product._id.toString() === product.productId;
-          });
-
-          if (existingCartItem) {
-            // If the product already exists in the cart, update its quantity
-            existingCartItem.quantity += product.quantity || 1;
-          } else {
-            // If the product doesn't exist in the cart, add it as a new cart item
-            user.cart.push({
-              product: foundProduct, // Use the actual product object here
-              quantity: product.quantity || 1,
-            });
-          }
-
-          // Update the cart count based on the quantity added
-          user.cartCount += product.quantity || 1;
-
-          // Save the updated user document with the cart
-          await user.save();
-
-          return user;
-        } catch (error) {
-          console.error("Error in addToCart resolver:", error);
-          throw error;
+        // Find the product by its _id
+        const foundProduct = await Product.findById(product.productId);
+        // console.log(foundProduct)
+        // console.log("")
+        // console.log(product.productId)
+        if (!foundProduct) {
+          throw new Error("Product not found");
         }
-      },
-        removeFromCart: async (_, { productId }, context) => {
-          if (!context.user) {
-            throw new Error("Authentication required");
+        /*
+        console.log("product information", product);
+        console.log('user',user)
+        console.log('foundProduct',foundProduct)
+        console.log('product.productId', product.productId)
+        console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
+
+        //returns false when just cartItem.product
+        //console.log('existingCartItem',existingCartItem); //returns undefined all the time
+        //console.log(product.productId); returning correctly
+        //console.log(product.quantity); returning correctly
+
+        //restructuring the function solved hte issues
+
+        const cartItemIndex = user.cart.findIndex(cartItem => cartItem.product.toString() === product.productId);
+
+        if (cartItemIndex !== -1) {
+          user.cart[cartItemIndex].quantity += product.quantity || 1;
+        } else {
+          user.cart.push({
+            product: foundProduct._id,
+            quantity: product.quantity || 1,
+          });
+        }
+        // Update the cart count based on the quantity added
+        user.cartCount += product.quantity || 1;
+
+        await user.save();
+
+        // Fetch and populate the user again
+        const populatedUser = await User.findById(user._id).populate({
+          path: 'cart.product',
+          select: '_id name description price',
+          populate: {
+            path: 'category',
+            select: 'name'
           }
+        });
 
-          try {
-            // Find the user by their _id
-            const user = await User.findById(context.user._id);
+        console.log(JSON.stringify(populatedUser, null, 3));
+        return populatedUser;
+      } catch (error) {
+        console.error("Error in addToCart resolver:", error);
+        throw error;
+      }
+    },
+    removeFromCart: async (_, { productId }, context) => {
+      if (!context.user) {
+        throw new Error("Authentication required");
+      }
 
-            if (!user) {
-              throw new Error("User not found");
-            }
+      try {
+        // Find the user by their _id
+        const user = await User.findById(context.user._id);
 
-            // Find the index of the cart item with the specified productId
-            const indexToRemove = user.cart.findIndex(
-              (item) => item.product && item.product.toString() === productId
-            );
+        if (!user) {
+          throw new Error("User not found");
+        }
 
-            if (indexToRemove === -1) {
-              throw new Error("Product not found in the cart");
-            }
+        // Find the index of the cart item with the specified productId
+        const indexToRemove = user.cart.findIndex(
+          (item) => item.product && item.product.toString() === productId
+        );
 
-            // Remove the cart item from the user's cart
-            user.cart.splice(indexToRemove, 1);
+        if (indexToRemove === -1) {
+          throw new Error("Product not found in the cart");
+        }
 
-            // Update the cart count based on the removal
-            user.cartCount--;
+        // Remove the cart item from the user's cart
+        user.cart.splice(indexToRemove, 1);
 
-            // Save the updated user document with the cart removed
-            await user.save();
+        // Update the cart count based on the removal
+        user.cartCount--;
 
-            return user;
-          } catch (error) {
-            console.error("Error in removeFromCart resolver:", error);
-            throw error;
-          }
-        },
-          //mutation to clear the cart after purchase :)
-          clearCart: async (_, __, context) => {
-            //check for authentication
-            //if were implementing userless checkout this needs to be changed
-            if (!context.user) {
-              throw new Error("Authentication required");
-            }
+        // Save the updated user document with the cart removed
+        await user.save();
 
-            try {
-              const user = await User.findById(context.user._id);
-              // Clear the user's cart by setting it to an empty array
-              user.cart = [];
+        return user;
+      } catch (error) {
+        console.error("Error in removeFromCart resolver:", error);
+        throw error;
+      }
+    },
+    //mutation to clear the cart after purchase :)
+    clearCart: async (_, __, context) => {
+      //check for authentication
+      //if were implementing userless checkout this needs to be changed
+      if (!context.user) {
+        throw new Error("Authentication required");
+      }
 
-              // Save the updated user data
-              await user.save();
+      try {
+        const user = await User.findById(context.user._id);
+        // Clear the user's cart by setting it to an empty array
+        user.cart = [];
+
+        // Save the updated user data
+        await user.save();
 
         // Return the updated user data
         return context.user;
