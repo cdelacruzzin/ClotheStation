@@ -7,6 +7,7 @@ import { idbPromise } from "../../utils/helpers";
 
 function ProductItem(item) {
     const [state, dispatch] = useStoreContext();
+    console.log({ item })
 
     // destructure product into item
     const {
@@ -14,7 +15,8 @@ function ProductItem(item) {
         name,
         _id,
         price,
-        quantity
+        quantity,
+        description
     } = item;
 
     // declare a cart for the start
@@ -46,18 +48,23 @@ function ProductItem(item) {
     }
 
     return (
-        <div><div className="card">
-            <Link to={`/products/${_id}`}>
-                <img
-                    alt={name}
-                    src={`/images/${image}`} />
-                <p>{name}</p>
-            </Link>
-        </div><div>
-                <div>{quantity} {pluralize("item", quantity)} in stock</div>
-                <span>${price}</span>
+        <>
+            <div style={{ background: 'red' }} className="card">
+                <Link to={`/products/${_id}`}>
+                    <h2>{name}</h2>
+                    <p>{description}</p>
+                    <img
+                        alt={name}
+                        src={`/images/${image}`} />
+                    <p>Price: ${price}</p>
+                </Link>
+            </div>
+            <div>{quantity} {pluralize("item", quantity)} in stock
+
                 <button onClick={addToCart}>Add to cart</button>
-            </div></div>  
+            </div>
+        </>
+
     );
 }
 

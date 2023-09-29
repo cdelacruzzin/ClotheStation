@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { useStoreContext } from "../../utils/globalState";
 import { QUERY_ALL_PRODUCTS } from '../../utils/queries';
 import { UPDATE_PRODUCTS } from '../../utils/actions';
+import ProductItem from '../ProductItem';
 
 function ProductList() {
 
@@ -36,12 +37,22 @@ function ProductList() {
     return (
         <>
             {selectCategory().map((item) => (
-                <div style={{ background: 'red' }} key={item._id}>
-                    <h2>{item.name}</h2>
-                    <p>{item.description}</p>
-                    <p>Price: ${item.price}</p>
-                    <small>ID: {item._id}</small>
-                </div>
+
+                <ProductItem
+                    key={item._id}
+                    _id={item._id}
+                    name={item.name}
+                    description={item.description}
+                    price={item.price}
+
+
+                />
+                // <div style={{ background: 'red' }} key={item._id}>
+                //     <h2>{item.name}</h2>
+                //     <p>{item.description}</p>
+                //     <p>Price: ${item.price}</p>
+                //     <small>ID: {item._id}</small>
+                // </div>
             ))}
 
 
