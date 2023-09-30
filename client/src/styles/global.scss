@@ -5,6 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./mixins";
+
 :root {
   // Universal
   --black-1: #1a1a1d;
@@ -31,14 +33,59 @@ body {
   width: 100vw;
 
   margin: 0;
+  color: var(--black-1);
   font-family: "Montserrat", "Titillium Web", sans-serif;
 }
 
 hr {
   width: 100%;
   height: 1px;
-  
   border: none;
-  
   background-color: rgb(0, 0, 0, 0.1);
+}
+
+.btn {
+  width: fit-content;
+  max-height: 50px;
+  padding: 1.25cqw 2cqw;
+
+  @include flex();
+
+  background-color: var(--coral-1);
+  border-bottom: solid var(--coral-3) 4px;
+  border-radius: 2px 2px 0 0;
+
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: white;
+
+  transition: filter 150ms ease;
+
+  &:hover { filter: brightness(0.9); }
+  
+  &.outlined {
+    background-color: transparent;
+    outline: solid var(--coral-3) 2px;
+  
+    border: none;
+    border-radius: 2px;
+  
+    color: var(--coral-1);
+  
+    position: relative;
+  
+    &::after {
+      @include pseudo(calc(100% - 5px), calc(100% - 5px), transparent, 1);
+      border: solid var(--coral-1) 2px;
+      border-radius: 2px;
+      transition: all 150ms ease;
+    }
+  
+    &:hover  {
+      color: white;
+      filter: brightness(1);
+      &::after { background-color: var(--coral-1); z-index: -1; }
+    }
+  }
 }

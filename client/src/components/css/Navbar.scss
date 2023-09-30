@@ -48,7 +48,7 @@
     a {
       color: var(--black-1);
       text-decoration: none;
-      
+
       font-family: "Montserrat", sans-serif;
       font-weight: 600;
 
@@ -73,19 +73,51 @@
     }
   }
 
-  #nav--icon-container {
+  #nav--icons {
+    width: fit-content;
+    margin: 0 1em;
+
     @include flex(row);
     gap: 0 1rem;
 
-    width: fit-content;
 
     position: absolute;
-    right: 1rem; top: 50%;
+    right: 1rem;
+    top: 50%;
     transform: translateY(-50%);
 
-    svg{
+    .nav--icons-account {
+      background-color: white;
+      @include flex(row);
+      
+      div {
+        background-color: white;
+        border-radius: 2px;
+        padding: 0 0.5cqw;
+        opacity: 0;
+        display: none;
+
+        svg {
+          width: clamp(20px, 1.5cqw, 1.5cqw);
+          height: clamp(20px, 1.5cqw, 1.5cqw);
+          color: var(--coral-1);
+          cursor: pointer;
+          &:hover { filter: brightness(0.9); fill: none; }
+        }
+      }
+
+      &.open div { display: flex; opacity: 1; }
+    }
+
+    svg {
+      width: clamp(24px, 1.75cqw, 1.75cqw);
+      height: clamp(24px,1.75cqw, 1.75cqw);
+      
       transition: fill 150ms ease;
-      &:hover { fill: var(--black-1); }
+      cursor: pointer;
+      &:hover {
+        fill: var(--black-1);
+      }
     }
 
     #nav--links-toggle {
@@ -122,15 +154,21 @@
       font-weight: 500;
       color: var(--black-1);
 
-      button, a{
+      button,
+      a {
         padding: 0.5rem 4rem;
         background-color: inherit;
-        transition: filter 150ms ease;;
-        &:hover { filter: brightness(0.95); }
-      }
+        transition: filter 150ms ease;
 
+        &:hover {
+          filter: brightness(0.95);
+        }
+      }
     }
-    .account-dropdown.open { display: flex !important; }
+    .account-dropdown.open {
+      display: flex !important;
+      z-index: 9999;
+    }
   }
 
   &::after {
@@ -190,7 +228,9 @@
       }
     }
 
-    #nav--icon-container #nav--links-toggle { display: block !important; }
+    #nav--icons #nav--links-toggle {
+      display: block !important;
+    }
 
     &::after {
       display: none;
@@ -200,7 +240,9 @@
   @media screen and (max-width: 400px) {
     #nav--logo-container {
       left: 6rem;
-      h1 { font-size: 12px; }
+      h1 {
+        font-size: 12px;
+      }
     }
   }
 }
