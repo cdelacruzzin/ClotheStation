@@ -25,7 +25,6 @@ function ProductList() {
 
     const { currentCategory } = state;
     function selectCategory() {
-        console.log(state)
         if (!currentCategory._id) {
             return state.products;
         } else {
@@ -44,15 +43,7 @@ function ProductList() {
                     name={item.name}
                     description={item.description}
                     price={item.price}
-
-
                 />
-                // <div style={{ background: 'red' }} key={item._id}>
-                //     <h2>{item.name}</h2>
-                //     <p>{item.description}</p>
-                //     <p>Price: ${item.price}</p>
-                //     <small>ID: {item._id}</small>
-                // </div>
             ))}
 
 
