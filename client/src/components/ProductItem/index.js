@@ -55,7 +55,7 @@ function ProductItem(item) {
                     <p>{description}</p>
                     <img
                         alt={name}
-                        src={`/images/${image}`} />
+                        src={image} />
                     <p>Price: ${price}</p>
 
                 </div>

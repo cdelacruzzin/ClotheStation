@@ -20,6 +20,7 @@ const resolvers = {
       throw new AuthentificationError("You need to be logged in!");
     },
     allCategories: async () => {
+      console.log('querying categories')
       return await Category.find({}).populate("products");
     },
     allProducts: async () => {
