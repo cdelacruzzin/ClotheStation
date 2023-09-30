@@ -1,0 +1,31 @@
+// For testing
+@mixin b($color: red) { border: solid $color 1px; }
+
+@mixin flex($dir: column, $align: center, $justify: center, $gapX: 0, $gapY: 0) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: $align;
+  justify-content: $justify;
+  gap: $gapY $gapX;
+}
+
+@mixin pseudo($width: 0, $height: 0, $bg: none, $center: 0, $top: 0, $bottom: 0, $right: 0, $left: 0) {
+  content: "";
+  
+  width: $width;
+  height: $height;
+
+  position: absolute;
+
+  background: $bg;
+
+  @if($center == 1) {
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+  } @else {
+    top: $top;
+    bottom: $bottom;
+    right: $right;
+    left: $left;
+  }
+}

@@ -22,8 +22,6 @@ function ProductList() {
 
     }, [dispatch, productData])
 
-
-
     const { currentCategory } = state;
 
     function selectCategory() {
