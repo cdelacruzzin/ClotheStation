@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import Cart from "../components/Cart";
-// import ProductList from "../components/ProductList";
-// import CategoryMenu from "../components/CategoryMenu";
+import ProductList from "../components/ProductList";
+import CategoryMenu from "../components/CategoryMenu";
 
 import { ProductCarousel } from "../components/ProductCarousel";
 
@@ -276,10 +276,10 @@ export default function Home() {
         />
       </ProductCarousel>
 
-      {/* <div className="children">
+      <div className="children">
         <CategoryMenu />
         <ProductList />
-      </div> */}
+      </div>
     </div>
   );
 };

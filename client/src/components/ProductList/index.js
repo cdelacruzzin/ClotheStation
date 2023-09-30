@@ -20,8 +20,6 @@ function ProductList() {
 
     }, [productData])
 
-
-
     const { currentCategory } = state;
     function selectCategory() {
         console.log(state)
