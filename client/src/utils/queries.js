@@ -58,6 +58,10 @@ query AllProducts {
     price
     name
     description
+    category {
+      _id
+      name
+    }
   }
 }`;
 
