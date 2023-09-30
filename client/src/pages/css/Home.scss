@@ -7,6 +7,7 @@
     @include flex;
 
     #header--hero {
+
       position: relative;
       
       #header--hero-image {
@@ -122,7 +123,7 @@
       h1 {
         width: 90%;
         margin-bottom: 1cqw;
-        font-size: clamp(1.25em, 2.75cqw, 2.75cqw);
+        font-size: clamp(1.5em, 2.75cqw, 2.75cqw);
         font-weight: 600;
         letter-spacing: 0.35em;
 

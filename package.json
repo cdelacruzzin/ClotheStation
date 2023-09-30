@@ -21,6 +21,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "react-indiana-drag-scroll": "^2.2.0",
     "sass": "^1.68.0",
     "styled-components": "^6.0.8"
   }

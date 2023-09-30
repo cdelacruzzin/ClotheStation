@@ -1,7 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import Cart from "../components/Cart";
 // import ProductList from "../components/ProductList";
 // import CategoryMenu from "../components/CategoryMenu";
+
+import { ProductCarousel } from "../components/ProductCarousel";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -16,8 +19,9 @@ import Title2 from "../assets/home/title_2.png";
 import AboutImg1 from "../assets/home/about_image_1.png";
 
 import "./css/Home.scss";
+import { CarouselItem } from "../components/CarouselItem";
 
-const Home = () => {
+export default function Home() {
   return (
     <div className="Home">
       {/* === HEADER === */}
@@ -61,7 +65,9 @@ const Home = () => {
             purpose, and the love of skating.
           </p>
           <div id="info--controls">
-            <button className="btn">Learn More</button>
+            <Link to="/about">
+              <button className="btn">Learn More</button>
+            </Link>
             <div id="info--controls-links">
               <FontAwesomeIcon icon={faFacebook} />
               <FontAwesomeIcon icon={faInstagram} />
@@ -73,6 +79,18 @@ const Home = () => {
           <img src={AboutImg1} alt="" />
         </div>
       </section>
+      {/* === ITEM CAROUSEL === */}
+      <ProductCarousel title="New Arrivals" btnText="View All" btnLink="/products">
+        <CarouselItem name="Start" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Some product with a super long long long name" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+        <CarouselItem name="End" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+      </ProductCarousel>
+
       {/* <div className="children">
         <CategoryMenu />
         <ProductList />
@@ -80,4 +98,3 @@ const Home = () => {
     </div>
   );
 };
-export default Home;

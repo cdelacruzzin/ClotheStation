@@ -32,8 +32,10 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <div id="nav--logo-container">
-        <img src={logo} alt="Website Logo" />
-        <h1>Urban Sk8</h1>
+        <Link to="/" className="flex flex-row items-center gap-x-3">
+          <img src={logo} alt="Website Logo" />
+          <h1>Urban Sk8</h1>
+        </Link>
       </div>
       <nav id="nav--links-container">
         <Link to="/" className={location.pathname === "/" ? "selected" : ""}>
@@ -118,7 +120,6 @@ const Navbar = () => {
         <button
           id="nav--links-toggle"
           onClick={() => {
-            console.log(document.getElementById("nav--links-container"));
             document
               .getElementById("nav--links-container")
               .classList.toggle("opened");
