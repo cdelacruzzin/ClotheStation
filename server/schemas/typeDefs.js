@@ -84,6 +84,7 @@ const typeDefs = gql`
     allProducts: [Product!]!
     checkout(products: [ProductInput]): Checkout
     cart(_id: ID!):Cart
+    product(_id: ID!): Product
   }
 
   # add new user and login user

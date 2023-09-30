@@ -79,6 +79,11 @@ const resolvers = {
 
       return { session: session.id };
     },
+    product: async (parent, {_id}) =>{
+      const product = await Product.findById(_id).populate('category');
+      console.log(product);
+      return product;
+    }
   },
 
   Mutation: {
