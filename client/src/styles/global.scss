@@ -53,7 +53,7 @@ hr {
   border-bottom: solid var(--coral-3) 4px;
   border-radius: 2px 2px 0 0;
 
-  font-size: 1em;
+  font-size: clamp(14px, 1cqw, 1cqw);
   font-weight: 600;
   letter-spacing: 2px;
   color: white;

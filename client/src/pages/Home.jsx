@@ -18,6 +18,14 @@ import Title2 from "../assets/home/title_2.png";
 
 import AboutImg1 from "../assets/home/about_image_1.png";
 
+import CategoryImgTee from "../assets/home/category_image_tee.png";
+import CategoryImgShoe from "../assets/home/category_image_shoe.png";
+import CategoryImgHoodie from "../assets/home/category_image_hoodie.png";
+
+import CategoryImgTeeMobile from "../assets/home/category_image_tee_mobile.svg";
+import CategoryImgShoeMobile from "../assets/home/category_image_shoe_mobile.svg";
+import CategoryImgHoodieMobile from "../assets/home/category_image_hoodie_mobile.svg";
+
 import "./css/Home.scss";
 import { CarouselItem } from "../components/CarouselItem";
 
@@ -79,18 +87,101 @@ export default function Home() {
           <img src={AboutImg1} alt="" />
         </div>
       </section>
+
       {/* === ITEM CAROUSEL === */}
-      <ProductCarousel title="New Arrivals" btnText="View All" btnLink="/products">
-        <CarouselItem name="Start" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Some product with a super long long long name" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="Black Hoodie" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
-        <CarouselItem name="End" price="90" image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071" />
+      <ProductCarousel
+        title="New Arrivals"
+        btnText="View All"
+        btnLink="/products"
+      >
+        <CarouselItem
+          name="Start"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Some product with a super long long long name"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="End"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
       </ProductCarousel>
 
+      {/* === PRODUCT CATEGORIES === */}
+      <div id="home-categories">
+        <h1>Shop Collections</h1>
+        <div id="categories--images">
+          <div className="category-image">
+            <img src={CategoryImgTee} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn outlined">Shop Collection</button>
+            </Link>
+          </div>
+          <div className="category-image--mobile">
+            <img src={CategoryImgTeeMobile} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn">Shop Collection</button>
+            </Link>
+          </div>
+
+          <div className="category-image">
+            <img src={CategoryImgShoe} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn outlined">Shop Collection</button>
+            </Link>
+          </div>
+          <div className="category-image--mobile">
+            <img src={CategoryImgShoeMobile} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn">Shop Collection</button>
+            </Link>
+          </div>
+
+          <div className="category-image">
+            <img src={CategoryImgHoodie} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn outlined">Shop Collection</button>
+            </Link>
+          </div>
+          <div className="category-image--mobile">
+            <img src={CategoryImgHoodieMobile} alt="Category hero for shoes" />
+            <Link to="/products">
+              <button className="btn">Shop Collection</button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      
+      
       {/* <div className="children">
         <CategoryMenu />
         <ProductList />

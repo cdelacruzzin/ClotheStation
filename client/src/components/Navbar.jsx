@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import Auth from "../utils/auth";
-// import { Link as RouterLink } from "react-router-dom";
+// import Auth from "../utils/auth";
 
-// import { Box } from "@mui/system";
-// import { Tabs, Tab, Link as MuiLink } from "@mui/material";
-import { useStoreContext } from "../utils/globalState";
-import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket, faCog } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/fontawesome-svg-core";
+// import { useStoreContext } from "../utils/globalState";
+// import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
 
 import logo from "../assets/logo.svg";
 
@@ -19,16 +12,17 @@ import "./css/Navbar.scss";
 const Navbar = () => {
   const location = useLocation();
   
-  const [value, setValue] = useState(0); // Start with first tab
-  const [state, dispatch] = useStoreContext();
+  // const [value, setValue] = useState(0); // Start with first tab
+  // const [state, dispatch] = useStoreContext();
 
-  function resetCategory() {
-    console.log(state);
-    dispatch({
-      type: UPDATE_CURRENT_CATEGORY,
-      currentCategory: { id: "", name: "" },
-    });
-  }
+  // function resetCategory() {
+  //   console.log(state);
+  //   dispatch({
+  //     type: UPDATE_CURRENT_CATEGORY,
+  //     currentCategory: { id: "", name: "" },
+  //   });
+  // }
+
   return (
     <div className="Navbar">
       <div id="nav--logo-container">
