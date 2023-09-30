@@ -33,6 +33,11 @@ import "./css/Home.scss";
 import { CarouselItem } from "../components/CarouselItem";
 
 export default function Home() {
+
+
+
+
+  
   return (
     <div className="Home">
       {/* === HEADER === */}

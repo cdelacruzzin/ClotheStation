@@ -13,7 +13,6 @@ import {
 
 function CategoryMenu() {
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
-    console.log({categoryData});
 
     const [state, dispatch] = useStoreContext();
     const { categories, currentCategory } = state;
@@ -35,6 +34,7 @@ function CategoryMenu() {
             currentCategory: {id: _id, name: name}
         });
      };
+     console.log(!state.currentCategory)
     return (
         <>
                 {!currentCategory? (
@@ -45,6 +45,7 @@ function CategoryMenu() {
                 {categories.map((item) => (
 
                     <button
+                    style={{ background: 'blue', margin: '3px' }}
                         key={item._id}
                         onClick={()=>{
                             selectCategory(item);
