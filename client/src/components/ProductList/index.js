@@ -9,9 +9,9 @@ function ProductList() {
 
     const [state, dispatch] = useStoreContext();
     const { loading, data: productData } = useQuery(QUERY_ALL_PRODUCTS);
-
     const { products } = state;
 
+    console.log(state)
     useEffect(() => {
         if (productData) {
             dispatch({
@@ -19,14 +19,13 @@ function ProductList() {
                 products: productData.allProducts
             });
         };
-
     }, [dispatch, productData])
 
     const { currentCategory } = state;
 
     function selectCategory() {
         console.log(currentCategory)
-        console.log(state)
+        // console.log(state)
         if (!currentCategory.id) {
             return state.products;
         } else {

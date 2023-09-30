@@ -55,13 +55,14 @@ export const QUERY_ALL_PRODUCTS = gql`
 query AllProducts {
   allProducts {
     _id
-    price
     name
-    description
+    price
+    imageSource
     category {
       _id
       name
     }
+    description
   }
 }`;
 
@@ -75,4 +76,4 @@ query singleProd($id: ID!) {
     price
   }
 }
-`
+`;

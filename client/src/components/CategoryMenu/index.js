@@ -13,6 +13,7 @@ import {
 
 function CategoryMenu() {
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
+    console.log({categoryData});
 
     const [state, dispatch] = useStoreContext();
     const { categories, currentCategory } = state;
