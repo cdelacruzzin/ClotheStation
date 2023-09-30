@@ -11,7 +11,7 @@ import SignupForm from './components/signup';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-
+import SingleProduct from "./pages/SingleItem";
 
 
 const httpLink = createHttpLink({
@@ -57,7 +57,7 @@ function App() {
                     <Routes>
                         <Route
                             path="/"
-                            element={<Home/>}
+                            element={<Home />}
                         />
                         <Route
                             path="/signup"
@@ -66,6 +66,10 @@ function App() {
                         <Route
                             path="/login"
                             element={<Login />}
+                        />
+                        <Route
+                            path="/products/:id"
+                            element={<SingleProduct />}
                         />
                     </Routes>
                 </StoreProvider>
