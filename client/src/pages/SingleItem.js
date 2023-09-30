@@ -25,11 +25,8 @@ function SingleProduct() {
 
 
     function addToCart(){
-        
-    }
 
-    console.log({ state })
-    console.log({ selectedProduct })
+    }
     return (
         <>
             {selectedProduct ? (

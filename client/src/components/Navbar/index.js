@@ -16,7 +16,6 @@ const Navbar = () => {
 
 
     function resetCategory() {
-        console.log(state)
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
             currentCategory: {id:'', name:''}

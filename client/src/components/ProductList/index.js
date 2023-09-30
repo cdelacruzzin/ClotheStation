@@ -11,6 +11,7 @@ function ProductList() {
     const { loading, data: productData } = useQuery(QUERY_ALL_PRODUCTS);
 
     const { products } = state;
+
     useEffect(() => {
         if (productData) {
             dispatch({
@@ -19,17 +20,20 @@ function ProductList() {
             });
         };
 
-    }, [productData])
+    }, [dispatch, productData])
 
 
 
     const { currentCategory } = state;
+
     function selectCategory() {
-        if (!currentCategory._id) {
+        console.log(currentCategory)
+        console.log(state)
+        if (!currentCategory.id) {
             return state.products;
         } else {
             //TODO: for this to work, we need to have a category reference id in the product model
-            return state.products.filter((item) => item.category === currentCategory);
+            return state.products.filter((item) => item.category.some(category => category._id === currentCategory.id));
         }
     }
 
