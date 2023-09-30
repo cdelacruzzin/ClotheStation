@@ -117,7 +117,8 @@
 
   // #region ABOUT
   #home-about {
-    margin: 9 5cqw;
+    width: 90vw;
+    margin: 5cqw auto;
     padding: 2cqw 0;
 
     display: grid;
@@ -296,6 +297,59 @@
         .category-image { display: none ; }
         .category-image--mobile {display: block; }
       }
+    }
+  }
+  // #endregion
+
+  // #region INFO SPLITTER 
+  #home-info-splitter {
+
+    height: fit-content;
+    margin: 7cqw 0;
+
+    @include flex(row, center, center);
+
+
+    div {
+      width: 50%;
+      padding: 1.5em 5em;
+      
+      @include flex(column, center, center, 0, 0cqw);
+
+      &:nth-of-type(1) { background-color: var(--white-3); }
+      &:nth-of-type(2) { background-color: var(--white-2); }
+
+      img {
+        width: clamp(4em, 4cqw, 4cqw);
+        height: clamp(4em, 4cqw, 4cqw);
+      }
+
+      h1 {
+        white-space: nowrap;
+        margin: 1em 0 0.25em 0;
+        letter-spacing: 0.25em;
+        font-size: clamp(16px, 1.25cqw, 1.25cqw);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      p {
+        width: 75%;
+        height: fit-content;
+        min-height: 125px;
+        font-family: "Titillium Web", sans-serif;
+        font-size: clamp(12px, 0.9cqw, 0.9cqw);
+        text-align: center;
+        line-height: 2em;
+      }
+      
+      button {
+        margin: 1em 0 0 0;
+        padding: 0.75em 2em;
+        font-size: clamp(14px, 0.5cqw, 0.5cqw);
+
+      }
+      &:nth-of-type(2) button { background-color: var(--coral-2); }
     }
   }
   // #endregion

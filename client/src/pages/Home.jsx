@@ -26,6 +26,9 @@ import CategoryImgTeeMobile from "../assets/home/category_image_tee_mobile.svg";
 import CategoryImgShoeMobile from "../assets/home/category_image_shoe_mobile.svg";
 import CategoryImgHoodieMobile from "../assets/home/category_image_hoodie_mobile.svg";
 
+import SkateboardIcon from "../assets/home/skateboard_icon.svg";
+import CharityIcon from "../assets/home/charity_icon.svg";
+
 import "./css/Home.scss";
 import { CarouselItem } from "../components/CarouselItem";
 
@@ -88,12 +91,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* === ITEM CAROUSEL === */}
+      {/* === NEW ARRIVALS CAROUSEL === */}
       <ProductCarousel
         title="New Arrivals"
         btnText="View All"
         btnLink="/products"
       >
+        {/* 
+          !!! THESE ARE PLACE HOLDERS, 
+          REMOVE THEM AND REPLACE WITH CODE THAT GETS PRODUCTS FROM
+          THE DATABASE AND DISPLAY THEM HERE USING THE CAROUSELITEM.
+
+          EX.
+
+          {
+            // Get all the products from the database as array and map them.
+            products.map((product) => {
+              return (
+                <CarouselItem
+                  name={product.name}
+                  price={product.price}
+                  image={product.imageSrc}
+                />
+              )
+            })
+          }
+        */}
         <CarouselItem
           name="Start"
           price="90"
@@ -180,8 +203,79 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
-      
+
+      {/* === INFO SPLITTER === */}
+      <div id="home-info-splitter">
+        <div>
+          <img src={SkateboardIcon} alt="Skateboard icon" />
+          <h1>Skater Friendly</h1>
+          <p>
+            Urban Sk8 is the embodiment of skate culture. Crafted by passionate
+            skaters, exuding authenticity, style, and energy of the skate world.
+            You're not just wearing clothing; you're embracing a lifestyle.
+          </p>
+          <button className="btn">Learn More</button>
+        </div>
+        <div>
+          <img src={CharityIcon} alt="Charity icon" />
+          <h1>Giving Back</h1>
+          <p>
+            We believe in giving back to the community that inspires us. That's
+            why we commit to donating 1% of our profits to support troubled
+            youth in finding their passion for skating.
+          </p>
+          <button className="btn">Learn More</button>
+        </div>
+      </div>
+
+      {/* === SKATE DECKS CAROUSEL === */}
+      <ProductCarousel
+        title="Sake Decks"
+        btnText="View All"
+        btnLink="/products"
+      >
+        <CarouselItem
+          name="Start"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Some product with a super long long long name"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="Black Hoodie"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+        <CarouselItem
+          name="End"
+          price="90"
+          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
+        />
+      </ProductCarousel>
+
       {/* <div className="children">
         <CategoryMenu />
         <ProductList />

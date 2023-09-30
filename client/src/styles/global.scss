@@ -9,6 +9,10 @@
 
 :root {
   // Universal
+  --white-1: white;
+  --white-2: #FCFCFC;
+  --white-3: #F7F7F7;
+  
   --black-1: #1a1a1d;
 
   --coral-1: #F8635E;
@@ -57,7 +61,8 @@ hr {
   font-weight: 600;
   letter-spacing: 2px;
   color: white;
-
+  white-space: nowrap;
+  
   transition: filter 150ms ease;
 
   &:hover { filter: brightness(0.9); }
