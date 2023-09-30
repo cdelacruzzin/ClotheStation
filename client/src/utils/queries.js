@@ -18,7 +18,7 @@ export const QUERY_CHECKOUT = gql`
     }
   }`
 
-export const QUERY_CATEGORIES =gql`
+export const QUERY_CATEGORIES = gql`
 query Query {
   allCategories {
     _id
@@ -60,3 +60,15 @@ query AllProducts {
     description
   }
 }`;
+
+export const QUERY_PRODUCT = gql`
+query singleProd($id: ID!) {
+  product(_id: $id) {
+    _id
+    description
+    imageSource
+    name
+    price
+  }
+}
+`
