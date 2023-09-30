@@ -32,6 +32,7 @@ const StoreProvider = ({ value = [], ...props }) => {
         cart: [],
         categories: [],
         currentCategory: {id: '', nane: ''},
+        selectedProduct:{name:''},
     });
 
     return <Provider value={[state, dispatch]} {...props} />;

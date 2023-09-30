@@ -9,6 +9,7 @@ import {
   TOGGLE_CART,
   UPDATE_CART_QUANTITY,
   ADD_TO_CART,
+  SET_CURRENT_PRODUCT
 } from "./actions";
 
 /**this reducer function is the main function to manage the global state based on dispatch actions.
@@ -39,6 +40,13 @@ export const reducer = (state, action) => {
         ...state,
         products: action.products,
       };
+
+      case SET_CURRENT_PRODUCT:
+        return {
+          ...state,
+          selectedProduct: action.selectedProduct,
+        };
+
     // lets user add multiple products to the cart array
     case ADD_MULTIPLE_TO_CART:
       return {
