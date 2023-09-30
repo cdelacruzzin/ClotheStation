@@ -23,7 +23,7 @@ const resolvers = {
       return await Category.find({}).populate("products");
     },
     allProducts: async () => {
-      return await Product.find({});
+      return await Product.find({}).populate('category');
     },
     // get products tye categories of the carts products for a single user
     // cart: async (parent, { _id }, context) => {
@@ -79,6 +79,11 @@ const resolvers = {
 
       return { session: session.id };
     },
+    product: async (parent, {_id}) =>{
+      const product = await Product.findById(_id).populate('category');
+      console.log(product);
+      return product;
+    }
   },
 
   Mutation: {

@@ -23,7 +23,7 @@ function CategoryMenu() {
                 categories: categoryData.allCategories
             })
         }
-    }, [categoryData])
+    }, [categoryData, dispatch])
 
 
      const selectCategory = (item)=>{
