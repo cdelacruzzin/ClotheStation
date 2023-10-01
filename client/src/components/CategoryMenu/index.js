@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from '@apollo/client';
 
 
@@ -9,6 +10,16 @@ import {
     UPDATE_CATEGORIES,
     UPDATE_CURRENT_CATEGORY
 } from '../../utils/actions';
+
+
+
+import CategoryImgTee from "../../assets/home/category_image_tee.png";
+import CategoryImgShoe from "../../assets/home/category_image_shoe.png";
+import CategoryImgHoodie from "../../assets/home/category_image_hoodie.png";
+
+import CategoryImgTeeMobile from "../../assets/home/category_image_tee_mobile.svg";
+import CategoryImgShoeMobile from "../../assets/home/category_image_shoe_mobile.svg";
+import CategoryImgHoodieMobile from "../../assets/home/category_image_hoodie_mobile.svg";
 
 
 function CategoryMenu() {
@@ -26,17 +37,19 @@ function CategoryMenu() {
     }, [categoryData, dispatch])
 
 
-     const selectCategory = (item)=>{
+    const selectCategory = (item) => {
 
-        const {_id, name} = item;
+        const { _id, name } = item;
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
-            currentCategory: {id: _id, name: name}
+            currentCategory: { id: _id, name: name }
         });
-     };
+    };
+
+    console.log(categories)
     return (
         <>
-                {!currentCategory? (
+            {/* {!currentCategory? (
                     <p>home</p>
                 ): (
                     <p>{currentCategory.name}</p>
@@ -54,7 +67,53 @@ function CategoryMenu() {
                     </button>
 
 
-                ))}
+                ))} */}
+            {/* === PRODUCT CATEGORIES === */}
+            <div id="home-categories">
+                <h1>Shop Collections</h1>
+                <div id="categories--images">
+                    <div className="category-image">
+                        <img src={CategoryImgTee} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn outlined">Shop Collection</button>
+                        </Link>
+                    </div>
+                    <div className="category-image--mobile">
+                        <img src={CategoryImgTeeMobile} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn">Shop Collection</button>
+                        </Link>
+                    </div>
+
+                    <div className="category-image">
+                        <img src={CategoryImgShoe} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn outlined">Shop Collection</button>
+                        </Link>
+                    </div>
+                    <div className="category-image--mobile">
+                        <img src={CategoryImgShoeMobile} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn">Shop Collection</button>
+                        </Link>
+                    </div>
+
+                    <div className="category-image">
+                        <img src={CategoryImgHoodie} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn outlined">Shop Collection</button>
+                        </Link>
+                    </div>
+                    <div className="category-image--mobile">
+                        <img src={CategoryImgHoodieMobile} alt="Category hero for shoes" />
+                        <Link to="/categories">
+                            <button className="btn">Shop Collection</button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+
 
         </>
     )

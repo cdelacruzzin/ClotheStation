@@ -6,8 +6,6 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 function ProductItem(item) {
-
-    console.log(item)
     const [state, dispatch] = useStoreContext();
 
     // destructure product into item
