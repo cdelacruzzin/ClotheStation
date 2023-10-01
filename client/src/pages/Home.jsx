@@ -222,11 +222,6 @@ export default function Home() {
           image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
         />
       </ProductCarousel>
-
-      <div className="children">
-        <CategoryMenu />
-        {/* <ProductList /> */}
-      </div>
     </div>
   );
 };
