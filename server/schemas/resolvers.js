@@ -44,15 +44,13 @@ const resolvers = {
       throw new AuthentificationError("Not logged in");
     },
     checkout: async (parent, args, context) => {
-      //insert testMode into args
-      //creates a flag that to test mode or livemmode
-      const { testMode } = args;
 
       const url = new URL(context.headers.referer).origin;
       // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
       await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
 
+      
       for (const product of args.products) {
         line_items.push({
           price_data: {
@@ -71,30 +69,7 @@ const resolvers = {
         });
       }
 
-      // Define the mode based on testMode parameter
-      const mode = testMode ? "payment" : "payment"; // Use "payment" for production and testing
-
-      // For testing purposes, you can create a flag to use test card data when in test mode
-      const useTestCardData = testMode;
-
-      // If in test mode, use Stripe test card data
-      if (useTestCardData) {
-        // You can replace this with actual test card data from Stripe
-        // For example, use card number 4242 4242 4242 4242 for success
-        line_items.push({
-          price_data: {
-            currency: "cad",
-            product_data: {
-              name: "Test Product",
-              description: "A product for testing",
-              images: [`${url}/images/test-product.jpg`],
-            },
-            unit_amount: 1000, // $10.00
-          },
-          quantity: 1,
-        });
-      }
-
+      /*
       // checkout with stripe and create a new stripe checkout session
       const session = await stripe.checkout.sessions.create({
         // use card as payment method
@@ -105,9 +80,25 @@ const resolvers = {
         // create success and cancel urls
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
-      });
+      });*/
+      const FRONTEND_DOMAIN = 'http://localhost:3001'
+      //test session
+      const session = await stripe.checkout.sessions.create({
+        // use card as payment method
+        payment_method_types: ["card"],
+        //still uses items passed in from args 
+        line_items,
+        mode: 'payment',
+        success_url: FRONTEND_DOMAIN + "/success",
+        cancel_url: FRONTEND_DOMAIN + "/cancel"
+      })  
+      // ( url: "STRUPEURL.com")
+      return JSON.stringify({
+        url: session.url
+      })
 
-      return { session: session.id };
+
+      //return { session: session.id };
     },
   },
 
