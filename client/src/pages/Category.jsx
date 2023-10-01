@@ -6,10 +6,10 @@ import { QUERY_PRODUCT } from '../utils/queries';
 import { useQuery } from "@apollo/client";
 import ProductItem from '../components/ProductItem';
 
-function CategoryPage(){
+function CategoryPage() {
 
     const [state, dispatch] = useStoreContext();
-    const {products, currentCategory} = state;
+    const { products, currentCategory } = state;
 
     function selectCategory() {
         if (!currentCategory.id) {
@@ -19,12 +19,24 @@ function CategoryPage(){
             return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
         }
     }
-console.log('Products:', products);
-console.log('Current Category:', currentCategory);
-console.log('Filtered Products:', selectCategory());
+    console.log('Products:', products);
+    console.log('Current Category:', currentCategory);
+    console.log('Filtered Products:', selectCategory());
 
     return (
         <>
+            {selectCategory().map((item) => (
+
+                <ProductItem
+                    key={item._id}
+                    _id={item._id}
+                    name={item.name}
+                    description={item.description}
+                    price={item.price}
+                    image={item.imageSource}
+
+                />
+            ))}
         </>
     )
 }
