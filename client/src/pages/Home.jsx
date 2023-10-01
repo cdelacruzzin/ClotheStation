@@ -59,7 +59,9 @@ export default function Home() {
             <div>
               <h1>Feel</h1>
               <div>
+                <Link to="/products">
                 <button className="btn">Shop</button>
+                </Link>
                 <h1>The</h1>
               </div>
             </div>
