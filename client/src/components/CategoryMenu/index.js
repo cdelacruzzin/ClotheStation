@@ -22,6 +22,8 @@ import CategoryImgShoeMobile from "../../assets/home/category_image_shoe_mobile.
 import CategoryImgHoodieMobile from "../../assets/home/category_image_hoodie_mobile.svg";
 
 
+
+
 function CategoryMenu() {
 
     const categoryImages = {
@@ -50,8 +52,14 @@ function CategoryMenu() {
                 type: UPDATE_CATEGORIES,
                 categories: categoryData.allCategories
             })
-        }
-    }, [categoryData, dispatch])
+        };
+        dispatch({
+            type: UPDATE_CURRENT_CATEGORY,
+            currentCategory: { id: '', name: '' }
+        });
+    }, [categoryData, dispatch]);
+
+
 
     const selectCategory = (item) => {
         const { _id, name } = item;

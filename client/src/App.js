@@ -12,7 +12,8 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SingleProduct from "./pages/SingleItem";
-
+import CategoryPage from './pages/Category';
+import Products from './pages/Products';
 
 const httpLink = createHttpLink({
     uri: '/graphql',    // the uri specifies the graphql server's endpoint - in this case, "/graphql". when a "mutation" or "query" occurs, the request will be sent to '/graphql
@@ -70,6 +71,14 @@ function App() {
                         <Route
                             path="/products/:id"
                             element={<SingleProduct />}
+                        />
+                        <Route
+                            path="/products"
+                            element={<Products />}
+                        />
+                        <Route
+                            path="categories"
+                            element={<CategoryPage />}
                         />
                     </Routes>
                 </StoreProvider>

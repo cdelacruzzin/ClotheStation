@@ -34,7 +34,7 @@ function SingleProduct() {
                     <Link to='/'>← Back to Products</Link>
                     <p>
                         <img
-                            src={`/images/${selectedProduct.imageSource}`}
+                            src={selectedProduct.imageSource}
                             alt={selectedProduct.imageSource}
                         ></img>
                     </p>
