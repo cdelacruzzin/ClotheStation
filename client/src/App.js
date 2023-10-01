@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SingleProduct from "./pages/SingleItem";
+import CategoryPage from './pages/Category';
 
 
 const httpLink = createHttpLink({
@@ -70,6 +71,10 @@ function App() {
                         <Route
                             path="/products/:id"
                             element={<SingleProduct />}
+                        />
+                        <Route
+                            path="categories"
+                            element={<CategoryPage/>}
                         />
                     </Routes>
                 </StoreProvider>

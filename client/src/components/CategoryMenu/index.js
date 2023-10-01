@@ -22,6 +22,8 @@ import CategoryImgShoeMobile from "../../assets/home/category_image_shoe_mobile.
 import CategoryImgHoodieMobile from "../../assets/home/category_image_hoodie_mobile.svg";
 
 
+
+
 function CategoryMenu() {
 
     const categoryImages = {
