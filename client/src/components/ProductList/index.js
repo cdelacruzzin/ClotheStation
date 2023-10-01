@@ -10,7 +10,7 @@ function ProductList() {
 
     const [state, dispatch] = useStoreContext();
     const { loading, data: productData } = useQuery(QUERY_ALL_PRODUCTS);
-    const { products } = state;
+    const { products, currentCategory } = state;
 
     useEffect(() => {
         if (productData) {
@@ -21,21 +21,17 @@ function ProductList() {
         };
     }, [dispatch, productData])
 
-    const { currentCategory } = state;
-
-    function selectCategory() {
-        // console.log(state)
-        if (!currentCategory.id) {
-            return products;
-        } else {
-            //TODO: for this to work, we need to have a category reference id in the product model
-            return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
-        }
-    }
-    // console.log(selectCategory())
+    // function selectCategory() {
+    //     if (!currentCategory.id) {
+    //         return products;
+    //     } else {
+    //         return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
+    //     }
+    // }
+    console.log(productData)
     return (
         <>
-            {selectCategory().map((item) => (
+            {products.map((item) => (
 
                 <ProductItem
                     key={item._id}
@@ -47,8 +43,6 @@ function ProductList() {
 
                 />
             ))}
-
-
         </>
     )
 }

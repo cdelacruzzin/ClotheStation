@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useEffect }from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/globalState";
@@ -7,7 +7,7 @@ import { idbPromise } from "../../utils/helpers";
 
 function ProductItem(item) {
     const [state, dispatch] = useStoreContext();
-
+console.log(state)
     // destructure product into item
     const {
         image,
@@ -17,6 +17,8 @@ function ProductItem(item) {
         quantity,
         description
     } = item;
+
+
 
     // declare a cart for the start
     const { cart } = state
@@ -46,6 +48,7 @@ function ProductItem(item) {
         }
     }
 
+    // console.log(state)
     return (
         <>
             <Link to={`/products/${_id}`}>
@@ -59,24 +62,6 @@ function ProductItem(item) {
                     </div>
                 </div>
             </Link>
-
-
-            {/* <div style={{ background: 'red' }} className="card">
-
-                <h2>{name}</h2>
-                <p>{description}</p>
-                <img
-                    alt={name}
-                    src={image} />
-                <p>Price: ${price}</p>
-
-            </div>
-
-            <div>
-                {quantity} {pluralize("item", quantity)} in stock
-
-                <button onClick={addToCart}>Add to cart</button>
-            </div> */}
         </>
 
     );

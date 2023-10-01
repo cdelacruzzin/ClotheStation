@@ -43,6 +43,7 @@ function CategoryMenu() {
 
     const [state, dispatch] = useStoreContext();
     const { categories, currentCategory } = state;
+    
     useEffect(() => {
         if (categoryData) {
             dispatch({
