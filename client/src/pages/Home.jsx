@@ -102,112 +102,54 @@ export default function Home() {
         btnText="View All"
         btnLink="/products"
       >
-        {/* 
-          !!! THESE ARE PLACE HOLDERS, 
-          REMOVE THEM AND REPLACE WITH CODE THAT GETS PRODUCTS FROM
-          THE DATABASE AND DISPLAY THEM HERE USING THE CAROUSELITEM.
-
-          EX.
-
-          {
-            // Get all the products from the database as array and map them.
-            products.map((product) => {
-              return (
-                <CarouselItem
-                  name={product.name}
-                  price={product.price}
-                  image={product.imageSrc}
-                />
-              )
-            })
-          }
-        */}
-        <CarouselItem
-          name="Start"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Some product with a super long long long name"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="End"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
+        <ProductList/>
       </ProductCarousel>
+      <CategoryMenu/>
 
-      {/* === PRODUCT CATEGORIES === */}
+      {/* === PRODUCT CATEGORIES ===
       <div id="home-categories">
         <h1>Shop Collections</h1>
         <div id="categories--images">
           <div className="category-image">
             <img src={CategoryImgTee} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn outlined">Shop Collection</button>
             </Link>
           </div>
           <div className="category-image--mobile">
             <img src={CategoryImgTeeMobile} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn">Shop Collection</button>
             </Link>
           </div>
 
           <div className="category-image">
             <img src={CategoryImgShoe} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn outlined">Shop Collection</button>
             </Link>
           </div>
           <div className="category-image--mobile">
             <img src={CategoryImgShoeMobile} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn">Shop Collection</button>
             </Link>
           </div>
 
           <div className="category-image">
             <img src={CategoryImgHoodie} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn outlined">Shop Collection</button>
             </Link>
           </div>
           <div className="category-image--mobile">
             <img src={CategoryImgHoodieMobile} alt="Category hero for shoes" />
-            <Link to="/products">
+            <Link to="/categories">
               <button className="btn">Shop Collection</button>
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* === INFO SPLITTER === */}
       <div id="home-info-splitter">
@@ -280,11 +222,6 @@ export default function Home() {
           image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
         />
       </ProductCarousel>
-
-      <div className="children">
-        <CategoryMenu />
-        <ProductList />
-      </div>
     </div>
   );
 };

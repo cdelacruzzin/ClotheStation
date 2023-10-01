@@ -9,7 +9,22 @@ const categoryData = [
     description: "Sweater",
     products: [],
   },
+  {
+    name: "Tees",
+    description: "Tees",
+    products: [],
+  },
+  {
+    name: "Shoes",
+    description: "Shoes",
+    products: [],
+  },
+  {
+    name: "Hoodies",
+    description: "Hoodies",
+    products: [],
+  },
 ];
 
 //categoryIds
-module.exports = { categoryData  };
+module.exports = { categoryData };
