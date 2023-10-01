@@ -4,6 +4,7 @@ import { useStoreContext } from "../../utils/globalState";
 import { QUERY_ALL_PRODUCTS } from '../../utils/queries';
 import { UPDATE_PRODUCTS } from '../../utils/actions';
 import ProductItem from '../ProductItem';
+import { CarouselItem } from "../CarouselItem";
 
 function ProductList() {
 
@@ -31,8 +32,7 @@ function ProductList() {
             return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
         }
     }
-
-console.log(selectCategory());
+    // console.log(selectCategory())
     return (
         <>
             {selectCategory().map((item) => (

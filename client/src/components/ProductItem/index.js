@@ -6,6 +6,8 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 function ProductItem(item) {
+
+    console.log(item)
     const [state, dispatch] = useStoreContext();
 
     // destructure product into item
@@ -49,22 +51,34 @@ function ProductItem(item) {
     return (
         <>
             <Link to={`/products/${_id}`}>
-                <div style={{ background: 'red' }} className="card">
-
-                    <h2>{name}</h2>
-                    <p>{description}</p>
-                    <img
-                        alt={name}
-                        src={image} />
-                    <p>Price: ${price}</p>
-
+                <div className="carousel-item">
+                    <div className="item--image">
+                    <img alt={name} src={image} />
+                    </div>
+                    <div className="item--info">
+                        <h1 className="item--name">{name}</h1>
+                        <p className="itme--info-price">$ {price} CAD</p>
+                    </div>
                 </div>
             </Link>
+
+
+            {/* <div style={{ background: 'red' }} className="card">
+
+                <h2>{name}</h2>
+                <p>{description}</p>
+                <img
+                    alt={name}
+                    src={image} />
+                <p>Price: ${price}</p>
+
+            </div>
+
             <div>
                 {quantity} {pluralize("item", quantity)} in stock
 
                 <button onClick={addToCart}>Add to cart</button>
-            </div>
+            </div> */}
         </>
 
     );

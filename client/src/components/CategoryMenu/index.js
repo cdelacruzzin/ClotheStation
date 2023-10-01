@@ -34,7 +34,6 @@ function CategoryMenu() {
             currentCategory: {id: _id, name: name}
         });
      };
-     console.log(!state.currentCategory)
     return (
         <>
                 {!currentCategory? (

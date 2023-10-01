@@ -102,6 +102,7 @@ export default function Home() {
         btnText="View All"
         btnLink="/products"
       >
+        <ProductList/>
         {/* 
           !!! THESE ARE PLACE HOLDERS, 
           REMOVE THEM AND REPLACE WITH CODE THAT GETS PRODUCTS FROM
@@ -122,7 +123,7 @@ export default function Home() {
             })
           }
         */}
-        <CarouselItem
+        {/* <CarouselItem
           name="Start"
           price="90"
           image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
@@ -161,7 +162,7 @@ export default function Home() {
           name="End"
           price="90"
           image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
+        /> */}
       </ProductCarousel>
 
       {/* === PRODUCT CATEGORIES === */}
@@ -283,7 +284,7 @@ export default function Home() {
 
       <div className="children">
         <CategoryMenu />
-        <ProductList />
+        {/* <ProductList /> */}
       </div>
     </div>
   );
