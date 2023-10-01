@@ -52,99 +52,44 @@ function CategoryMenu() {
         }
     }, [categoryData, dispatch])
 
-
     const selectCategory = (item) => {
-
-        const { _id, name } = item;
+        const {_id, name} = item;
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
-            currentCategory: { id: _id, name: name }
+            currentCategory: {id: _id, name: name}
         });
     };
-
-
-    const categoryElements = Object.keys(categoryImages).map(category => (
-        <div key={category}>
-            <div className="category-image">
-                <img src={categoryImages[category].web} alt={`Category hero for ${category.toLowerCase()}`} />
-                <Link to="/categories">
-                    <button className="btn outlined">Shop Collection</button>
-                </Link>
-            </div>
-            <div className="category-image--mobile">
-                <img src={categoryImages[category].mobile} alt={`Category hero for ${category.toLowerCase()}`} />
-                <Link to="/categories">
-                    <button className="btn">Shop Collection</button>
-                </Link>
-            </div>
-        </div>
-    ));
     return (
         <>
-            {/* {!currentCategory? (
-                    <p>home</p>
-                ): (
-                    <p>{currentCategory.name}</p>
-                )}
-                {categories.map((item) => (
-
-                    <button
-                    style={{ background: 'blue', margin: '3px' }}
-                        key={item._id}
-                        onClick={()=>{
-                            selectCategory(item);
-                        }}
-                    >
-                        {item.name}
-                    </button>
-
-
-                ))} */}
             {/* === PRODUCT CATEGORIES === */}
             <div id="home-categories">
                 <h1>Shop Collections</h1>
                 <div id="categories--images">
+                    {categories.map(category => {
+                        const categoryName = category.name;
+                        const images = categoryImages[categoryName];
 
-                    {categoryElements}
-                    {/* <div className="category-image">
-                        <img src={CategoryImgTee} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn outlined">Shop Collection</button>
-                        </Link>
-                    </div>
-                    <div className="category-image--mobile">
-                        <img src={CategoryImgTeeMobile} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn">Shop Collection</button>
-                        </Link>
-                    </div>
+                        if (!images) return null; // Skip categories that don't have images in categoryImages object.
 
-                    <div className="category-image">
-                        <img src={CategoryImgShoe} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn outlined">Shop Collection</button>
-                        </Link>
-                    </div>
-                    <div className="category-image--mobile">
-                        <img src={CategoryImgShoeMobile} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn">Shop Collection</button>
-                        </Link>
-                    </div>
+                        return (
+                            <div key={category._id}>
+                                <div className="category-image">
+                                    <img src={images.web} alt={`Category hero for ${categoryName.toLowerCase()}`} />
+                                    <button className="btn outlined" onClick={() => {
+                                        selectCategory(category);
+                                    }}>Shop Collection</button>
+                                </div>
+                                <div className="category-image--mobile">
+                                    <img src={images.mobile} alt={`Category hero for ${categoryName.toLowerCase()}`} />
+                                    <button className="btn" onClick={() => {
+                                        selectCategory(category);
+                                    }}>Shop Collection</button>
+                                </div>
+                            </div>
+                        );
+                    })}
 
-                    <div className="category-image">
-                        <img src={CategoryImgHoodie} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn outlined">Shop Collection</button>
-                        </Link>
-                    </div>
-                    <div className="category-image--mobile">
-                        <img src={CategoryImgHoodieMobile} alt="Category hero for shoes" />
-                        <Link to="/categories">
-                            <button className="btn">Shop Collection</button>
-                        </Link>
-                    </div>*/}
-                </div> 
+                </div>
             </div>
 
 
