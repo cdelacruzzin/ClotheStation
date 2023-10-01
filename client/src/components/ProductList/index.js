@@ -28,7 +28,6 @@ function ProductList() {
     //         return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
     //     }
     // }
-    console.log(productData)
     return (
         <>
             {products.map((item) => (

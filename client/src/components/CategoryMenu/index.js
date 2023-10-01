@@ -52,8 +52,14 @@ function CategoryMenu() {
                 type: UPDATE_CATEGORIES,
                 categories: categoryData.allCategories
             })
-        }
-    }, [categoryData, dispatch])
+        };
+        dispatch({
+            type: UPDATE_CURRENT_CATEGORY,
+            currentCategory: { id: '', name: '' }
+        });
+    }, [categoryData, dispatch]);
+
+
 
     const selectCategory = (item) => {
         const { _id, name } = item;

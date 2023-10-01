@@ -32,8 +32,14 @@ import CharityIcon from "../assets/home/charity_icon.svg";
 import "./css/Home.scss";
 import { CarouselItem } from "../components/CarouselItem";
 
+import { useStoreContext } from "../utils/globalState";
+
 export default function Home() {
 
+
+  const [state, dispatch] = useStoreContext();
+
+  
 
 
 
