@@ -2,9 +2,12 @@
 const { AuthentificationError } = require("apollo-server-express");
 const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
-const uuid = require('uuid');
+const uuid = require("uuid");
 // import stripe and use stripe api for testing
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require("stripe")(
+  process.env.STRIPE_SECRET_KEY ||
+    "sk_test_51NvpXcItNuwzBTMWuEw91tBIEQUQPac3ajfxnn2eHcbQFCf4UJrYqkveOQ5zi8fQ6p0ZAGQEMEb7DC8PkPZmz6jy00jQMmCkpn"
+);
 
 // resolver to query current logged_in user
 const resolvers = {
@@ -20,39 +23,39 @@ const resolvers = {
       throw new AuthentificationError("You need to be logged in!");
     },
     allCategories: async () => {
-      console.log('querying categories')
       return await Category.find({}).populate("products");
     },
     allProducts: async () => {
-      return await Product.find({}).populate('category');
+      return await Product.find({});
     },
     // get products tye categories of the carts products for a single user
     // cart: async (parent, { _id }, context) => {
     cart: async (parent, args, context) => {
-
       // TODO: use try catch
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'cart.product',
-          populate: 'category',
+          path: "cart.product",
+          populate: "category",
         });
 
         return user.cart.id(_id);
       }
 
-      throw new AuthentificationError('Not logged in');
+      throw new AuthentificationError("Not logged in");
     },
     checkout: async (parent, args, context) => {
+
       const url = new URL(context.headers.referer).origin;
       // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
       await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
 
+      
       for (const product of args.products) {
         line_items.push({
           price_data: {
             // display price in cad
-            currency: 'cad',
+            currency: "cad",
             // fill with current product data
             product_data: {
               name: product.name,
@@ -66,25 +69,37 @@ const resolvers = {
         });
       }
 
+      /*
       // checkout with stripe and create a new stripe checkout session
       const session = await stripe.checkout.sessions.create({
         // use card as payment method
-        payment_method_types: ['card'],
+        payment_method_types: ["card"],
         // line ordered items for payment
         line_items,
-        mode: 'payment',
+        mode: "payment",
         // create success and cancel urls
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
-      });
+      });*/
+      const FRONTEND_DOMAIN = 'http://localhost:3001'
+      //test session
+      const session = await stripe.checkout.sessions.create({
+        // use card as payment method
+        payment_method_types: ["card"],
+        //still uses items passed in from args 
+        line_items,
+        mode: 'payment',
+        success_url: FRONTEND_DOMAIN + "/success",
+        cancel_url: FRONTEND_DOMAIN + "/cancel"
+      })  
+      // ( url: "STRUPEURL.com")
+      return JSON.stringify({
+        url: session.url
+      })
 
-      return { session: session.id };
+
+      //return { session: session.id };
     },
-    product: async (parent, {_id}) =>{
-      const product = await Product.findById(_id).populate('category');
-      console.log(product);
-      return product;
-    }
   },
 
   Mutation: {
@@ -115,15 +130,14 @@ const resolvers = {
         // }
 
         const token = signToken(user);
-        console.log(user)
-        console.log({ token })
+        console.log(user);
+        console.log({ token });
 
         return { token, user };
       } catch (error) {
         console.log(error);
       }
     },
-
 
     addToCart: async (_, { product }, context) => {
       if (!context.user) {
@@ -132,8 +146,7 @@ const resolvers = {
 
       try {
         // Find the user by their _id
-        const user = await User.findById(context.user._id)
-
+        const user = await User.findById(context.user._id);
 
         // console.log(user)
         if (!user) {
@@ -162,7 +175,9 @@ const resolvers = {
 
         //restructuring the function solved hte issues
 
-        const cartItemIndex = user.cart.findIndex(cartItem => cartItem.product.toString() === product.productId);
+        const cartItemIndex = user.cart.findIndex(
+          (cartItem) => cartItem.product.toString() === product.productId
+        );
 
         if (cartItemIndex !== -1) {
           user.cart[cartItemIndex].quantity += product.quantity || 1;
@@ -179,15 +194,15 @@ const resolvers = {
 
         // Fetch and populate the user again
         const populatedUser = await User.findById(user._id).populate({
-          path: 'cart.product',
-          select: '_id name description price',
+          path: "cart.product",
+          select: "_id name description price",
           populate: {
-            path: 'category',
-            select: 'name'
-          }
+            path: "category",
+            select: "name",
+          },
         });
 
-        console.log(JSON.stringify(populatedUser, null, 3));
+        //console.log(JSON.stringify(populatedUser, null, 3));
         return populatedUser;
       } catch (error) {
         console.error("Error in addToCart resolver:", error);
@@ -261,15 +276,24 @@ const resolvers = {
       }
 
       try {
+        // Fetch the user data for the authenticated user
+        const user = await User.findById(context.user._id);
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
         // Fetch the product by its productId
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productId).populate(
+          "comment.user"
+        );
         if (!product) {
           throw new Error("Product not found");
         }
-        console.log(comment)
+
         // Create a new comment
         const newComment = new Comment({
-          user: context.user._id, // Assuming you have a user associated with the comment
+          user: context.user, // Assuming you have a user associated with the comment
           text: comment.text,
         });
 
@@ -284,6 +308,50 @@ const resolvers = {
       } catch (error) {
         console.error(error);
         throw new Error("Error adding comment");
+      }
+    },
+    removeComment: async (_, { commentId }, context) => {
+      // Check for user authentication
+      if (!context.user) {
+        throw new Error("Authentication required");
+      }
+
+      try {
+        // Fetch the product by its productId
+        const product = await Product.findOne({ "comment._id": commentId });
+
+        if (!product) {
+          throw new Error("Product not found");
+        }
+
+        // Find the index of the comment to remove
+        const commentIndex = product.comment.findIndex(
+          (comment) => comment._id.toString() === commentId
+        );
+
+        if (commentIndex === -1) {
+          throw new Error("Comment not found");
+        }
+
+        // Ensure that the user making the request matches the user who created the comment
+        if (
+          product.comment[commentIndex].user.toString() !==
+          context.user._id.toString()
+        ) {
+          throw new Error("Unauthorized to remove this comment");
+        }
+
+        // Remove the comment from the product's comment array
+        product.comment.splice(commentIndex, 1);
+
+        // Save the updated product
+        await product.save();
+
+        // Return the updated product
+        return product;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error removing comment");
       }
     },
   },
