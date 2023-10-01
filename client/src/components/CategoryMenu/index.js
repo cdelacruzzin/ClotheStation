@@ -23,6 +23,22 @@ import CategoryImgHoodieMobile from "../../assets/home/category_image_hoodie_mob
 
 
 function CategoryMenu() {
+
+    const categoryImages = {
+        Tees: {
+            web: CategoryImgTee,
+            mobile: CategoryImgTeeMobile
+        },
+        Shoes: {
+            web: CategoryImgShoe,
+            mobile: CategoryImgShoeMobile
+        },
+        Hoodies: {
+            web: CategoryImgHoodie,
+            mobile: CategoryImgHoodieMobile
+        }
+    }
+
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
     const [state, dispatch] = useStoreContext();
@@ -46,7 +62,23 @@ function CategoryMenu() {
         });
     };
 
-    console.log(categories)
+
+    const categoryElements = Object.keys(categoryImages).map(category => (
+        <div key={category}>
+            <div className="category-image">
+                <img src={categoryImages[category].web} alt={`Category hero for ${category.toLowerCase()}`} />
+                <Link to="/categories">
+                    <button className="btn outlined">Shop Collection</button>
+                </Link>
+            </div>
+            <div className="category-image--mobile">
+                <img src={categoryImages[category].mobile} alt={`Category hero for ${category.toLowerCase()}`} />
+                <Link to="/categories">
+                    <button className="btn">Shop Collection</button>
+                </Link>
+            </div>
+        </div>
+    ));
     return (
         <>
             {/* {!currentCategory? (
@@ -72,7 +104,9 @@ function CategoryMenu() {
             <div id="home-categories">
                 <h1>Shop Collections</h1>
                 <div id="categories--images">
-                    <div className="category-image">
+
+                    {categoryElements}
+                    {/* <div className="category-image">
                         <img src={CategoryImgTee} alt="Category hero for shoes" />
                         <Link to="/categories">
                             <button className="btn outlined">Shop Collection</button>
@@ -109,8 +143,8 @@ function CategoryMenu() {
                         <Link to="/categories">
                             <button className="btn">Shop Collection</button>
                         </Link>
-                    </div>
-                </div>
+                    </div>*/}
+                </div> 
             </div>
 
 
