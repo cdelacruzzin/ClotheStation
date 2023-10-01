@@ -1,10 +1,7 @@
 import React from "react";
 import { useStoreContext } from "../utils/globalState";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { QUERY_PRODUCT } from '../utils/queries';
-import { useQuery } from "@apollo/client";
 import ProductItem from '../components/ProductItem';
+import { ProductCarousel } from "../components/ProductCarousel";
 
 function CategoryPage() {
 
@@ -25,17 +22,19 @@ function CategoryPage() {
 
     return (
         <>
+            <h2>{currentCategory.name}</h2>
             {selectCategory().map((item) => (
+                <ProductCarousel>
+                    <ProductItem
+                        key={item._id}
+                        _id={item._id}
+                        name={item.name}
+                        description={item.description}
+                        price={item.price}
+                        image={item.imageSource}
+                    />
+                </ProductCarousel>
 
-                <ProductItem
-                    key={item._id}
-                    _id={item._id}
-                    name={item.name}
-                    description={item.description}
-                    price={item.price}
-                    image={item.imageSource}
-
-                />
             ))}
         </>
     )
