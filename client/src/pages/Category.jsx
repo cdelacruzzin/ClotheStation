@@ -25,10 +25,6 @@ function CategoryPage() {
     //         });
     //     };
     // }, [dispatch, productData])
-
-
-
-    
     function selectCategory() {
         if (!currentCategory.id) {
             return products;
@@ -45,7 +41,7 @@ function CategoryPage() {
         <>
             <h2>{currentCategory.name}</h2>
             {selectCategory().map((item) => (
-                <ProductCarousel>
+                <ProductCarousel key={item._id}>
                     <ProductItem
                         key={item._id}
                         _id={item._id}
