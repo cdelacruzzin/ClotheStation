@@ -74,6 +74,9 @@ const resolvers = {
       // Define the mode based on testMode parameter
       const mode = testMode ? "payment" : "payment"; // Use "payment" for production and testing
 
+      // For testing purposes, you can create a flag to use test card data when in test mode
+      const useTestCardData = testMode;
+
       // If in test mode, use Stripe test card data
       if (useTestCardData) {
         // You can replace this with actual test card data from Stripe
