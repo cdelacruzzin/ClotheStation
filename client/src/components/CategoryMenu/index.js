@@ -53,10 +53,10 @@ function CategoryMenu() {
     }, [categoryData, dispatch])
 
     const selectCategory = (item) => {
-        const {_id, name} = item;
+        const { _id, name } = item;
         dispatch({
             type: UPDATE_CURRENT_CATEGORY,
-            currentCategory: {id: _id, name: name}
+            currentCategory: { id: _id, name: name }
         });
     };
     return (
