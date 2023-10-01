@@ -73,24 +73,28 @@ function CategoryMenu() {
 
                         return (
                             <div key={category._id}>
-                                <div className="category-image">
-                                    <img src={images.web} alt={`Category hero for ${categoryName.toLowerCase()}`} />
-                                    <button className="btn outlined" onClick={() => {
-                                        selectCategory(category);
-                                    }}>Shop Collection</button>
-                                </div>
-                                <div className="category-image--mobile">
-                                    <img src={images.mobile} alt={`Category hero for ${categoryName.toLowerCase()}`} />
-                                    <button className="btn" onClick={() => {
-                                        selectCategory(category);
-                                    }}>Shop Collection</button>
-                                </div>
+                                <Link to="/categories">
+                                    <div className="category-image">
+                                        <img src={images.web} alt={`Category hero for ${categoryName.toLowerCase()}`} />
+                                        <button className="btn outlined" onClick={() => {
+                                            selectCategory(category);
+                                        }}>Shop Collection</button>
+                                    </div>
+                                </Link>
+                                <Link to="/categories">
+                                    <div className="category-image--mobile">
+                                        <img src={images.mobile} alt={`Category hero for ${categoryName.toLowerCase()}`} />
+                                        <button className="btn" onClick={() => {
+                                            selectCategory(category);
+                                        }}>Shop Collection</button>
+                                    </div>
+                                </Link>
                             </div>
                         );
                     })}
 
-                </div>
-            </div>
+                </div >
+            </div >
 
 
 
