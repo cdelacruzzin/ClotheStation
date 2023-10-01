@@ -7,7 +7,6 @@ import { idbPromise } from "../../utils/helpers";
 
 function ProductItem(item) {
     const [state, dispatch] = useStoreContext();
-console.log(item)
     // destructure product into item
     const {
         image,
