@@ -78,11 +78,11 @@ function Login({ open, handleClose }) {
             )}
 
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit" onClick={handleFormSubmit}>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit" onClick={handleFormSubmit}>
                 Sign In
               </Button>
-
+         
               {/* Should navigate back to the page the user was on */}
             </DialogActions>
           </form>

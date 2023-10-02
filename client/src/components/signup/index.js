@@ -98,8 +98,8 @@ const SignupForm = ({ open, handleClose }) => {
           </div>
         )}
           <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
         <Button type="submit">Submit</Button>
-        <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
       </DialogContent>
     
