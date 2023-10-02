@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 // import Auth from "../utils/auth";
 
@@ -7,7 +7,7 @@ import { faRightToBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 
 // import { useStoreContext } from "../utils/globalState";
 // import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
-
+import Login from '../pages/Login';
 import logo from "../assets/logo.svg";
 import "./css/Navbar.scss";
 
@@ -16,6 +16,7 @@ import AuthService from "../utils/auth"; // Import your AuthService
 const Navbar = () => {
   const location = useLocation();
 
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   // Use AuthService methods to check authentication status
   const isLoggedIn = AuthService.loggedIn();
 
@@ -38,6 +39,14 @@ const Navbar = () => {
     // Redirect to the login page or another appropriate location
     navigate('/');
   };
+
+  const openLoginModal = () => {
+    setLoginModalOpen(true);
+  }
+
+  const closeLoginModal = () => {
+    setLoginModalOpen(false);
+  }
 
   return (
     <div className="Navbar">
@@ -126,13 +135,15 @@ const Navbar = () => {
             </>
           ) : (
             <div className="flex flex-row gap-x-2 mx-2">
-              <Link to="/login"><FontAwesomeIcon icon={faRightToBracket} /></Link>
+              <Link onClick={openLoginModal}>
+                <FontAwesomeIcon icon={faRightToBracket} />
+              </Link>
               <Link to="/signup"><FontAwesomeIcon icon={faUserPlus} /></Link>
             </div>
           )}
         </div>
 
-        {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.
+        {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.*/}
       <button
         id="nav--links-toggle"
         onClick={() => {
@@ -155,8 +166,10 @@ const Navbar = () => {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
-      </button>*/}
+      </button>
       </div>
+      <Login open={loginModalOpen} handleClose={closeLoginModal} />
+
     </div>
   );
 };
