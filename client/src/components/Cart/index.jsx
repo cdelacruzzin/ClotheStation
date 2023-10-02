@@ -28,9 +28,22 @@ const Cart = () => {
         }));
     };
 
-    const total = useMemo(() => {
-        return state.cart.reduce((acc, item) => acc + item.price, 0);
-    }, [state.cart]);
+    // const total = useMemo(() => {
+    //     return state.cart.reduce((acc, item) => acc + item.price, 0);
+    // }, [state.cart]);
+
+    const total = ()=>{
+        let total =0;
+        filterProductsForCheckout().forEach(element => {
+            total += (element.purchaseQuantity * element.price)
+            console.log(`Quantity of ${element.name}: ${element.purchaseQuantity}`) 
+        });
+        return total;
+    }
+    console.log(total())
+// total();
+
+
 
     // 3. Effects
     useEffect(() => {
@@ -42,7 +55,6 @@ const Cart = () => {
     }, [data]);
 
     useEffect(() => {
-        console.log(state)
         async function getCart() {
             console.log(state);
             const cart = await idbPromise('cart', 'get');
@@ -103,7 +115,7 @@ const Cart = () => {
 
                     <div>
                         {/* <strong>Total: ${calculateTotal()}</strong> */}
-                        <strong>Total: ${total}</strong>
+                        <strong>Total: ${total()}</strong>
 
 
                         {Auth.loggedIn() ? (
