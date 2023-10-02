@@ -54,6 +54,7 @@ const resolvers = {
       // console.log(args.products)
 
       for (const product of args.products) {
+        console.log(product)
         line_items.push({
           price_data: {
             // display price in cad
@@ -64,13 +65,15 @@ const resolvers = {
               description: product.description,
               images: [`${url}/images/${product.image}`],
             },
-            unit_amount: product.price * 100,
+            unit_amount: Math.round(product.price * 100),
+            // unit_amount: product.price *100,
           },
           // display quantity of products
           quantity: product.purchaseQuantity,
         });
       }
-      console.log({line_items})
+      console.log(line_items)
+      
       try {
         // checkout with stripe and create a new stripe checkout session
         const session = await stripe.checkout.sessions.create({
@@ -84,7 +87,7 @@ const resolvers = {
             cancel_url: `${url}/`,
         });
     
-        console.log(session)
+        console.log('session')
         return { session: session.id };
     } catch (error) {
         console.error("Error creating checkout session:", error);

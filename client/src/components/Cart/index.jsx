@@ -66,13 +66,13 @@ const Cart = () => {
         }
     }, [state.cart.length, dispatch, state]);
 
-    useEffect(() => {
-        getCheckout({
-            variables: {
-                products: filterProductsForCheckout(),
-            },
-        });
-    }, [state.cart, getCheckout]);
+    // useEffect(() => {
+    //     getCheckout({
+    //         variables: {
+    //             products: filterProductsForCheckout(),
+    //         },
+    //     });
+    // }, [state.cart, getCheckout]);
 
     // 4. Event Handlers
     const toggleCart = () => {
