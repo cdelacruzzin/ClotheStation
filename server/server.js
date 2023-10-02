@@ -12,7 +12,7 @@ const { resolvers, typeDefs } = require('./schemas'); //imports the GraphQL reso
 const stripe = require('stripe')('sk_test_51NvpXcItNuwzBTMWuEw91tBIEQUQPac3ajfxnn2eHcbQFCf4UJrYqkveOQ5zi8fQ6p0ZAGQEMEb7DC8PkPZmz6jy00jQMmCkpn')
 
 const app = express(); //creates an express server instance
-const PORT = process.env.PORT || 3000; //stores the port number from the .env file. if dne, set the port as 3000
+const PORT = process.env.PORT || 3001; //stores the port number from the .env file. if dne, set the port as 3000
 
 const server = new ApolloServer({   //initializes a new Apollo Server with the typeDefs, resolver functions and the auth context 
     typeDefs,
