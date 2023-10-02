@@ -50,7 +50,7 @@ function Login({ open, handleClose }) {
           <h2>Login</h2>
           <form onSubmit={handleFormSubmit}>
             <div className="flex-row space-between my-2">
-              <label htmlFor="email">Email address:</label>
+              <label htmlFor="email">Email address: </label>
               <input
                 placeholder="youremail@test.com"
                 name="email"
@@ -60,9 +60,9 @@ function Login({ open, handleClose }) {
               />
             </div>
             <div className="flex-row space-between my-2">
-              <label htmlFor="pwd">Password:</label>
+              <label htmlFor="pwd">Password: </label>
               <input
-                placeholder="******"
+                placeholder="*********"
                 name="password"
                 type="password"
                 id="pwd"

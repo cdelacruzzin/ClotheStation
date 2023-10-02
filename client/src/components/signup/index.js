@@ -57,39 +57,52 @@ const SignupForm = ({ open, handleClose }) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Signup</DialogTitle>
       <DialogContent>
+        <div className="container my-1">
         <form onSubmit={handleFormSubmit}>
+        <div className="flex-row space-between my-2">
+        <label htmlFor="email">Username: </label>
           <input
             value={userFormData.username}
             type="text"
             name="username"
             onChange={handleChange}
             placeholder="Enter a username"
-          ></input>
+          />
+          </div>
+          <div className="flex-row space-between my-2">
+          <label htmlFor="email">Email address: </label>
           <input
             placeholder="Enter an email"
             type="email"
             name="email"
             onChange={handleChange}
             value={userFormData.email}
-          ></input>
+          />
+          </div>
+          <div className="flex-row space-between my-2">
+          <label htmlFor="email">Password: </label>
           <input
-            placeholder="Enter a password"
+            placeholder="*********"
             type="password"
             name="password"
             onChange={handleChange}
             value={userFormData.password}
-          ></input>
-          <Button type="submit">Submit</Button>
+          />
+          </div>
+         
         </form>
+        </div>
         {error && (
           <div>
             <p className="error-text">Error: {error.message}</p>
           </div>
         )}
-      </DialogContent>
-      <DialogActions>
+          <DialogActions>
+        <Button type="submit">Submit</Button>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
+      </DialogContent>
+    
     </Dialog>
   );
 };
