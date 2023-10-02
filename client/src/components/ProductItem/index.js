@@ -21,33 +21,6 @@ function ProductItem(item) {
 
     // declare a cart for the start
     const { cart } = state
-
-    // add to cart function 
-    const addToCart = () => {
-        const itemInCart = cart.find((cartItem) => cartItem._id === _id)
-        if (itemInCart) {
-            dispatch({
-                // update cart quantity if item is in cart
-                type: UPDATE_CART_QUANTITY,
-                _id: _id,
-                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-            });
-            // add item also in the index db
-            idbPromise('cart', 'put', {
-                ...itemInCart,
-                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-            });
-        } else {
-            // execute add to cart action and add it to index db
-            dispatch({
-                type: ADD_TO_CART,
-                product: { ...item, purchaseQuantity: 1 }
-            });
-            idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-        }
-    }
-
-    // console.log(state)
     return (
         <>
             <Link to={`/products/${_id}`}>
