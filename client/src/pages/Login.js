@@ -1,75 +1,71 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const Login = (props) => {
-    // set the initial userFormState, which is empty
-    const [userFormData, setUserFormData] = useState({ email: '', password: ''});
-    // create the login instance that uses the mutation
-    const [loginUser, { error }] = useMutation(LOGIN_USER);
+function Login(props) {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN_USER);
 
-    // update the state based on form input changes
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const mutationResponse = await login({
+        variables: { email: formState.email, password: formState.password },
+      });
+      const token = mutationResponse.data.login.token;
+      Auth.login(token);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-        setUserFormData({
-            ...userFormData,
-            [name]: value,
-        });
-    };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
-    
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // call login function 
-            const { data } = await loginUser({
-                variables: { ...userFormData},
-            });
+  return (
+    <div className="container my-1">
+      <Link to="/signup">← Go to Signup</Link>
 
-        // check for mutation errors
-        if(error) {
-            throw new Error('Something went wrong');
-        }
-
-        // pass in token from login response
-        Auth.login(data.login.token);
-        } catch (err) {
-          console.log(err);
-        }
-
-        // empty form after submit
-        // setUserFormData({
-        //     email: '',
-        //     password: '',
-        // });
-    };
-
-    return (
-        <form onSubmit={handleFormSubmit}>
-            <input 
-                type='email'
-                placeholder='Enter your email here'
-                name='email'
-                onChange={handleInputChange}
-                value={userFormData.email}
-                required
-            />
-            <input 
-                type='password'
-                placeholder='Enter your password here'
-                name='password'
-                onChange={handleInputChange}
-                value={userFormData.password}
-                required
-            />
-            <button type='submit'>Login</button>
-            <button onClick={Auth.logout}>Logout</button>
-        </form>
-        
-
-    )
+      <h2>Login</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="email">Email address:</label>
+          <input
+            placeholder="youremail@test.com"
+            name="email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="pwd">Password:</label>
+          <input
+            placeholder="******"
+            name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+          />
+        </div>
+        {error ? (
+          <div>
+            <p className="error-text">The provided credentials are incorrect</p>
+          </div>
+        ) : null}
+        <div className="flex-row flex-end">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default Login;

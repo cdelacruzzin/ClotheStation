@@ -6,6 +6,7 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
+    password: String
     cartCount: Int #items in cart at the time
     cart: [Cart]
   }
