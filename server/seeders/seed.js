@@ -4,6 +4,9 @@ const { User, Category, Comment, Product } = require("../models");
 const userData = require("./userData.json");
 const { categoryData } = require("./categoryData");
 const { productData } = require("./productData");
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10; // Number of salt rounds for bcrypt
 
 db.once("open", async () => {
   try {
@@ -12,8 +15,15 @@ db.once("open", async () => {
     await Category.deleteMany({});
     await Product.deleteMany({});
 
+    // Hash passwords before inserting user data
+    const hashedUserData = userData.map((user) => ({
+        username: user.username,
+        email: user.email,
+        password: bcrypt.hashSync(user.password, saltRounds), // Hash the password
+      }));
+
     //seed information
-    await User.insertMany(userData);
+    await User.insertMany(hashedUserData);
     console.table("Users seeded!");
 
     // Seed categories
