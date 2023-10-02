@@ -22,8 +22,9 @@ function Products() {
 
     return (
         <>
+        <ProductCarousel>
         {products.map((item) => (
-                <ProductCarousel key={item._id}>
+                
                     <ProductItem
                         key={item._id}
                         _id={item._id}
@@ -32,10 +33,10 @@ function Products() {
                         price={item.price}
                         image={item.imageSource}
                     />
-                </ProductCarousel>
+            
 
             ))}
-        
+            </ProductCarousel>
         </>
     )
 }

@@ -115,51 +115,6 @@ export default function Home() {
       </ProductCarousel>
       <CategoryMenu/>
 
-      {/* === PRODUCT CATEGORIES ===
-      <div id="home-categories">
-        <h1>Shop Collections</h1>
-        <div id="categories--images">
-          <div className="category-image">
-            <img src={CategoryImgTee} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn outlined">Shop Collection</button>
-            </Link>
-          </div>
-          <div className="category-image--mobile">
-            <img src={CategoryImgTeeMobile} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn">Shop Collection</button>
-            </Link>
-          </div>
-
-          <div className="category-image">
-            <img src={CategoryImgShoe} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn outlined">Shop Collection</button>
-            </Link>
-          </div>
-          <div className="category-image--mobile">
-            <img src={CategoryImgShoeMobile} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn">Shop Collection</button>
-            </Link>
-          </div>
-
-          <div className="category-image">
-            <img src={CategoryImgHoodie} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn outlined">Shop Collection</button>
-            </Link>
-          </div>
-          <div className="category-image--mobile">
-            <img src={CategoryImgHoodieMobile} alt="Category hero for shoes" />
-            <Link to="/categories">
-              <button className="btn">Shop Collection</button>
-            </Link>
-          </div>
-        </div>
-      </div> */}
-
       {/* === INFO SPLITTER === */}
       <div id="home-info-splitter">
         <div>
