@@ -1,0 +1,51 @@
+@import "../../styles/mixins";
+
+.carousel-item {
+  width: 100%;
+  height: clamp(200px, 20cqw, 20cqw);
+  min-height: fit-content;
+  aspect-ratio: 1.5 / 2;
+
+  display: grid;
+  grid-template-rows: 0.75fr 0.25fr;
+
+  .item--image {
+    width: 100%;
+    height: 100%;
+
+    img {
+     height: 100%;
+     object-fit: contain;
+    }
+  }
+
+  .item--info {
+    $font-size: 0.85cqw;
+    $line-height: 1.5;
+    $lines-to-show: 2;
+
+    h1 {
+      display: block; /* Fallback for non-webkit */
+      display: -webkit-box;
+      
+      width: 90%;
+      height: fit-content;
+      max-height: 0.75em*$line-height*2.55;
+
+      -webkit-line-clamp: $lines-to-show;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      font-size: clamp(0.75em, $font-size, $font-size);
+      line-height: $line-height;
+      font-family: "Titillium Web", sans-serif;
+      letter-spacing: 0.1em;
+    }
+    p {
+      color: gray;
+      font-size: clamp(0.75em, calc($font-size/1), calc($font-size/1));
+      font-family: "Titillium Web", sans-serif;
+    }
+  }
+}

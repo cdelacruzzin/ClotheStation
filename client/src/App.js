@@ -4,10 +4,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';     //utility from apollo client which lets modify the request context, when sending a request/ recieving a response.
 //import necessary react and apollo packages\
 
+import { StoreProvider } from './utils/globalState';
+import './styles/index.css';
 //TODO: import modules for the main app
 import SignupForm from './components/signup';
-
-
+import Login from './pages/Login';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import SingleProduct from "./pages/SingleItem";
+import CategoryPage from './pages/Category';
+import Products from './pages/Products';
 
 const httpLink = createHttpLink({
     uri: '/graphql',    // the uri specifies the graphql server's endpoint - in this case, "/graphql". when a "mutation" or "query" occurs, the request will be sent to '/graphql
@@ -45,15 +51,39 @@ const client = new ApolloClient({
 function App() {
     return (
         <ApolloProvider client={client}>
+
             <Router>
-                <SignupForm/>
-                <Routes>
-                    <Route
-                    path="/signup"
-                    element={<SignupForm/>}
-                    />
-                </Routes>
+                <StoreProvider>
+                    <Navbar />
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<Home />}
+                        />
+                        <Route
+                            path="/signup"
+                            element={<SignupForm />}
+                        />
+                        <Route
+                            path="/login"
+                            element={<Login />}
+                        />
+                        <Route
+                            path="/products/:id"
+                            element={<SingleProduct />}
+                        />
+                        <Route
+                            path="/products"
+                            element={<Products />}
+                        />
+                        <Route
+                            path="categories"
+                            element={<CategoryPage />}
+                        />
+                    </Routes>
+                </StoreProvider>
             </Router>
+
         </ApolloProvider>
     );
 }

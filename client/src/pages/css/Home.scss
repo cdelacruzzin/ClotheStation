@@ -1,0 +1,356 @@
+@import "../../styles/mixins";
+
+.Home {
+  button { text-transform: uppercase; }
+  
+  // #region HEADER
+  #home-header {
+    margin: 2rem 0;
+
+    @include flex;
+
+    #header--hero {
+
+      position: relative;
+      
+      #header--hero-image {
+        width: fit-content;
+
+        @include flex(row, center, center);
+        gap: 0 0.5cqw;
+
+        .hero-image {
+          height: 39cqw;
+          $offset: 1.5cqw;
+
+          &:nth-of-type(1) { transform: translateY(-$offset * 1.25); }
+          &:nth-of-type(2) { height: 44.25cqw; }
+          &:nth-of-type(3) { transform: translateY($offset); }
+        }
+      }
+      
+      #header--hero-text {
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+
+        div {
+          width: fit-content;
+          height: fit-content;
+
+          color: white;
+          font-family: "Montserrat", sans-serif;
+          font-size: 6vw;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 1cqw;
+
+          &:nth-of-type(1) {
+            transform: translateX(70%);
+            div {
+              height: 4.5cqw;
+              
+              @include flex(row);
+              gap: 0 1.5cqw;
+              
+              transform: translateX(1cqw);
+
+              button {
+                align-self: flex-start;
+                transform: translateY(0.2cqw);
+                padding: 0.75cqw 2.35cqw;
+                font-weight: 500;
+                font-size: clamp(10px, 0.75cqw, 0.75cqw);
+              }
+            }
+          }
+          &:nth-of-type(2) {
+            transform: translate(50cqw, 12cqw);
+            img { background-size: contain; width: 19cqw; }
+          }
+        }
+      }
+    
+      @media screen and (max-width: 500px) {
+        #header--hero-image {
+          overflow: hidden;
+          margin: 0 -2.5em;
+          width: 100vw;
+          height: 15rem;
+
+          .hero-image {
+            height: 100% !important;
+            transform: translate(0, 0) !important;
+          }
+        }
+        #header--hero-text {
+          div {
+            position: absolute;
+            font-size: clamp(2.5rem, 11cqw, 11cqw);
+
+            &:nth-of-type(1) {
+              left: 0;
+              transform: translate(-5cqw, 0);
+
+              button {
+                align-self: auto !important;
+                transform: translateY(0) !important;
+                padding: 0.45rem 1.5rem !important;
+                font-size: 0.6rem !important;
+              }
+            }
+            &:nth-of-type(2) {
+              bottom: 0; right: 0;
+              transform: translate(0, -10cqw);
+              img { width: 9.5rem; }
+            }
+          }
+        }
+      }
+    }
+  }
+  // #endregion
+
+  hr:nth-of-type(1) { width: 75%; margin: 5cqw auto 3cqw auto; }
+
+  // #region ABOUT
+  #home-about {
+    width: 90vw;
+    margin: 5cqw auto;
+    padding: 2cqw 0;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 1.5cqw;
+    
+    #about--info {
+      overflow: hidden;
+      @include flex(column, center, flex-start, 0, 1rem);
+
+      h1 {
+        width: 90%;
+        margin-bottom: 1cqw;
+        font-size: clamp(1.5em, 2.75cqw, 2.75cqw);
+        font-weight: 600;
+        letter-spacing: 0.35em;
+
+        position: relative;
+
+        &::after {
+          @include pseudo(25%, 0.1em, var(--coral-2), 0, 1, -0.4em);
+        }
+      }
+
+      p {
+        margin: 0.75em 0 0 0;
+        width: 90%;
+        line-height: 1.75em;
+      }
+      
+      #info--controls {
+        width: 90%;
+        margin: 1cqw 0;
+        @include flex(row, center, flex-start, 1.5rem, 0);
+
+        button {
+          font-size: clamp(12px, 0.75cqw, 0.75cqw);
+        }
+
+        #info--controls-links {
+          @include flex(row, center, center, 1rem, 0);
+          svg {
+            width: 26px;
+            height: 26px;
+            &:nth-of-type(1) { color: var(--coral-2); }
+            &:nth-of-type(2) { color: var(--coral-3); }
+            &:nth-of-type(3) { color: var(--coral-4); }
+          }
+        }
+      }
+    }
+
+    #about--image {
+      img {
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px
+      }
+      @include flex(row, flex-start);
+    }
+
+    @media screen and (max-width: 800px) {
+      @include flex();
+
+      #about--info {
+        h1 {
+          width: fit-content;
+          &::after { width: 100%; }
+        }
+        p {
+          text-align: center;
+          font-size: clamp(12px, 2cqw, 2cqw);
+        }
+
+        #info--controls {
+          @include flex(column, center, center, 0, 0.75em);
+          width: fit-content;
+          button {
+            padding: 1.5cqw 5cqw;
+            @media screen and (max-width: 600px) {
+              padding: 0.5em 3em;
+            }
+          }
+
+          #info--controls-links {
+            margin: 0.25em 0 0 0;
+            gap: 0 1em;
+          }
+        }
+      }
+      
+      #about--image { display: none;}
+    }
+  }
+  // #endregion
+
+  // #region CATEGORIES
+  #home-categories {
+    width: 90vw;
+    margin: 0 auto;
+    
+    @include flex(column, center, center, 0, 0.5em);
+    
+    h1 {
+      padding-bottom: 0.1em;
+      margin-bottom: 1em;
+      
+      font-size: clamp(1.25em, 2cqw, 2cqw);;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+
+      position: relative;
+      
+      &::after {
+        @include pseudo(50%, 0.15rem, var(--coral-1), 0, 1, -0.25em);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    #categories--images {
+      width: 100%;
+      @include flex(row, center, center, 1em, 0);
+      
+      .category-image {
+        img {
+          border-radius: 4px;
+          height: clamp(300px, 32.5cqw, 32.5cqw);
+          aspect-ratio: 1.5 / 2;
+          object-fit: cover;
+        }
+
+        button {
+          white-space: nowrap;
+          width: 100%;
+          margin-top: 1em;
+          font-size: clamp(10px, 0.75cqw, 0.75cqw);
+        }
+      }
+
+      .category-image--mobile {
+        display: none;
+        width: 100%;
+        
+        img { width: 100%; }
+        button {
+          margin: 0.75em auto 0 auto;
+          padding: 0.25em 2em;
+          font-size: 12px;
+          width: 90%;
+          border: none;
+        }
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      width: 95vw;
+      
+      h1 {
+        position: relative;
+        font-size: clamp(14px, 3.5cqw, 3.5cqw);
+      }
+
+      #categories--images {
+        @include flex(column, center, center, 0, 1.5em);
+
+        .category-image {
+          img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+          }
+          width: 90%;
+        }
+        .category-image { display: none ; }
+        .category-image--mobile {display: block; }
+      }
+    }
+  }
+  // #endregion
+
+  // #region INFO SPLITTER 
+  #home-info-splitter {
+
+    height: fit-content;
+    margin: 7cqw 0;
+
+    @include flex(row, center, center);
+
+
+    div {
+      width: 50%;
+      padding: 1.5em 5em;
+      
+      @include flex(column, center, center, 0, 0cqw);
+
+      &:nth-of-type(1) { background-color: var(--white-3); }
+      &:nth-of-type(2) { background-color: var(--white-2); }
+
+      img {
+        width: clamp(4em, 4cqw, 4cqw);
+        height: clamp(4em, 4cqw, 4cqw);
+      }
+
+      h1 {
+        white-space: nowrap;
+        margin: 1em 0 0.25em 0;
+        letter-spacing: 0.25em;
+        font-size: clamp(16px, 1.25cqw, 1.25cqw);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      p {
+        width: 75%;
+        height: fit-content;
+        min-height: 125px;
+        font-family: "Titillium Web", sans-serif;
+        font-size: clamp(12px, 0.9cqw, 0.9cqw);
+        text-align: center;
+        line-height: 2em;
+      }
+      
+      button {
+        margin: 1em 0 0 0;
+        padding: 0.75em 2em;
+        font-size: clamp(14px, 0.5cqw, 0.5cqw);
+
+      }
+      &:nth-of-type(2) button { background-color: var(--coral-2); }
+    }
+  }
+  // #endregion
+}
