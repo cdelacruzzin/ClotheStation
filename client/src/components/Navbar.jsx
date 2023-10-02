@@ -8,6 +8,7 @@ import { faRightToBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 // import { useStoreContext } from "../utils/globalState";
 // import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
 import Login from '../pages/Login';
+import SignupForm from '../components/signup/index';
 import logo from "../assets/logo.svg";
 import "./css/Navbar.scss";
 
@@ -17,6 +18,7 @@ const Navbar = () => {
   const location = useLocation();
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [signupModalOpen, setSignUpModalOpen] = useState(false);
   // Use AuthService methods to check authentication status
   const isLoggedIn = AuthService.loggedIn();
 
@@ -46,6 +48,14 @@ const Navbar = () => {
 
   const closeLoginModal = () => {
     setLoginModalOpen(false);
+  }
+
+  const openSignupModal = () => {
+    setSignUpModalOpen(true);
+  }
+
+  const closeSignupModal = () => {
+    setSignUpModalOpen(false);
   }
 
   return (
@@ -138,7 +148,9 @@ const Navbar = () => {
               <Link onClick={openLoginModal}>
                 <FontAwesomeIcon icon={faRightToBracket} />
               </Link>
-              <Link to="/signup"><FontAwesomeIcon icon={faUserPlus} /></Link>
+              <Link onClick={openSignupModal}>
+                <FontAwesomeIcon icon={faUserPlus} />
+              </Link>
             </div>
           )}
         </div>
@@ -169,7 +181,7 @@ const Navbar = () => {
       </button>
       </div>
       <Login open={loginModalOpen} handleClose={closeLoginModal} />
-
+      <SignupForm open={signupModalOpen} handleClose={closeSignupModal} />
     </div>
   );
 };
