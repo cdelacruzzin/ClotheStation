@@ -185,7 +185,7 @@ export default function Home() {
 
       {/* === SKATE DECKS CAROUSEL === */}
       <ProductCarousel
-        title="Sake Decks"
+        title="Skate Decks"
         btnText="View All"
         btnLink="/products"
       >
