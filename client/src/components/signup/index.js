@@ -46,6 +46,7 @@ const SignupForm = ({ open, handleClose }) => {
         variables: { ...userFormData },
       });
       Auth.login(data.addUser.token);
+      handleClose();
       //calls the login function from Auth, which takes in a token id as parameters.
       // Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
     } catch (error) {
@@ -90,8 +91,7 @@ const SignupForm = ({ open, handleClose }) => {
           />
           </div>
          
-        </form>
-        </div>
+        
         {error && (
           <div>
             <p className="error-text">Error: {error.message}</p>
@@ -101,6 +101,9 @@ const SignupForm = ({ open, handleClose }) => {
           <Button onClick={handleClose}>Cancel</Button>
         <Button type="submit">Submit</Button>
       </DialogActions>
+
+      </form>
+        </div>
       </DialogContent>
     
     </Dialog>

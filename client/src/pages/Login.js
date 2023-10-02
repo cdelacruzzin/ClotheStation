@@ -12,7 +12,18 @@ import {
   Button,
 } from "@mui/material";
 
+import SignupForm from '../components/signup/index';
+
 function Login({ open, handleClose }) {
+  const [signupModalOpen, setSignUpModalOpen] = useState(false);
+  const openSignupModal = () => {
+    setSignUpModalOpen(true);
+  }
+
+  const closeSignupModal = () => {
+    setSignUpModalOpen(false);
+  }
+
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error }] = useMutation(LOGIN_USER);
   const handleFormSubmit = async (event) => {
@@ -45,7 +56,7 @@ function Login({ open, handleClose }) {
       <DialogTitle>Login</DialogTitle>
       <DialogContent>
         <div className="container my-1">
-          <Link to="/signup">← Go to Signup</Link>
+          <Button onClick={openSignupModal}>← Go to Signup</Button>
 
           <h2>Login</h2>
           <form onSubmit={handleFormSubmit}>
@@ -88,6 +99,7 @@ function Login({ open, handleClose }) {
           </form>
         </div>
       </DialogContent>
+      <SignupForm open={signupModalOpen} handleClose={closeSignupModal} />
     </Dialog>
   );
 }

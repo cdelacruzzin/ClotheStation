@@ -46,17 +46,22 @@ const Navbar = () => {
     setLoginModalOpen(true);
   }
 
-  const closeLoginModal = () => {
-    setLoginModalOpen(false);
-  }
+  // const closeLoginModal = () => {
+  //   setLoginModalOpen(false);
+  // }
 
   const openSignupModal = () => {
     setSignUpModalOpen(true);
   }
 
-  const closeSignupModal = () => {
+  // const closeSignupModal = () => {
+  //   setSignUpModalOpen(false);
+  // }
+
+  const handleModalsCLose = () => {
+    setLoginModalOpen(false);
     setSignUpModalOpen(false);
-  }
+  };
 
   return (
     <div className="Navbar">
@@ -180,8 +185,8 @@ const Navbar = () => {
         </svg>
       </button>
       </div>
-      <Login open={loginModalOpen} handleClose={closeLoginModal} />
-      <SignupForm open={signupModalOpen} handleClose={closeSignupModal} />
+      <Login open={loginModalOpen} handleClose={handleModalsCLose} />
+      <SignupForm open={signupModalOpen} handleClose={handleModalsCLose} />
     </div>
   );
 };
