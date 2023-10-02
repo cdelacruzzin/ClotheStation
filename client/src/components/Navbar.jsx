@@ -1,10 +1,14 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 // import Auth from "../utils/auth";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightToBracket, faUserPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+
 // import { useStoreContext } from "../utils/globalState";
 // import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
-
+import Login from '../pages/Login';
+import SignupForm from '../components/signup/index';
 import logo from "../assets/logo.svg";
 import "./css/Navbar.scss";
 
@@ -13,6 +17,8 @@ import AuthService from "../utils/auth"; // Import your AuthService
 const Navbar = () => {
   const location = useLocation();
 
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [signupModalOpen, setSignUpModalOpen] = useState(false);
   // Use AuthService methods to check authentication status
   const isLoggedIn = AuthService.loggedIn();
 
@@ -34,6 +40,29 @@ const Navbar = () => {
 
     // Redirect to the login page or another appropriate location
     navigate('/');
+  };
+
+  // open the login modal
+  const openLoginModal = () => {
+    setLoginModalOpen(true);
+  }
+
+  // const closeLoginModal = () => {
+  //   setLoginModalOpen(false);
+  // }
+// open the singup modal
+  const openSignupModal = () => {
+    setSignUpModalOpen(true);
+  }
+
+  // const closeSignupModal = () => {
+  //   setSignUpModalOpen(false);
+  // }
+
+  // close both modals
+  const handleModalsCLose = () => {
+    setLoginModalOpen(false);
+    setSignUpModalOpen(false);
   };
 
   return (
@@ -123,13 +152,20 @@ const Navbar = () => {
             </>
           ) : (
             <div className="flex flex-row gap-x-2 mx-2">
-              <Link to="/login">Log In</Link>
-              <Link to="/signup">Sign-Up</Link>
+               <Link to="cart">
+               <FontAwesomeIcon icon={faCartShopping} />
+              </Link>
+              <Link onClick={openLoginModal}>
+                <FontAwesomeIcon icon={faRightToBracket} />
+              </Link>
+              <Link onClick={openSignupModal}>
+                <FontAwesomeIcon icon={faUserPlus} />
+              </Link>
             </div>
           )}
         </div>
 
-        {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.
+        {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.*/}
       <button
         id="nav--links-toggle"
         onClick={() => {
@@ -152,8 +188,11 @@ const Navbar = () => {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
-      </button>*/}
+      </button>
       </div>
+      {/* handle login modal open and close, same for sign up modal */}
+      <Login open={loginModalOpen} handleClose={handleModalsCLose} />
+      <SignupForm open={signupModalOpen} handleClose={handleModalsCLose} />
     </div>
   );
 };

@@ -5,6 +5,11 @@ import { Link, useParams } from "react-router-dom";
 import { QUERY_PRODUCT } from '../utils/queries';
 import { useQuery } from "@apollo/client";
 import { SET_CURRENT_PRODUCT } from '../utils/actions';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+
+// import "./css/SingleItem.scss";
 
 function SingleProduct() {
     const { loading, data: queryProduct } = useQuery(QUERY_PRODUCT, {
@@ -51,7 +56,7 @@ function SingleProduct() {
                     <div>
                         <button
                         onClick={addToCart}
-                        >Add To Cart</button>
+                        ><FontAwesomeIcon icon={faCartPlus} className="cart-icon"/></button>
                     </div>
                 </div>
             ) : null}
