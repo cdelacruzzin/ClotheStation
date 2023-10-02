@@ -43,7 +43,7 @@ const productData = [
     imageSource: "https://www.sk8clothing.com/cdn/shop/files/FallenRevolverBillyMarksShoeWheatBlackGum_1800x1800.webp?v=1695830645"
   },
   {
-    name: "Hoodie Graphic Blue",
+    name: "Hoodies Graphic Blue",
     price: 129.99,
     description: "A blue hoodie with a vibrant graphic design",
     categories: [],
@@ -78,6 +78,14 @@ const productData = [
     name: "Shoes High-Top Black",
     price: 94.99,
     description: "High-top black shoes, perfect for casual outings",
+    categories: [],
+    comment: [],
+    imageSource: "https://www.sk8clothing.com/cdn/shop/files/NBNumeric440TrailShoeBlackGreen_480x.jpg?v=1692199979"
+  },
+  {
+    name: "Decks High-Top Black",
+    price: 94.99,
+    description: "High-top black decks, perfect for casual outings",
     categories: [],
     comment: [],
     imageSource: "https://www.sk8clothing.com/cdn/shop/files/NBNumeric440TrailShoeBlackGreen_480x.jpg?v=1692199979"

@@ -24,7 +24,11 @@ const categoryData = [
     description: "Hoodies",
     products: [],
   },
-];
-
+  {
+    name: "Decks",
+    description: "Decks",
+    products: [],
+  },
+]
 //categoryIds
 module.exports = { categoryData };
