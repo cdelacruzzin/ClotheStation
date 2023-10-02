@@ -33,6 +33,7 @@ import "./css/Home.scss";
 import { CarouselItem } from "../components/CarouselItem";
 
 import { useStoreContext } from "../utils/globalState";
+import Skatedecks from "../components/SkateDecks/Skatedecks";
 
 export default function Home() {
 
@@ -189,46 +190,8 @@ export default function Home() {
         btnText="View All"
         btnLink="/products"
       >
-        <CarouselItem
-          name="Start"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Some product with a super long long long name"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="Black Hoodie"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
-        <CarouselItem
-          name="End"
-          price="90"
-          image="https://www.sk8clothing.com/cdn/shop/files/RDSOGHoodieOceanBlue_480x.webp?v=1694608071"
-        />
+        <Skatedecks/>
+      
       </ProductCarousel>
     </div>
   );
