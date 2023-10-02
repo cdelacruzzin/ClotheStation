@@ -12,7 +12,7 @@ export function idbPromise(storeName, method, object) {
         // open shop-shop indexed data base, with index 1
         const request = window.indexedDB.open('shop-shop', 1);
         let db, tx, store;
-        request.onupgradeneeded = function(e) {
+        request.onupgradeneeded = function (e) {
             const db = request.result;
             // create object stores for products, categories and cart
             db.createObjectStore('products', { keyPath: '_id' });
@@ -20,11 +20,11 @@ export function idbPromise(storeName, method, object) {
             db.createObjectStore('cart', { keyPath: '_id' });
         };
 
-        request.onerror = function(e) {
+        request.onerror = function (e) {
             console.log('There was an error');
         };
 
-        request.onsuccess = function(e) {
+        request.onsuccess = function (e) {
             db = request.result;
             tx = db.transaction(storeName, 'readwrite');
             store = tx.objectStore(storeName);
@@ -40,17 +40,20 @@ export function idbPromise(storeName, method, object) {
                     break;
                 case 'get':
                     const all = store.getAll();
-                    all.onsuccess = function() {
+                    all.onsuccess = function () {
                         resolve(all.result);
                     };
+                    break;
+                case 'delete':
+                    store.delete(object._id);
                     break;
                 default:
                     console.log('No valid method');
                     break;
             }
 
-            tx.oncomplete = function() {
-                db.onclose();
+            tx.oncomplete = function () {
+                db.close();
             };
         };
     });

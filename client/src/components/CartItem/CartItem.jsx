@@ -8,6 +8,7 @@ const CartItem = ({ item }) => {
 
   // execute remove item action from cart
   const removeFromCart = (item) => {
+    console.log(item)
     dispatch({
       type: REMOVE_FROM_CART,
       _id: item._id,

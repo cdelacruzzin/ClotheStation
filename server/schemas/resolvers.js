@@ -43,12 +43,18 @@ const resolvers = {
       throw new AuthentificationError('Not logged in');
     },
     checkout: async (parent, args, context) => {
+      
       const url = new URL(context.headers.referer).origin;
+      // console.log({url})
       // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
       await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
+      
+
+      // console.log(args.products)
 
       for (const product of args.products) {
+        console.log(product)
         line_items.push({
           price_data: {
             // display price in cad
@@ -59,26 +65,37 @@ const resolvers = {
               description: product.description,
               images: [`${url}/images/${product.image}`],
             },
-            unit_amount: product.price * 100,
+            unit_amount: Math.round(product.price * 100),
+            // unit_amount: product.price *100,
           },
           // display quantity of products
-          quantity: product.quantity,
+          quantity: product.purchaseQuantity,
         });
       }
+      console.log(line_items)
+      
+      try {
+        // checkout with stripe and create a new stripe checkout session
+        const session = await stripe.checkout.sessions.create({
+            // use card as payment method
+            payment_method_types: ['card'],
+            // line ordered items for payment
+            line_items,
+            mode: 'payment',
+            // create success and cancel urls
+            success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${url}/`,
+        });
+    
+        console.log('session')
+        return { session: session.id };
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        // Handle the error accordingly, you can also send a response to the client if this is part of an API endpoint.
+    }
+    
 
-      // checkout with stripe and create a new stripe checkout session
-      const session = await stripe.checkout.sessions.create({
-        // use card as payment method
-        payment_method_types: ['card'],
-        // line ordered items for payment
-        line_items,
-        mode: 'payment',
-        // create success and cancel urls
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
-      });
 
-      return { session: session.id };
     },
     product: async (parent, {_id}) =>{
       const product = await Product.findById(_id).populate('category');

@@ -6,19 +6,48 @@ import { idbPromise } from '../../utils/helpers';
 import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/globalState';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../..utils/actions';
+import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import { useMemo } from 'react';
 
 // use stripePromise for testing and insert api key in loadStripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
+    // 1. Hooks and State Management
     const [state, dispatch] = useStoreContext();
-    // execute query when user wants to execute query
-    const [getCheckout, {data}] = useLazyQuery(QUERY_CHECKOUT);
+    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
+    // 2. Helper Functions
+    const filterProductsForCheckout = () => {
+        return state.cart.map(product => ({
+            _id: product._id,
+            purchaseQuantity: product.purchaseQuantity,
+            name: product.name,
+            image: product.imageSource, // note the change from imageSource to image
+            price: product.price,
+        }));
+    };
+
+    // const total = useMemo(() => {
+    //     return state.cart.reduce((acc, item) => acc + item.price, 0);
+    // }, [state.cart]);
+
+    const total = ()=>{
+        let total =0;
+        filterProductsForCheckout().forEach(element => {
+            total += (element.purchaseQuantity * element.price)
+            console.log(`Quantity of ${element.name}: ${element.purchaseQuantity}`) 
+        });
+        return total;
+    }
+    console.log(total())
+// total();
+
+
+
+    // 3. Effects
     useEffect(() => {
         if (data) {
-            // once data received load stripe and then redirect to checkout
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: data.checkout.session });
             });
@@ -27,7 +56,7 @@ const Cart = () => {
 
     useEffect(() => {
         async function getCart() {
-            // get cart items from index db
+            console.log(state);
             const cart = await idbPromise('cart', 'get');
             dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
         }
@@ -35,42 +64,42 @@ const Cart = () => {
         if (!state.cart.length) {
             getCart();
         }
-    }, [state.cart.length, dispatch]);
+    }, [state.cart.length, dispatch, state]);
 
-    // execute toggle cart action
-    function toggleCart() {
-        dispatch({ type: TOGGLE_CART});
-    }
+    // useEffect(() => {
+    //     getCheckout({
+    //         variables: {
+    //             products: filterProductsForCheckout(),
+    //         },
+    //     });
+    // }, [state.cart, getCheckout]);
 
-    // calculate total price of products inside cart
-    function calculateTotal() {
+    // 4. Event Handlers
+    const toggleCart = () => {
+        dispatch({ type: TOGGLE_CART });
+    };
+
+    const submitCheckout = () => {
         getCheckout({
             variables: {
-                products: [...state.cart],
+                products: filterProductsForCheckout(),
             },
         });
-    }
+    };
 
-    // submit Checkout function
-    function submitCheckout() {
-        getCheckout({
-            variables: {
-                products: [...state.cart],
-            },
-        });
-    }
-
+    // 5. Render Logic
     if (!state.cartOpen) {
         return (
-            // toggle Cart to open once it's closed
             <div className="cart-closed" onClick={toggleCart}>
                 <span role="img" aria-label="trash">
-                   🛒
+                    🛒
                 </span>
             </div>
         );
     }
 
+
+    console.log(Auth.loggedIn())
     return (
         <div className="cart">
             <div className='close' onClick={toggleCart}>
@@ -80,15 +109,17 @@ const Cart = () => {
             {state.cart.length ? (
                 <div>
                     {state.cart.map((item) => (
-                        <CartItem key={item._id} item={item}/>
+                        <CartItem key={item._id} item={item} />
                     ))}
 
 
                     <div>
-                        <strong>Total: ${calculateTotal()}</strong>
+                        {/* <strong>Total: ${calculateTotal()}</strong> */}
+                        <strong>Total: ${total()}</strong>
+
 
                         {Auth.loggedIn() ? (
-                            <button onClick={submitCheckout}></button>
+                            <button onClick={submitCheckout}>checkout</button>
                         ) : (
                             <span>(log in to check out)</span>
                         )}
@@ -97,7 +128,7 @@ const Cart = () => {
             ) : (
                 <h3>
                     <span role='img' aria-label="prohibited">
-                      🚫
+                        🚫
                     </span>
                     You haven't added anything to your cart yet!
                 </h3>

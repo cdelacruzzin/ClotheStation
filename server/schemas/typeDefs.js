@@ -69,7 +69,9 @@ const typeDefs = gql`
     name: String
     image: String
     price: Float
-    quantity: Int
+    #quantity: Int
+    imageSource: String
+    description: String
   }
 
   # Auth type to handle returning data from a profile creating or user login
