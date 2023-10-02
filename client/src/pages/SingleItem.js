@@ -30,7 +30,7 @@ function SingleProduct() {
     return (
         <>
             {selectedProduct ? (
-                <div style={{ background: 'red' }}>
+                <div>
                     <Link to='/'>← Back to Products</Link>
                     <p>
                         <img

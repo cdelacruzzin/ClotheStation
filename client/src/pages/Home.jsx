@@ -59,7 +59,9 @@ export default function Home() {
             <div>
               <h1>Feel</h1>
               <div>
+                <Link to="/products">
                 <button className="btn">Shop</button>
+                </Link>
                 <h1>The</h1>
               </div>
             </div>
@@ -183,7 +185,7 @@ export default function Home() {
 
       {/* === SKATE DECKS CAROUSEL === */}
       <ProductCarousel
-        title="Sake Decks"
+        title="Skate Decks"
         btnText="View All"
         btnLink="/products"
       >
