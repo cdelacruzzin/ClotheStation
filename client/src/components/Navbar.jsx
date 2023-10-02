@@ -50,7 +50,7 @@ const Navbar = () => {
   // const closeLoginModal = () => {
   //   setLoginModalOpen(false);
   // }
-// open the singup modal
+  // open the singup modal
   const openSignupModal = () => {
     setSignUpModalOpen(true);
   }
@@ -147,13 +147,16 @@ const Navbar = () => {
                     />
                   </svg>
                 </a>
+                <Link to="cart">
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </Link>
               </div>
 
             </>
           ) : (
             <div className="flex flex-row gap-x-2 mx-2">
-               <Link to="cart">
-               <FontAwesomeIcon icon={faCartShopping} />
+              <Link to="cart">
+                <FontAwesomeIcon icon={faCartShopping} />
               </Link>
               <Link onClick={openLoginModal}>
                 <FontAwesomeIcon icon={faRightToBracket} />
@@ -166,29 +169,29 @@ const Navbar = () => {
         </div>
 
         {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.*/}
-      <button
-        id="nav--links-toggle"
-        onClick={() => {
-          document
-            .getElementById("nav--links-container")
-            .classList.toggle("opened");
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
+        <button
+          id="nav--links-toggle"
+          onClick={() => {
+            document
+              .getElementById("nav--links-container")
+              .classList.toggle("opened");
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
       </div>
       {/* handle login modal open and close, same for sign up modal */}
       <Login open={loginModalOpen} handleClose={handleModalsCLose} />

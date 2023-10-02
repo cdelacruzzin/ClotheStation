@@ -43,7 +43,11 @@ const resolvers = {
       throw new AuthentificationError('Not logged in');
     },
     checkout: async (parent, args, context) => {
+      console.log(args)
+      // console.log(context.headers)
       const url = new URL(context.headers.referer).origin;
+ 
+      console.log(url)
       // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
       await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
