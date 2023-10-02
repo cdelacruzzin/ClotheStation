@@ -3,7 +3,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 // import Auth from "../utils/auth";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightToBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket, faUserPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 // import { useStoreContext } from "../utils/globalState";
 // import { UPDATE_CURRENT_CATEGORY } from "../utils/actions";
@@ -150,6 +150,9 @@ const Navbar = () => {
             </>
           ) : (
             <div className="flex flex-row gap-x-2 mx-2">
+               <Link to="cart">
+               <FontAwesomeIcon icon={faCartShopping} />
+              </Link>
               <Link onClick={openLoginModal}>
                 <FontAwesomeIcon icon={faRightToBracket} />
               </Link>
