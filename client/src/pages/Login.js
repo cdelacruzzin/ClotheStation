@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -16,6 +17,9 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       Auth.login(token);
+
+      //should redirect to homepage
+      window.location.href = '/'; // Replace with your home page URL
     } catch (e) {
       console.log(e);
     }
@@ -61,7 +65,7 @@ function Login(props) {
           </div>
         ) : null}
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+        <button type="submit">Sign In</button> {/* Should navigate back to the page the user was on */}
         </div>
       </form>
     </div>
