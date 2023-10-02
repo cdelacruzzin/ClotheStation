@@ -42,6 +42,7 @@ const Navbar = () => {
     navigate('/');
   };
 
+  // open the login modal
   const openLoginModal = () => {
     setLoginModalOpen(true);
   }
@@ -49,7 +50,7 @@ const Navbar = () => {
   // const closeLoginModal = () => {
   //   setLoginModalOpen(false);
   // }
-
+// open the singup modal
   const openSignupModal = () => {
     setSignUpModalOpen(true);
   }
@@ -58,6 +59,7 @@ const Navbar = () => {
   //   setSignUpModalOpen(false);
   // }
 
+  // close both modals
   const handleModalsCLose = () => {
     setLoginModalOpen(false);
     setSignUpModalOpen(false);
@@ -188,6 +190,7 @@ const Navbar = () => {
         </svg>
       </button>
       </div>
+      {/* handle login modal open and close, same for sign up modal */}
       <Login open={loginModalOpen} handleClose={handleModalsCLose} />
       <SignupForm open={signupModalOpen} handleClose={handleModalsCLose} />
     </div>

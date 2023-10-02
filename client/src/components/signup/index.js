@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
+// import necessary mui modal components
 import {
   Dialog,
   DialogTitle,
@@ -45,7 +46,9 @@ const SignupForm = ({ open, handleClose }) => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+      //  once user signed up add token and login
       Auth.login(data.addUser.token);
+      // close modal
       handleClose();
       //calls the login function from Auth, which takes in a token id as parameters.
       // Auth.login(data.addUser.token)  //passes in the token from the return response of "addUser"
@@ -55,9 +58,11 @@ const SignupForm = ({ open, handleClose }) => {
   };
 
   return (
+    // open and close for the sign up
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Signup</DialogTitle>
       <DialogContent>
+        {/* form content for the signup modal */}
         <div className="container my-1">
         <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
@@ -91,12 +96,13 @@ const SignupForm = ({ open, handleClose }) => {
           />
           </div>
          
-        
+         {/* error handling */}
         {error && (
           <div>
             <p className="error-text">Error: {error.message}</p>
           </div>
         )}
+        {/* handle sign up and cancel for the sign up */}
           <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
         <Button type="submit">Submit</Button>

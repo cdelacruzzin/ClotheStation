@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-// import necessary components from the mui
+// import necessary modal components from the mui
 import {
   Dialog,
   DialogTitle,
@@ -12,14 +12,19 @@ import {
   Button,
 } from "@mui/material";
 
+// import signup
 import SignupForm from '../components/signup/index';
 
+// use open and handleClose as props for the login modal
 function Login({ open, handleClose }) {
+  // set signupModal state as false
   const [signupModalOpen, setSignUpModalOpen] = useState(false);
+  // once open signup modal, set state to true
   const openSignupModal = () => {
     setSignUpModalOpen(true);
   }
 
+  // close signup modal
   const closeSignupModal = () => {
     setSignUpModalOpen(false);
   }
@@ -37,6 +42,7 @@ function Login({ open, handleClose }) {
 
       //should redirect to homepage
       // window.location.href = '/'; // Replace with your home page URL
+      // handleClose login modal once logged in
       handleClose();
     } catch (e) {
       console.log(e);
@@ -52,10 +58,13 @@ function Login({ open, handleClose }) {
   };
 
   return (
+    // modal open and close
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Login</DialogTitle>
       <DialogContent>
+        {/* content for login modal */}
         <div className="container my-1">
+          {/* opens the signup modal */}
           <Button onClick={openSignupModal}>← Go to Signup</Button>
 
           <h2>Login</h2>
@@ -89,16 +98,16 @@ function Login({ open, handleClose }) {
             )}
 
             <DialogActions>
+              {/* close modal or sign in */}
             <Button onClick={handleClose}>Cancel</Button>
             <Button type="submit" onClick={handleFormSubmit}>
                 Sign In
               </Button>
-         
-              {/* Should navigate back to the page the user was on */}
             </DialogActions>
           </form>
         </div>
       </DialogContent>
+      {/* sign up form handling */}
       <SignupForm open={signupModalOpen} handleClose={closeSignupModal} />
     </Dialog>
   );
