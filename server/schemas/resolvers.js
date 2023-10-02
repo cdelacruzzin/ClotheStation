@@ -1,5 +1,5 @@
 // import authentificationerror , usermodel and signToken
-const { AuthentificationError } = require("apollo-server-express");
+const { AuthenticationError } = require("apollo-server-express");
 const { User, Category, Comment, Product, Cart } = require("../models");
 const { signToken } = require("../utils/auth");
 const uuid = require('uuid');
@@ -103,16 +103,18 @@ const resolvers = {
         const user = await User.findOne({ email });
 
         if (!user) {
-          throw new AuthentificationError(
+          throw new AuthenticationError(
             "No user found with this email address"
           );
         }
+        //console.log('user:',user)
+        //console.log('password:',password)
 
-        // const correctPw = await user.isCorrectPassword(password);
-
-        // if (!correctPw) {
-        //   throw new AuthentificationError("Incorrect credentials");
-        // }
+        const correctPw = await user.isCorrectPassword(password);
+        //console.log(correctPw)
+        if (!correctPw) {
+          throw new AuthenticationError("Incorrect credentials");
+        }
 
         const token = signToken(user);
         console.log(user)
