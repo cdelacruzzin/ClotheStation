@@ -109,8 +109,9 @@ const resolvers = {
         }
         console.log('user:',user)
         console.log('password:',password)
-        const correctPw = await user.isCorrectPassword(password);
 
+        const correctPw = await user.isCorrectPassword(password);
+        console.log(correctPw)
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
         }
