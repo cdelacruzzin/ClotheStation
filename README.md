@@ -3,7 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightblue.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-In this group project we [...]. You can access it from the [Deployment](#deployment) section below.
+In this group project we to embarked on a jourey to build an e-Commerce platform which allows users to choose products, add to cart, login to personal account, and purchase cart items utilizing Stripe. This app is built on MERN stack. Used Express and Node.js to build the server, implemented Model View Controller paradigm and interconnected a MongoDB no-SQL database using GraphQL. 
+
+You can access the App from the [Deployment](#deployment) section below.
 
 ## Table of Contents
 - [User-Story](#user-story)
@@ -64,19 +66,36 @@ WHEN I enter my account’s email address and password and click on the login bu
 THEN I the modal closes and I am logged in to the site
 WHEN I am logged in 
 THEN I can see the cart at a later point of time and have it saved in the account, (SAVE clothes, save purchase history)
-
 ```
-(Admin-Dashboard
-User Story
-
-Acceptance Criteria)
 
 ## Installation
 To get the app running, simply head on over to the deployed link on Heroku.
 
+In the development environment you can run the following commands in the console:
+```
+npm install
+
+npm run seed
+
+npm run develop
+```
+
+for the production environment:
+```
+npm run build
+```
 
 ## Usage
-This app allows the user to [...].
+This app allows the user to choose products, add to cart, login to personal account, and purchase cart items utilizing Stripe.
+
+The following images replicate the use of our app.
+
+![homepage](./Assets/app_img_01.JPG)
+![searcarousel](./Assets/app_img_02-carousel.jpg)
+![categories](./Assets/app_img_03_categories.JPG)
+![sign-up](./Assets/app_img_04_sign_up.jpg)
+![log_in](./Assets/app_img_05_log_in.JPG)
+![product](./Assets/app_img_06_add_to_cart.jpg)
 
 ## License
 This app is covered under MIT license. For details and limitations of this license please visit:
@@ -97,7 +116,7 @@ If you have any questions, you can email them to us.
 ## Deployment
 
 1. You can find the video walkthrough of a typical user flow of the application **here:** <br>
-[link](link)<br>
+[Urban Sk8 - Deployed Link](https://urban-sk8-ef054e6c42c1.herokuapp.com/)<br>
 
 
 2. You can find the URL of my GitHub repository that contains this code **here:** <br>[GitHub Repo - link](https://github.com/cdelacruzzin/ClotheStation)
