@@ -43,18 +43,18 @@ function SingleProduct() {
                 products: queryProduct.products,
             });
 
-            //   queryProduct.products.forEach((product) => {
-            //     idbPromise('products', 'put', product);
-            //   });
+              queryProduct.products.forEach((product) => {
+                idbPromise('products', 'put', product);
+              });
         }
         // get cache from idb
         else if (!loading) {
-            //   idbPromise('products', 'get').then((indexedProducts) => {
-            //     dispatch({
-            //       type: UPDATE_PRODUCTS,
-            //       products: indexedProducts,
-            //     });
-            //   });
+              idbPromise('products', 'get').then((indexedProducts) => {
+                dispatch({
+                  type: UPDATE_PRODUCTS,
+                  products: indexedProducts,
+                });
+              });
         }
         // console.log(currentProduct)
 
@@ -71,16 +71,16 @@ function SingleProduct() {
                 _id: id,
                 purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
             });
-            //   idbPromise('cart', 'put', {
-            //     ...itemInCart,
-            //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-            //   });
+              idbPromise('cart', 'put', {
+                ...itemInCart,
+                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+              });
         } else {
             dispatch({
                 type: ADD_TO_CART,
                 product: { ...currentProduct, purchaseQuantity: 1 },
             });
-            //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+              idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
         }
     }
 

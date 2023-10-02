@@ -13,8 +13,11 @@ import { useMemo } from 'react';
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
+    // 1. Hooks and State Management
     const [state, dispatch] = useStoreContext();
+    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
+    // 2. Helper Functions
     const filterProductsForCheckout = () => {
         return state.cart.map(product => ({
             _id: product._id,
@@ -22,16 +25,16 @@ const Cart = () => {
             name: product.name,
             image: product.imageSource, // note the change from imageSource to image
             price: product.price,
-            // If ProductInput requires a quantity field, add it here. Otherwise, omit.
         }));
     };
 
+    const total = useMemo(() => {
+        return state.cart.reduce((acc, item) => acc + item.price, 0);
+    }, [state.cart]);
 
-    // execute query when user wants to execute query
-    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+    // 3. Effects
     useEffect(() => {
         if (data) {
-            // once data received load stripe and then redirect to checkout
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: data.checkout.session });
             });
@@ -39,10 +42,9 @@ const Cart = () => {
     }, [data]);
 
     useEffect(() => {
+        console.log(state)
         async function getCart() {
-
-            console.log(state)
-            // get cart items from index db
+            console.log(state);
             // const cart = await idbPromise('cart', 'get');
             // dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
         }
@@ -52,22 +54,6 @@ const Cart = () => {
         }
     }, [state.cart.length, dispatch, state]);
 
-    // execute toggle cart action
-    function toggleCart() {
-        dispatch({ type: TOGGLE_CART });
-    }
-
-    // calculate total price of products inside cart
-    console.log(...state.cart)
-    // function calculateTotal() {
-    //     getCheckout({
-    //         variables: {
-    //             products: [...state.cart],
-    //         },
-    //     });
-    // }
-
-
     useEffect(() => {
         getCheckout({
             variables: {
@@ -76,15 +62,10 @@ const Cart = () => {
         });
     }, [state.cart, getCheckout]);
 
-
-
-
-    const total = useMemo(() => {
-        return state.cart.reduce((acc, item) => acc + item.price, 0);
-    }, [state.cart]);
-
-
-
+    // 4. Event Handlers
+    const toggleCart = () => {
+        dispatch({ type: TOGGLE_CART });
+    };
 
     const submitCheckout = () => {
         getCheckout({
@@ -94,10 +75,9 @@ const Cart = () => {
         });
     };
 
-
+    // 5. Render Logic
     if (!state.cartOpen) {
         return (
-            // toggle Cart to open once it's closed
             <div className="cart-closed" onClick={toggleCart}>
                 <span role="img" aria-label="trash">
                     🛒
@@ -105,6 +85,7 @@ const Cart = () => {
             </div>
         );
     }
+
 
     console.log(Auth.loggedIn())
     return (
