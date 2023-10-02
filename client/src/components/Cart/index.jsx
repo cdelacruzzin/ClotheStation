@@ -14,6 +14,19 @@ const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
     const [state, dispatch] = useStoreContext();
+
+    const filterProductsForCheckout = () => {
+        return state.cart.map(product => ({
+            _id: product._id,
+            purchaseQuantity: product.purchaseQuantity,
+            name: product.name,
+            image: product.imageSource, // note the change from imageSource to image
+            price: product.price,
+            // If ProductInput requires a quantity field, add it here. Otherwise, omit.
+        }));
+    };
+
+
     // execute query when user wants to execute query
     const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
     useEffect(() => {
@@ -54,21 +67,11 @@ const Cart = () => {
     //     });
     // }
 
-    // Only calculates total without side effects
-    function calculateTotal() {
-        // Assuming items have a price property and you want to sum them up.
-        return state.cart.reduce((acc, item) => acc + item.price, 0);
-    }
-    // Memoized version of calculateTotal (so it only recalculates when state.cart changes)
-    const total = useMemo(() => {
-        return calculateTotal();
-    }, [state.cart]);
 
-    // If you need to execute getCheckout whenever the cart changes, do it in a useEffect:
     useEffect(() => {
         getCheckout({
             variables: {
-                products: [...state.cart],
+                products: filterProductsForCheckout(),
             },
         });
     }, [state.cart, getCheckout]);
@@ -76,15 +79,21 @@ const Cart = () => {
 
 
 
+    const total = useMemo(() => {
+        return state.cart.reduce((acc, item) => acc + item.price, 0);
+    }, [state.cart]);
 
-    // submit Checkout function
-    function submitCheckout() {
-        //     getCheckout({
-        //         variables: {
-        //             products: [...state.cart],
-        //         },
-        //     });
-    }
+
+
+
+    const submitCheckout = () => {
+        getCheckout({
+            variables: {
+                products: filterProductsForCheckout(),
+            },
+        });
+    };
+
 
     if (!state.cartOpen) {
         return (
@@ -96,6 +105,8 @@ const Cart = () => {
             </div>
         );
     }
+
+    console.log(Auth.loggedIn())
     return (
         <div className="cart">
             <div className='close' onClick={toggleCart}>
@@ -115,7 +126,7 @@ const Cart = () => {
 
 
                         {Auth.loggedIn() ? (
-                            <button onClick={submitCheckout}></button>
+                            <button onClick={submitCheckout}>checkout</button>
                         ) : (
                             <span>(log in to check out)</span>
                         )}
