@@ -86,6 +86,8 @@ Happy Shopping!
 
 [Chris Dang](https://github.com/Koro999)
 
+[Abraham Hodos](https://github.com/hnm938)
+
 ## License
 
 MIT licensed product.
