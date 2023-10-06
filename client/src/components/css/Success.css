@@ -1,0 +1,9 @@
+:root {
+  --coral-1: #F8635E;
+}
+
+.success {
+  text-align: center;
+  color: var(--coral-1);
+  font-size: 2.5rem;
+}/*# sourceMappingURL=Success.css.map */

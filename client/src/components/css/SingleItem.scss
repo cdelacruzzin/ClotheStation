@@ -3,6 +3,8 @@
 :root {
     --coral-1: #F8635E;
     --coral-2: #FA9793;
+    --coral-3: #FBB9B7;
+    --coral-4: #FBD0CE;
     --dark-green: rgb(10, 105, 10);
 }
 
@@ -43,7 +45,8 @@
     div {
       Button {
         font-size: 1.5rem;
-        color: var(--coral-1)
+        color: var(--coral-4);
+        background-color: var(--coral-1);
       }
       .success-message {
         color: var(--dark-green);
