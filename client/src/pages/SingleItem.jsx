@@ -6,12 +6,12 @@ import { QUERY_PRODUCT } from '../utils/queries';
 import { useQuery } from "@apollo/client";
 import { SET_CURRENT_PRODUCT, UPDATE_CART_QUANTITY, ADD_TO_CART, UPDATE_PRODUCTS } from '../utils/actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@mui/material";
 
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { idbPromise } from "../utils/helpers";
-
-// import "./css/SingleItem.scss";
+import "../components/css/SingleItem.scss"
 
 function SingleProduct() {
     const { loading, data: queryProduct } = useQuery(QUERY_PRODUCT, {
@@ -88,28 +88,33 @@ function SingleProduct() {
     return (
         <>
             {selectedProduct ? (
-                <div>
-                    <Link to='/'>← Back to Products</Link>
-                    <p>
+                <div className="single--product-page">
+                    <Link to='/products'>← Back to Products</Link>
+                    <div className="single-product">
+                        <div>
                         <img
                             src={selectedProduct.imageSource}
                             alt={selectedProduct.imageSource}
                         ></img>
-                    </p>
+                        </div>
+        
                     <h2>
                         {selectedProduct.name}
                     </h2>
                     <p>
                         {selectedProduct.description}
                     </p>
-                    <p>
+                    <p className="product-price">
                         <strong>Price:</strong>{' '}
-                        ${selectedProduct.price}
+                        <span>${selectedProduct.price}</span>
+                        CAD
                     </p>
                     <div>
-                        <button
+                        <Button
                             onClick={addToCart}
-                        ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></button>
+                            variant="contained"
+                        ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></Button>
+                    </div>
                     </div>
                 </div>
             ) : null}

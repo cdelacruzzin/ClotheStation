@@ -107,12 +107,12 @@ const productData = [
     imageSource: "https://www.sk8clothing.com/cdn/shop/files/PrimitivexCallofDutyRodriguezGhostDeck8125_1800x1800.webp?v=1692879780"
   },
   {
-    name: "Decks Grizzly Marshmellow Complete 7.75",
-    price: 110.99,
-    description: "Prebuilt grizzly skateboard",
+    name: "Decks Santa Cruz McCoy Transcend VX Twin Deck 8.25",
+    price: 120.99,
+    description: "Cutting edge VX-Technology",
     categories: [],
     comment: [],
-    imageSource: "https://www.sk8clothing.com/collections/new-arrivals-skateboards/products/grizzly-marshmellow-complete-7-75"
+    imageSource: "https://www.sk8clothing.com/cdn/shop/files/SantaCruzMcCoyTranscendVXTwinDeck825_1800x1800.jpg?v=1693505617"
   },
   {
     name: "Decks Alien Workshop Inflatable Intel Deck 8.125",
