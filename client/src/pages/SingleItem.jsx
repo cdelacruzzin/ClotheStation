@@ -21,6 +21,7 @@ function SingleProduct() {
     const [state, dispatch] = useStoreContext();
     const { products, cart, selectedProduct } = state;
     const [currentProduct, setCurrentProduct] = useState({});
+    // success message state
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
@@ -84,7 +85,13 @@ function SingleProduct() {
               idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
         }
 
-        setSuccessMessage(`${currentProduct.name} has been added to the cart successfully!`)
+        // success message once item added to the cart
+        setSuccessMessage(`${currentProduct.name} has been added to the cart successfully!`);
+
+        // display success message for 3 seconds
+        setTimeout(() => {
+            setSuccessMessage("");
+        }, 3000);
     }
 
     console.log(state)
@@ -92,7 +99,7 @@ function SingleProduct() {
         <>
             {selectedProduct ? (
                 <div className="single--product-page">
-                    <Link to='/products'>← Back to Products</Link>
+                    <Link to='/products' className="product--page-link">← Back to Products</Link>
                     <div className="single-product">
                         <div>
                         <img
@@ -117,6 +124,7 @@ function SingleProduct() {
                             onClick={addToCart}
                             variant="contained"
                         ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></Button>
+                        {/* display successmessage here once add to cart clicked */}
                         {successMessage && <p className="success-message">{successMessage}</p>}
                     </div>
                     </div>

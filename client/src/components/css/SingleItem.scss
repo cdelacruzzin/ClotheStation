@@ -1,28 +1,37 @@
 @import "../../styles/mixins";
 
+:root {
+    --coral-1: #F8635E;
+    --coral-2: #FA9793;
+    --dark-green: rgb(10, 105, 10);
+}
+
 .single--product-page {
   margin: 1rem;
 
-  Link {
+  .product--page-link {
     margin-bottom: 1rem;
+    color:var(--coral-2);
   }
 
   .single-product {
     div {
-      width: 15rem;
-      height: 15rem;
+      width: 20rem;
+      height: 20rem;
       img {
-        width: 15rem;
-        height: 15rem;
+        width: 20rem;
+        height: 20rem;
         object-fit: contain;
       }
     }
     h2 {
       font-size: 1.5rem;
       font-weight: bold;
+      color: var(--coral-1);
     }
     p {
       font-size: 1rem;
+      color: var(--coral-2);
     }
     .product-price {
       margin-top: 1rem;
@@ -34,9 +43,10 @@
     div {
       Button {
         font-size: 1.5rem;
+        color: var(--coral-1)
       }
       .success-message {
-        color: green;
+        color: var(--dark-green);
       }
     }
   }
