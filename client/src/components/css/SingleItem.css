@@ -30,4 +30,7 @@
 }
 .single--product-page .single-product div Button {
   font-size: 1.5rem;
+}
+.single--product-page .single-product div .success-message {
+  color: green;
 }/*# sourceMappingURL=SingleItem.css.map */

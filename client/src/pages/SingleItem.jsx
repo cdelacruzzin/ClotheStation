@@ -21,6 +21,7 @@ function SingleProduct() {
     const [state, dispatch] = useStoreContext();
     const { products, cart, selectedProduct } = state;
     const [currentProduct, setCurrentProduct] = useState({});
+    const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
         if (queryProduct) {
@@ -82,6 +83,8 @@ function SingleProduct() {
             });
               idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
         }
+
+        setSuccessMessage(`${currentProduct.name} has been added to the cart successfully!`)
     }
 
     console.log(state)
@@ -114,6 +117,7 @@ function SingleProduct() {
                             onClick={addToCart}
                             variant="contained"
                         ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></Button>
+                        {successMessage && <p className="success-message">{successMessage}</p>}
                     </div>
                     </div>
                 </div>
