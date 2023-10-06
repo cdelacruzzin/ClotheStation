@@ -108,7 +108,7 @@ function SingleProduct() {
                         {selectedProduct.description}
                     </p>
                     <p className="product-price">
-                        <strong>Price:</strong>{' '}
+                        {' '}
                         <span>${selectedProduct.price}</span>
                         CAD
                     </p>
