@@ -1,4 +1,49 @@
-.cart-icon {
-  width: 3rem;
-  height: 3rem;
+:root {
+  --coral-1: #F8635E;
+  --coral-2: #FA9793;
+  --coral-3: #FBB9B7;
+  --coral-4: #FBD0CE;
+  --dark-green: rgb(10, 105, 10);
+}
+
+.single--product-page {
+  margin: 1rem;
+}
+.single--product-page .product--page-link {
+  margin-bottom: 1rem;
+  color: var(--coral-2);
+}
+.single--product-page .single-product div {
+  width: 20rem;
+  height: 20rem;
+}
+.single--product-page .single-product div img {
+  width: 20rem;
+  height: 20rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.single--product-page .single-product h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--coral-1);
+}
+.single--product-page .single-product p {
+  font-size: 1rem;
+  color: var(--coral-2);
+}
+.single--product-page .single-product .product-price {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+}
+.single--product-page .single-product .product-price span {
+  margin-right: 0.25rem;
+}
+.single--product-page .single-product div Button {
+  font-size: 1.5rem;
+  color: var(--coral-4);
+  background-color: var(--coral-1);
+}
+.single--product-page .single-product div .success-message {
+  color: var(--dark-green);
 }/*# sourceMappingURL=SingleItem.css.map */

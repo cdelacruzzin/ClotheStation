@@ -10,11 +10,12 @@
   grid-template-rows: 0.75fr 0.25fr;
 
   .item--image {
-    width: 100%;
-    height: 100%;
+    width: 10em;
+    height: 10em;
 
     img {
-     height: 100%;
+     height: 10em;
+     width: 10em;
      object-fit: contain;
     }
   }

@@ -1,7 +1,56 @@
 @import "../../styles/mixins";
 
+:root {
+    --coral-1: #F8635E;
+    --coral-2: #FA9793;
+    --coral-3: #FBB9B7;
+    --coral-4: #FBD0CE;
+    --dark-green: rgb(10, 105, 10);
+}
 
-.cart-icon {
-    width:3rem;
-    height: 3rem;
+.single--product-page {
+  margin: 1rem;
+
+  .product--page-link {
+    margin-bottom: 1rem;
+    color:var(--coral-2);
+  }
+
+  .single-product {
+    div {
+      width: 20rem;
+      height: 20rem;
+      img {
+        width: 20rem;
+        height: 20rem;
+        object-fit: contain;
+      }
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--coral-1);
+    }
+    p {
+      font-size: 1rem;
+      color: var(--coral-2);
+    }
+    .product-price {
+      margin-top: 1rem;
+      font-size: 1.15rem;
+      span {
+        margin-right: 0.25rem;
+      }
+    }
+    div {
+      Button {
+        font-size: 1.5rem;
+        color: var(--coral-4);
+        background-color: var(--coral-1);
+      }
+      .success-message {
+        color: var(--dark-green);
+      }
+    }
+  }
 }
