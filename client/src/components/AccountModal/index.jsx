@@ -1,26 +1,56 @@
 import React, { useState } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from '@mui/base/Dropdown';
 import { MenuButton } from '@mui/base/MenuButton';
 import { Menu } from '@mui/base/Menu';
 import { MenuItem } from '@mui/base/MenuItem';
+import Login from '../../pages/Login';
+import SignupForm from '../../components/signup/index';
 import '../css/Navbar.css';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightToBracket, faUserPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import AuthService from "../../utils/auth"; // Import your AuthService
 
 
 const AccountModal = () => {
+    const navigate = useNavigate();
+    const isLoggedIn = AuthService.loggedIn();
 
-    const createHandleMenuClick = (menuItems) => {
-        return () => {
-            alert(`clicked on ${menuItems}`);
-        }
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const [signupModalOpen, setSignUpModalOpen] = useState(false);
+
+    // open the login modal
+    const openLoginModal = () => {
+        setLoginModalOpen(true);
+    }
+    // open the singup modal
+    const openSignupModal = () => {
+        setSignUpModalOpen(true);
     }
 
 
 
+    // close both modals
+    const handleModalsCLose = () => {
+        setLoginModalOpen(false);
+        setSignUpModalOpen(false);
+    };
+    const handleLogout = () => {
+        console.log('called')
+        // Clear user session or token (implement this in your Auth utility)
+        AuthService.logout();
+
+        // Redirect to the login page or another appropriate location
+        navigate('/');
+    };
+
+
     return (
         <>
+
             <Dropdown>
                 <MenuButton >
                     <svg
@@ -44,15 +74,45 @@ const AccountModal = () => {
                     </svg>
                 </MenuButton>
                 <Menu className="CustomMenuIntroduction">
-                    {AuthService ? (
-                        <MenuItem className="CustomMenuIntroduction--item" onClick={createHandleMenuClick('Logout')}>Logout</MenuItem>
+                    {isLoggedIn ? (
+                        <MenuItem className="CustomMenuIntroduction--item" onClick={() => handleLogout()}>
+                            <span style={{ display: 'flex', alignItems: 'center' }}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                    />
+                                </svg>
+                                <span>Logout</span>
+                            </span>
+                        </MenuItem>
                     ) : (
-                        <MenuItem className="CustomMenuIntroduction--item" onClick={createHandleMenuClick('Login')}>Login</MenuItem>
+                        <>
+                            <MenuItem className="CustomMenuIntroduction--item" onClick={openLoginModal}>
+                                <FontAwesomeIcon icon={faRightToBracket} />{' '}
+                                Login</MenuItem>
+
+
+                            <MenuItem className="CustomMenuIntroduction--item" onClick={openSignupModal}>
+                                <FontAwesomeIcon icon={faUserPlus} />{' '}
+                                Signup</MenuItem>
+                        </>
+
                     )}
 
                 </Menu>
             </Dropdown>
 
+            <Login open={loginModalOpen} handleClose={handleModalsCLose} />
+            <SignupForm open={signupModalOpen} handleClose={handleModalsCLose} />
         </>
     )
 
