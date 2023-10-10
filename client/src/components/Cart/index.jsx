@@ -7,8 +7,6 @@ import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/globalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
-import { useMemo } from 'react';
-
 // use stripePromise for testing and insert api key in loadStripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
@@ -38,7 +36,7 @@ const Cart = () => {
             total += (element.purchaseQuantity * element.price)
             console.log(`Quantity of ${element.name}: ${element.purchaseQuantity}`) 
         });
-        return total;
+        return Math.round(total);
     }
     console.log(total())
 // total();

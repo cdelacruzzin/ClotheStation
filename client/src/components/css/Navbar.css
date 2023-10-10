@@ -191,6 +191,30 @@
   left: 0;
   box-shadow: var(--coral-2) 7.5cqw 0, var(--coral-3) 15cqw 0;
 }
+
+.CustomMenuIntroduction {
+      font-family: IBM Plex Sans, sans-serif;
+      font-size: 0.875rem;
+      box-sizing: border-box;
+      padding: 6px;
+      margin: 12px 0;
+      min-width: 200px;
+      border-radius: 12px;
+      overflow: auto;
+      outline: 0px;
+      background-color: gray;
+}
+
+.CustomMenuIntroduction--item {
+  list-style: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+}
+
+
+
 @media screen and (max-width: 1100px) {
   .Navbar #nav--logo-container {
     left: 50%;
