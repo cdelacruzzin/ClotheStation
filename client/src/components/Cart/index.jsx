@@ -90,7 +90,7 @@ const Cart = () => {
     //     );
     // }
     if (state.cart.length) {
-        console.log('state.cart is truthy');
+        console.log(state.cart.length);
     } else {
         console.log('state.cart is falsy');
     }
@@ -116,7 +116,7 @@ const Cart = () => {
                             <Box sx={{ mt: 2 }}>
                                 <span className='cart-title-container'>
                                     <span className='cart-title'><strong>Cart</strong></span>
-                                    <span className='cart-item-count'> (1 item)</span>
+                                    <span className='cart-item-count'> ({state.cart.length} item)</span>
                                 </span>
                             </Box>
 
