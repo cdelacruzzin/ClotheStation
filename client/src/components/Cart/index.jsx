@@ -132,7 +132,6 @@ const Cart = () => {
                                 sx={
                                     {
                                         m: 1,
-                                        gap: 1
                                     }
                                 }>
                                 <strong>{`Total: $${total()} `}</strong>

@@ -8,7 +8,7 @@ import { SET_CURRENT_PRODUCT, UPDATE_CART_QUANTITY, ADD_TO_CART, UPDATE_PRODUCTS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
 
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { idbPromise } from "../utils/helpers";
 import "../components/css/SingleItem.scss"
@@ -45,18 +45,18 @@ function SingleProduct() {
                 products: queryProduct.products,
             });
 
-              queryProduct.products.forEach((product) => {
+            queryProduct.products.forEach((product) => {
                 idbPromise('products', 'put', product);
-              });
+            });
         }
         // get cache from idb
         else if (!loading) {
-              idbPromise('products', 'get').then((indexedProducts) => {
+            idbPromise('products', 'get').then((indexedProducts) => {
                 dispatch({
-                  type: UPDATE_PRODUCTS,
-                  products: indexedProducts,
+                    type: UPDATE_PRODUCTS,
+                    products: indexedProducts,
                 });
-              });
+            });
         }
 
     }, [products, queryProduct, loading, dispatch, id]);
@@ -69,16 +69,16 @@ function SingleProduct() {
                 _id: id,
                 purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
             });
-              idbPromise('cart', 'put', {
+            idbPromise('cart', 'put', {
                 ...itemInCart,
                 purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-              });
+            });
         } else {
             dispatch({
                 type: ADD_TO_CART,
                 product: { ...currentProduct, purchaseQuantity: 1 },
             });
-              idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+            idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
         }
 
         // success message once item added to the cart
@@ -89,39 +89,56 @@ function SingleProduct() {
             setSuccessMessage("");
         }, 3000);
     }
+
+    function saveProduct() {
+
+    }
     return (
         <>
             {selectedProduct ? (
                 <div className="single--product-page">
-                    <Link to='/products' className="product--page-link">← Back to Products</Link>
-                    <div className="single-product">
-                        <div>
-                        <img
-                            src={selectedProduct.imageSource}
-                            alt={selectedProduct.imageSource}
-                        ></img>
+                    <Link to='/products' className="product--page-link"><strong>← Back to Products</strong></Link>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div className="single-product" style={{ padding: '1em', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '50%', borderRadius: '2em', border: '1px solid #000' }} // #000 is just an example for black
+                        >
+                            <div>
+                                <img
+                                    src={selectedProduct.imageSource}
+                                    alt={selectedProduct.imageSource}
+                                ></img>
+                            </div>
+
+                            <h2>
+                                {selectedProduct.name}
+                            </h2>
+                            <p>
+                                {selectedProduct.description}
+                            </p>
+                            <p className="product-price">
+                                {' '}
+                                <span>${selectedProduct.price}</span>
+                                CAD
+                            </p>
+
+
+
+                            <div style={{ height: 'auto', display: 'flex', justifyContent: "space-evenly" }}>
+                                <Button
+                                    onClick={addToCart}
+                                    variant="contained"
+                                ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></Button>
+                                {/* display successmessage here once add to cart clicked */}
+
+                                <Button
+                                    onClick={saveProduct}
+                                    variant="contained"
+                                ><FontAwesomeIcon icon={faHeart} className="cart-icon" /></Button>
+                            </div>
+                            {successMessage && <p className="success-message">{successMessage}</p>}
                         </div>
-        
-                    <h2>
-                        {selectedProduct.name}
-                    </h2>
-                    <p>
-                        {selectedProduct.description}
-                    </p>
-                    <p className="product-price">
-                        {' '}
-                        <span>${selectedProduct.price}</span>
-                        CAD
-                    </p>
-                    <div>
-                        <Button
-                            onClick={addToCart}
-                            variant="contained"
-                        ><FontAwesomeIcon icon={faCartPlus} className="cart-icon" /></Button>
-                        {/* display successmessage here once add to cart clicked */}
-                        {successMessage && <p className="success-message">{successMessage}</p>}
+
                     </div>
-                    </div>
+
                 </div>
             ) : null}
 
