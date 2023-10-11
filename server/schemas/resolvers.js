@@ -293,9 +293,19 @@ const resolvers = {
         throw new Error("Error adding comment");
       }
     },
-    saveProduct: async(_, args, context) =>{
+    saveProduct: async(_, {ProductData}, context) =>{
       try {
         
+        const {_id} = context.user;
+        const currentUser = await User.findByIdAndUpdate(
+          _id,
+          { $push: {savedProducts: ProductData}},
+          {new: true},
+        )
+        .populate('savedProducts');
+
+        return currentUser;
+
       } catch (error) {
         console.error(error);
       }
