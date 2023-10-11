@@ -36,7 +36,9 @@ const SignupForm = ({ open, handleClose }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(e)
     try {
+
       /** calls the "addUser" function to trigger the mutation.
        * passes in a shallow copy of the userFormData as its variables.
        * {data} destructs the response to only extract the "data" property.

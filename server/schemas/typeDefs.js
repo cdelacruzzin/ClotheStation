@@ -9,6 +9,7 @@ const typeDefs = gql`
     password: String
     cartCount: Int #items in cart at the time
     cart: [Cart]
+    savedProducts: [Product]
   }
 
   type Checkout {
@@ -99,6 +100,8 @@ const typeDefs = gql`
     addComment(productId: ID!, comment: CommentData!): Product
     removeComment(comment: ID!): Product
     clearCart: User
+    
+    
   }
 `;
 

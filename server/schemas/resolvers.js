@@ -128,13 +128,13 @@ const resolvers = {
         //console.log('password:',password)
 
         const correctPw = await user.isCorrectPassword(password);
-        //console.log(correctPw)
+      console.log({correctPw})
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
         }
 
         const token = signToken(user);
-        console.log(user)
+        console.log({user})
         console.log({ token })
 
         return { token, user };

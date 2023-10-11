@@ -22,39 +22,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // You can set a default value if needed
   },
-  // cart:
-  // {
-  //   product: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'Product',
-  //     required: true,
-  //   },
-  //   quantity: {
-  //     type: Number,
-  //     required: true,
-  //   },
-  //  [Cart.schema]
-  // },
-
-
-  // [
-  //     {
-  //     purchaseDate: {
-  //       type: Date,
-  //       default: Date.now,
-  //     },
-  //     product: [
-  //       {
-  //         type: Schema.Types.ObjectId,
-  //         ref: "Product",
-  //         quantity: {
-  //           type: Number,
-  //           required: true,
-  //         }
-  //       },
-  //     ],
-  //   }
-  // ]
+  savedProducts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  }],
   cart: [{
     purchaseDate: {
       type: Date,
@@ -64,11 +35,11 @@ const userSchema = new Schema({
       type: Number,
       required: true
     },
-    product:  {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-        required: true
-      },
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+      required: true
+    },
   }]
 
 
@@ -77,22 +48,22 @@ const userSchema = new Schema({
 
 // set up pre-save middleware to create password
 //this should hash  the pw 
-userSchema.pre('save', async function(next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
-    }
-  
-    next();
-  });
+userSchema.pre('save', async function (next) {
+  if (this.isNew || this.isModified('password')) {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+
+  next();
+});
 
 // compare the incoming password with the hashed password
-userSchema.methods.isCorrectPassword = async function(password) {
-    console.log(password)
-    console.log(this.password)
-    return await bcrypt.compare(password, this.password);
+userSchema.methods.isCorrectPassword = async function (password) {
+  console.log(password)
+  console.log(this.password)
+  return await bcrypt.compare(password, this.password);
 
-  };
+};
 
 const User = mongoose.model('User', userSchema);
 
