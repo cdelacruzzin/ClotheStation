@@ -101,6 +101,7 @@ const typeDefs = gql`
     removeComment(comment: ID!): Product
     clearCart: User
     
+    saveProduct(ProductData: ProductData!): User
     
   }
 `;

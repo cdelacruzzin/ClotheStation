@@ -20,14 +20,7 @@ function ProductList() {
             });
         };
     }, [dispatch, productData])
-
-    // function selectCategory() {
-    //     if (!currentCategory.id) {
-    //         return products;
-    //     } else {
-    //         return products.filter((item) => item.category.some(category => category._id === currentCategory.id));
-    //     }
-    // }
+    
     return (
         <>
             {products.map((item) => (

@@ -58,15 +58,11 @@ function SingleProduct() {
                 });
               });
         }
-        // console.log(currentProduct)
-
-        // console.log(queryProduct)
 
     }, [products, queryProduct, loading, dispatch, id]);
 
     function addToCart() {
         const itemInCart = cart.find((cartItem) => cartItem._id === id);
-        console.log(currentProduct)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_CART_QUANTITY,
@@ -93,8 +89,6 @@ function SingleProduct() {
             setSuccessMessage("");
         }, 3000);
     }
-
-    console.log(state)
     return (
         <>
             {selectedProduct ? (

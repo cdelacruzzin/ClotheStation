@@ -54,7 +54,6 @@ const resolvers = {
       // console.log(args.products)
 
       for (const product of args.products) {
-        console.log(product)
         line_items.push({
           price_data: {
             // display price in cad
@@ -99,7 +98,6 @@ const resolvers = {
     },
     product: async (parent, {_id}) =>{
       const product = await Product.findById(_id).populate('category');
-      console.log(product);
       return product;
     }
   },
@@ -145,6 +143,8 @@ const resolvers = {
 
 
     addToCart: async (_, { product }, context) => {
+
+      // console.log({product})
       if (!context.user) {
         throw new Error("Authentication required");
       }
@@ -167,19 +167,7 @@ const resolvers = {
         if (!foundProduct) {
           throw new Error("Product not found");
         }
-        /*
-        console.log("product information", product);
-        console.log('user',user)
-        console.log('foundProduct',foundProduct)
-        console.log('product.productId', product.productId)
-        console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
 
-        //returns false when just cartItem.product
-        //console.log('existingCartItem',existingCartItem); //returns undefined all the time
-        //console.log(product.productId); returning correctly
-        //console.log(product.quantity); returning correctly
-
-        //restructuring the function solved hte issues
 
         const cartItemIndex = user.cart.findIndex(cartItem => cartItem.product.toString() === product.productId);
 
@@ -305,6 +293,13 @@ const resolvers = {
         throw new Error("Error adding comment");
       }
     },
+    saveProduct: async(_, args, context) =>{
+      try {
+        
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
   User: {
     // Resolver function for the "cartCount" field
