@@ -18,19 +18,10 @@ import Title2 from "../assets/home/title_2.png";
 
 import AboutImg1 from "../assets/home/about_image_1.png";
 
-import CategoryImgTee from "../assets/home/category_image_tee.png";
-import CategoryImgShoe from "../assets/home/category_image_shoe.png";
-import CategoryImgHoodie from "../assets/home/category_image_hoodie.png";
-
-import CategoryImgTeeMobile from "../assets/home/category_image_tee_mobile.svg";
-import CategoryImgShoeMobile from "../assets/home/category_image_shoe_mobile.svg";
-import CategoryImgHoodieMobile from "../assets/home/category_image_hoodie_mobile.svg";
-
 import SkateboardIcon from "../assets/home/skateboard_icon.svg";
 import CharityIcon from "../assets/home/charity_icon.svg";
 
 import "./css/Home.scss";
-import { CarouselItem } from "../components/CarouselItem";
 
 import { useStoreContext } from "../utils/globalState";
 import Skatedecks from "../components/SkateDecks/Skatedecks";

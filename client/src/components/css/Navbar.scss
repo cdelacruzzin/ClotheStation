@@ -104,7 +104,11 @@
           cursor: pointer;
           &:hover { filter: brightness(0.9); fill: none; }
         }
+
+
       }
+
+
 
       &.open div { display: flex; opacity: 1; }
     }
