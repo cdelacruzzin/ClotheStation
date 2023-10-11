@@ -23,7 +23,6 @@ const Navbar = () => {
   const [signupModalOpen, setSignUpModalOpen] = useState(false);
   // Use AuthService methods to check authentication status
   const isLoggedIn = AuthService.loggedIn();
-  console.log(isLoggedIn)
 
   // const [value, setValue] = useState(0); // Start with first tab
   // const [state, dispatch] = useStoreContext();
@@ -114,7 +113,7 @@ const Navbar = () => {
                 }}
               >
                 {/* logout and settings button, should be wrapped in this div */}
-                <AccountModal />
+                              <AccountModal />
                 {/*logout icon*/}
                 <a href="/" onClick={handleLogout}>
                   <svg
@@ -148,18 +147,18 @@ const Navbar = () => {
               <Link to="cart">
                 <FontAwesomeIcon icon={faCartShopping} />
               </Link>
-              {/* <Link onClick={openLoginModal}>
+              <Link onClick={openLoginModal}>
                 <FontAwesomeIcon icon={faRightToBracket} />
               </Link>
               <Link onClick={openSignupModal}>
                 <FontAwesomeIcon icon={faUserPlus} />
-              </Link> */}
+              </Link>
             </div>
           )}
         </div>
 
         {/* === NAVBAR TOGGLE BUTTON === unused it seems so I commented it out.*/}
-        {/* <button
+        <button
           id="nav--links-toggle"
           onClick={() => {
             document
@@ -181,7 +180,7 @@ const Navbar = () => {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
-        </button> */}
+        </button>
       </div>
       {/* handle login modal open and close, same for sign up modal */}
       <Login open={loginModalOpen} handleClose={handleModalsCLose} />

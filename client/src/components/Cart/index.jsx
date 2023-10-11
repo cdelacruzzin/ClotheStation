@@ -7,6 +7,13 @@ import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/globalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+
+
+import { Box, Container, height } from '@mui/system';
+import Button from '@mui/material/Button';
+
+
+
 // use stripePromise for testing and insert api key in loadStripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
@@ -26,20 +33,15 @@ const Cart = () => {
         }));
     };
 
-    // const total = useMemo(() => {
-    //     return state.cart.reduce((acc, item) => acc + item.price, 0);
-    // }, [state.cart]);
 
-    const total = ()=>{
-        let total =0;
+    const total = () => {
+        let total = 0;
         filterProductsForCheckout().forEach(element => {
             total += (element.purchaseQuantity * element.price)
-            console.log(`Quantity of ${element.name}: ${element.purchaseQuantity}`) 
+            console.log(`Quantity of ${element.name}: ${element.purchaseQuantity}`)
         });
         return Math.round(total);
     }
-    console.log(total())
-// total();
 
 
 
@@ -54,7 +56,6 @@ const Cart = () => {
 
     useEffect(() => {
         async function getCart() {
-            console.log(state);
             const cart = await idbPromise('cart', 'get');
             dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
         }
@@ -62,15 +63,8 @@ const Cart = () => {
         if (!state.cart.length) {
             getCart();
         }
-    }, [state.cart.length, dispatch, state]);
+    }, [dispatch, state.cart.length]);
 
-    // useEffect(() => {
-    //     getCheckout({
-    //         variables: {
-    //             products: filterProductsForCheckout(),
-    //         },
-    //     });
-    // }, [state.cart, getCheckout]);
 
     // 4. Event Handlers
     const toggleCart = () => {
@@ -86,52 +80,84 @@ const Cart = () => {
     };
 
     // 5. Render Logic
-    if (!state.cartOpen) {
-        return (
-            <div className="cart-closed" onClick={toggleCart}>
-                <span role="img" aria-label="trash">
-                    🛒
-                </span>
-            </div>
-        );
+    // if (!state.cartOpen) {
+    //     return (
+    //         <div className="cart-closed" onClick={toggleCart}>
+    //             <span role="img" aria-label="trash">
+    //                 🛒
+    //             </span>
+    //         </div>
+    //     );
+    // }
+    if (state.cart.length) {
+        console.log('state.cart is truthy');
+    } else {
+        console.log('state.cart is falsy');
     }
 
 
-    console.log(Auth.loggedIn())
     return (
-        <div className="cart">
-            <div className='close' onClick={toggleCart}>
-                [close]
+        <Container maxWidth="sm">
+            <div className='cart'>
+                {Auth.loggedIn()
+                    ? (state.cart.length
+                        ?
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                flexDirection: 'column',
+                                p: 1,
+                                m: 1,
+                                borderRadius: 5,
+                                border:1
+                            }}
+                        >
+                            <Box sx={{ mt: 2 }}>
+                                <span className='cart-title-container'>
+                                    <span className='cart-title'><strong>Cart</strong></span>
+                                    <span className='cart-item-count'> (1 item)</span>
+                                </span>
+                            </Box>
+
+                            {state.cart.map((item) => (
+                                <>
+                                    <hr />
+                                    <CartItem key={item._id} item={item} />
+                                    <hr />
+                                </>
+                            ))}
+
+                            <Box
+                                sx={
+                                    {
+                                        m: 1,
+                                        gap: 1
+                                    }
+                                }>
+                                <strong>{`Total: $${total()} `}</strong>
+                                <Button variant="outlined" onClick={submitCheckout}>checkout</Button>
+
+
+                            </Box>
+                        </Box>
+                        : <Box sx={{
+                            p: 1,
+                            my: 10,
+                            borderRadius: 1,
+                            border: 1
+                        }}>Your cart is empty. Add items to your cart!!</Box>)
+                    : <Box sx={{
+                        p: 1,
+                        my: 10,
+                        borderRadius: 1,
+                        border: 1
+                    }}>
+                        Log in to check out</Box>
+                }
             </div>
-            <h2>Cart</h2>
-            {state.cart.length ? (
-                <div>
-                    {state.cart.map((item) => (
-                        <CartItem key={item._id} item={item} />
-                    ))}
+        </Container>
 
-
-                    <div>
-                        {/* <strong>Total: ${calculateTotal()}</strong> */}
-                        <strong>Total: ${total()}</strong>
-
-
-                        {Auth.loggedIn() ? (
-                            <button onClick={submitCheckout}>checkout</button>
-                        ) : (
-                            <span>(log in to check out)</span>
-                        )}
-                    </div>
-                </div>
-            ) : (
-                <h3>
-                    <span role='img' aria-label="prohibited">
-                        🚫
-                    </span>
-                    You haven't added anything to your cart yet!
-                </h3>
-            )}
-        </div>
     );
 };
 
