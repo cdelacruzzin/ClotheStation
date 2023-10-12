@@ -9,7 +9,7 @@ const typeDefs = gql`
     password: String
     cartCount: Int #items in cart at the time
     cart: [Cart]
-    savedProducts: [Product]
+    savedProducts: [savedProduct]
   }
 
   type Checkout {
@@ -28,6 +28,11 @@ const typeDefs = gql`
     quantity: Int!
   }
 
+  type savedProduct {
+    quantity: Int!,
+    product: Product!
+  }
+
   type Product {
     _id: ID
     name: String
@@ -36,13 +41,13 @@ const typeDefs = gql`
     imageSource: String
     category: [Category]
     comment: [Comment]
+    quantity: Int
   }
   input ProductData {
     name: String!
     price: Float!
-    quantity: Int!
-    description: String
-    category: [ID!]! #reference category through IDs
+    imageSource: String!
+    description: String!
   }
 
   type Category {
@@ -81,6 +86,19 @@ const typeDefs = gql`
     user: User
   }
 
+
+
+  type AggregateUserType {
+    savedProductCount: Int!
+  }
+
+
+
+
+
+
+
+
   # query to look for current user, all categories, products, and checkout
   type Query {
     me: User
@@ -89,6 +107,8 @@ const typeDefs = gql`
     checkout(products: [ProductInput]): Checkout
     cart(_id: ID!):Cart
     product(_id: ID!): Product
+
+
   }
 
   # add new user and login user
@@ -101,7 +121,12 @@ const typeDefs = gql`
     removeComment(comment: ID!): Product
     clearCart: User
     
-    saveProduct(ProductData: ProductData!): User
+    saveProduct(ProductData: ProductData): User
+
+
+    applyAggregate(ProductData: ProductData!): User
+
+
     
   }
 `;

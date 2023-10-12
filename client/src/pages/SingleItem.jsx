@@ -3,7 +3,7 @@ import { useStoreContext } from "../utils/globalState";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { QUERY_PRODUCT } from '../utils/queries';
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { SET_CURRENT_PRODUCT, UPDATE_CART_QUANTITY, ADD_TO_CART, UPDATE_PRODUCTS } from '../utils/actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
@@ -12,6 +12,9 @@ import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { idbPromise } from "../utils/helpers";
 import "../components/css/SingleItem.scss"
+
+
+import { SAVEPRODUCT } from "../utils/mutations";
 
 function SingleProduct() {
     const { loading, data: queryProduct } = useQuery(QUERY_PRODUCT, {
@@ -90,7 +93,26 @@ function SingleProduct() {
         }, 3000);
     }
 
-    function saveProduct() {
+
+    const [product2save, {error}] = useMutation(SAVEPRODUCT);
+
+
+    async function saveProduct() {
+        // const {name, description, price, imageSource} = selectedProduct;
+
+        const {__typename, _id, ...selectedProductNoTypeName } = selectedProduct;
+
+        
+
+        try {
+            console.log(selectedProduct)
+            const saveProduct = await product2save({
+                variables: {productData: {selectedProductNoTypeName}}
+            })
+            console.log(saveProduct)
+        } catch (error) {
+            console.error(error);
+        }
 
     }
     return (
