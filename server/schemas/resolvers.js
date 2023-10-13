@@ -43,18 +43,17 @@ const resolvers = {
       throw new AuthentificationError('Not logged in');
     },
     checkout: async (parent, args, context) => {
-      
+
       const url = new URL(context.headers.referer).origin;
       // console.log({url})
       // Map through list of products sent bt the client to extract id of each item and create new order in order to purchase
       await Cart.create({ products: args.products.map(({ _id }) => _id) });
       const line_items = [];
-      
+
 
       // console.log(args.products)
 
       for (const product of args.products) {
-        console.log(product)
         line_items.push({
           price_data: {
             // display price in cad
@@ -73,35 +72,36 @@ const resolvers = {
         });
       }
       console.log(line_items)
-      
+
       try {
         // checkout with stripe and create a new stripe checkout session
         const session = await stripe.checkout.sessions.create({
-            // use card as payment method
-            payment_method_types: ['card'],
-            // line ordered items for payment
-            line_items,
-            mode: 'payment',
-            // create success and cancel urls
-            success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${url}/`,
+          // use card as payment method
+          payment_method_types: ['card'],
+          // line ordered items for payment
+          line_items,
+          mode: 'payment',
+          // create success and cancel urls
+          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${url}/`,
         });
-    
+
         console.log('session')
         return { session: session.id };
-    } catch (error) {
+      } catch (error) {
         console.error("Error creating checkout session:", error);
         // Handle the error accordingly, you can also send a response to the client if this is part of an API endpoint.
-    }
-    
+      }
+
 
 
     },
-    product: async (parent, {_id}) =>{
+    product: async (parent, { _id }) => {
       const product = await Product.findById(_id).populate('category');
-      console.log(product);
       return product;
-    }
+    },
+
+
   },
 
   Mutation: {
@@ -128,13 +128,13 @@ const resolvers = {
         //console.log('password:',password)
 
         const correctPw = await user.isCorrectPassword(password);
-        //console.log(correctPw)
+        console.log({ correctPw })
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
         }
 
         const token = signToken(user);
-        console.log(user)
+        console.log({ user })
         console.log({ token })
 
         return { token, user };
@@ -145,6 +145,8 @@ const resolvers = {
 
 
     addToCart: async (_, { product }, context) => {
+
+      // console.log({product})
       if (!context.user) {
         throw new Error("Authentication required");
       }
@@ -167,19 +169,7 @@ const resolvers = {
         if (!foundProduct) {
           throw new Error("Product not found");
         }
-        /*
-        console.log("product information", product);
-        console.log('user',user)
-        console.log('foundProduct',foundProduct)
-        console.log('product.productId', product.productId)
-        console.log('usercart:',user.cart); //empty array, makes sense at the beginning*/
 
-        //returns false when just cartItem.product
-        //console.log('existingCartItem',existingCartItem); //returns undefined all the time
-        //console.log(product.productId); returning correctly
-        //console.log(product.quantity); returning correctly
-
-        //restructuring the function solved hte issues
 
         const cartItemIndex = user.cart.findIndex(cartItem => cartItem.product.toString() === product.productId);
 
@@ -305,6 +295,72 @@ const resolvers = {
         throw new Error("Error adding comment");
       }
     },
+    applyAggregate: async (_, { ProductData }) => {
+
+      try {
+        const result = await User.aggregate([
+          { $unwind: "$savedProducts" },
+          {
+            $group: {
+              _id: "$username",
+              totalAmount: { $sum: "$savedProducts.quantity" }
+            }
+          }
+        ])
+        console.log(result)
+      } catch (error) {
+        console.error(error)
+      }
+
+    },
+
+    saveProduct: async (_, { ProductData }, context) => {
+      try {
+        const { _id } = context.user;
+
+        const product = await Product.findOne(
+          { name: ProductData.name }
+        )
+        const productId = product._id;
+
+        const user = await User.findById(_id).populate('savedProducts');
+
+        const index = user.savedProducts.some(p => p.product.toString() === (productId && productId.toString()));
+
+        if (index) {
+          try {
+            const update = await User.findByIdAndUpdate(
+              _id,
+              { $pull: { savedProducts: { product: productId } } },
+              { new: true, useFindAndModify: false },
+            )
+              .populate('savedProducts.product')
+
+            console.log(JSON.stringify(update, null, 2));
+            return update;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        else {
+          // Product isn't in savedProducts, so we add it with a quantity of 1
+          const newSavedProduct = {
+            quantity: 1,
+            product: productId  // Assuming ProductData._id contains the ObjectId of the product
+          };
+          const update = await User.findByIdAndUpdate(
+            _id,
+            { $push: { savedProducts: newSavedProduct } },
+            { new: true, useFindAndModify: false },
+          ).populate('savedProducts.product');
+          console.log(JSON.stringify(update, null, 2));
+          return update;
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
   User: {
     // Resolver function for the "cartCount" field

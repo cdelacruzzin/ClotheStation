@@ -27,3 +27,24 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const SAVEPRODUCT = gql`
+mutation saveProduct($productData: ProductData!) {
+  saveProduct(ProductData: $productData) {
+    _id
+    username
+    email
+    password
+    savedProducts {
+      quantity
+      product {
+        _id
+        name
+        price
+        description
+        imageSource
+      }
+    }
+  }
+}
+`;

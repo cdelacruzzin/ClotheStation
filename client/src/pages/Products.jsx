@@ -18,7 +18,8 @@ function Products() {
                 products: productData.allProducts
             });
         };
-    }, [dispatch, productData])
+        console.log(products)
+    }, [dispatch, productData, products])
 
     return (
         <>

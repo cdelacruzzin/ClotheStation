@@ -8,6 +8,7 @@ export function pluralize(name, count) {
 }
 
 export function idbPromise(storeName, method, object) {
+
     return new Promise((resolve, reject) => {
         // open shop-shop indexed data base, with index 1
         const request = window.indexedDB.open('shop-shop', 1);
@@ -35,8 +36,10 @@ export function idbPromise(storeName, method, object) {
 
             switch (method) {
                 case 'put':
-                    store.put(object);
-                    resolve(object);
+                    store.clear().onsuccess = () => {
+                        store.put(object);
+                        resolve(object);
+                    }
                     break;
                 case 'get':
                     const all = store.getAll();
@@ -51,7 +54,6 @@ export function idbPromise(storeName, method, object) {
                     console.log('No valid method');
                     break;
             }
-
             tx.oncomplete = function () {
                 db.close();
             };

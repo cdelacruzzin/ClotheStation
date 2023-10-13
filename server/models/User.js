@@ -22,39 +22,18 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // You can set a default value if needed
   },
-  // cart:
-  // {
-  //   product: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'Product',
-  //     required: true,
-  //   },
-  //   quantity: {
-  //     type: Number,
-  //     required: true,
-  //   },
-  //  [Cart.schema]
-  // },
-
-
-  // [
-  //     {
-  //     purchaseDate: {
-  //       type: Date,
-  //       default: Date.now,
-  //     },
-  //     product: [
-  //       {
-  //         type: Schema.Types.ObjectId,
-  //         ref: "Product",
-  //         quantity: {
-  //           type: Number,
-  //           required: true,
-  //         }
-  //       },
-  //     ],
-  //   }
-  // ]
+  savedProducts: [{
+    quantity: {
+      type: Number, 
+      max: 1,
+      required: true
+    },
+    product:  {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+      required: true
+    },
+  }],
   cart: [{
     purchaseDate: {
       type: Date,
