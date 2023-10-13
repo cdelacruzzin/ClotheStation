@@ -28,11 +28,12 @@ function SingleProduct() {
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
-
-    }, [queryProduct]);
-
-    useEffect(() => {
-
+        /*
+        checkIdb is an async function that returns a boolean.
+        it makes a "get" fetch to get all the documents in the "products" store in the indexDB.
+        iterates through the "products" store, and checks for a document with the same _id as the _queryProduct's _id.
+        returns true if it exists, false if doesnt.
+        */
         const checkIdb = async () => {
             if (queryProduct) {
                 const indexedProducts = await idbPromise('products', 'get');
@@ -41,17 +42,31 @@ function SingleProduct() {
             return false;
         }
 
+
         const handleIdb = async () => {
-            const res = await checkIdb()
-            console.log(queryProduct)
-            console.log(res && queryProduct)
+            const res = await checkIdb();   //stores the returned promise value of checkIdb (true/false).
+
+            /*if there are items in the "products" globalstate field,
+            it finds a product in the "products" globalstate field with an _id qual to the _id (destructured from useParams()), 
+            and sets the "currentProduct" state as this returned document.
+
+            this function runs when you are FIRST redirected to the SingleProduct page after clicking on a product.
+
+            Then puts this product in the "products" store object in the indexDB.
+            */
             if (products.length) {
                 setCurrentProduct(products.find((product) => product._id === id));
                 console.log(products.find((product) => product._id === id))
                 idbPromise('products', 'put', products.find((product) => product._id === id));
-            } else if (res) {
-                // console.log(checkIdb)
-                console.log('here')
+            } 
+            /* else if "res" and "queryProduct" are truthy values. This means that the queryProduct product is already saved in the indexDB.
+            This happens AFTER the queryProduct has already been put in the indexDB. This function runs if the queryProduct you are currently querying
+             is already saved in the indexDB. 
+
+             it will get that indexed document, dispatch the SET_CURRENT_PRODUCT type and set the selectedProduct as the indexed document product.
+             Then, sets the currentProduct state as this product, which was obtained from the indexdb.
+            */ 
+            else if (res && queryProduct) {
                 idbPromise('products', 'get').then((indexedProducts) => {
 
                     console.log(indexedProducts[0])
@@ -62,10 +77,12 @@ function SingleProduct() {
                     setCurrentProduct(indexedProducts[0])
                 })
 
+                /*
+                this is called when the _id from the params is different the _id from the saved "products" document from indexDB.
+                it dispatches the SET_CURRENT_PRODUCT type and set the selectedProduct as the queryProduct.product from the useQuery.
+                Essentially, it gets the product from server and sets it as the selectedProduct in the global state.       
+                */
             } else if(!res && queryProduct) {
-                console.log('else clause');
-                // console.log(state)
-                console.log(queryProduct.product)
                 dispatch({
                     type: SET_CURRENT_PRODUCT,
                     selectedProduct: queryProduct.product,
@@ -80,12 +97,7 @@ function SingleProduct() {
         handleIdb();
        
     }, [products, queryProduct, loading, dispatch, id]);
-
-
-
-
-
-
+    
     function addToCart() {
         const itemInCart = cart.find((cartItem) => cartItem._id === id);
         if (itemInCart) {
