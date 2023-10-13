@@ -1,0 +1,166 @@
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{0}: checkout: moving from cd/cartstyling to cd/feature-favourites
+[33mcdaf179[m[33m ([m[1;31morigin/cd/cartstyling[m[33m, [m[1;32mcd/feature-cartmodal[m[33m, [m[1;32mcd/cartstyling[m[33m)[m HEAD@{1}: checkout: moving from cd/feature-cartmodal to cd/cartstyling
+[33mcdaf179[m[33m ([m[1;31morigin/cd/cartstyling[m[33m, [m[1;32mcd/feature-cartmodal[m[33m, [m[1;32mcd/cartstyling[m[33m)[m HEAD@{2}: checkout: moving from cd/feature-favourites to cd/feature-cartmodal
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{3}: checkout: moving from cd/favouritesModel to cd/feature-favourites
+[33m1e68174[m[33m ([m[1;32mcd/favouritesModel[m[33m)[m HEAD@{4}: checkout: moving from main to cd/favouritesModel
+[33mabef0b5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from cd/favouritesModel to main
+[33m1e68174[m[33m ([m[1;32mcd/favouritesModel[m[33m)[m HEAD@{6}: reset: moving to HEAD
+[33m1e68174[m[33m ([m[1;32mcd/favouritesModel[m[33m)[m HEAD@{7}: commit: finished saveProduct resolver
+[33m9a3a433[m HEAD@{8}: commit: changed styling for single page product
+[33mb620632[m HEAD@{9}: commit: created resolver for saveproduct;
+[33ma6537d3[m HEAD@{10}: commit: created saveproduct mutation
+[33mf989b4d[m HEAD@{11}: commit: added savedBooks model
+[33mabef0b5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{12}: checkout: moving from main to cd/favouritesModel
+[33mabef0b5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{13}: pull: Fast-forward
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{14}: checkout: moving from cd/cartstyling to main
+[33mcdaf179[m[33m ([m[1;31morigin/cd/cartstyling[m[33m, [m[1;32mcd/feature-cartmodal[m[33m, [m[1;32mcd/cartstyling[m[33m)[m HEAD@{15}: checkout: moving from cd/feature-cartmodal to cd/cartstyling
+[33mcdaf179[m[33m ([m[1;31morigin/cd/cartstyling[m[33m, [m[1;32mcd/feature-cartmodal[m[33m, [m[1;32mcd/cartstyling[m[33m)[m HEAD@{16}: commit: fixed item count
+[33mf7fec0b[m HEAD@{17}: commit: finished styling for cart page
+[33mef776aa[m HEAD@{18}: commit: menu for login and signup
+[33m3778150[m HEAD@{19}: commit: created a modal for options setting
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{20}: checkout: moving from cd/feature-favourites to cd/feature-cartmodal
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{21}: checkout: moving from main to cd/feature-favourites
+[33mef9b5af[m[33m ([m[1;36mHEAD -> [m[1;32mcd/feature-favourites[m[33m)[m HEAD@{22}: checkout: moving from cd/addtocart to main
+[33ma6a1f1a[m[33m ([m[1;32mcd/addtocart[m[33m)[m HEAD@{23}: commit: added stripe key
+[33mc135f1a[m[33m ([m[1;31morigin/cd/addtocart[m[33m)[m HEAD@{24}: commit: fixed integer rounding
+[33m4a9e478[m HEAD@{25}: commit: fixed checkout resolver
+[33m188afac[m HEAD@{26}: commit: fixed calculating total
+[33m31ebb4e[m HEAD@{27}: commit: fixed idb delete
+[33m4b91460[m HEAD@{28}: commit: fixed idb delete
+[33ma8c9136[m HEAD@{29}: commit: push recent changes
+[33m90829d7[m HEAD@{30}: commit: fixed network error
+[33m9b38bee[m HEAD@{31}: commit: fixed typeDefs and the infinite loop on the Cart component
+[33maee0fca[m HEAD@{32}: commit: add to cart functionality works
+[33m86fb2e4[m HEAD@{33}: checkout: moving from main to cd/addtocart
+[33m86fb2e4[m HEAD@{34}: pull origin main: Fast-forward
+[33mfb49bb4[m HEAD@{35}: pull origin main: Fast-forward
+[33m3c276eb[m HEAD@{36}: pull origin main: Fast-forward
+[33m9a41707[m HEAD@{37}: checkout: moving from fw-feature/add-more-functionality to main
+[33m5bdc8a6[m HEAD@{38}: checkout: moving from main to fw-feature/add-more-functionality
+[33m9a41707[m HEAD@{39}: pull origin main: Fast-forward
+[33m0bcbce2[m HEAD@{40}: checkout: moving from render-globalState-data to main
+[33m8c1ee2a[m[33m ([m[1;31morigin/render-globalState-data[m[33m, [m[1;32mrender-globalState-data[m[33m)[m HEAD@{41}: commit: renders all products on products page
+[33maaf9e44[m HEAD@{42}: pull: Merge made by the 'ort' strategy.
+[33mfc8c78a[m HEAD@{43}: checkout: moving from renderproducts to render-globalState-data
+[33m3e960bb[m[33m ([m[1;32mrenderproducts[m[33m)[m HEAD@{44}: checkout: moving from render-globalState-data to renderproducts
+[33mfc8c78a[m HEAD@{45}: pull origin main: Merge made by the 'ort' strategy.
+[33m3e960bb[m[33m ([m[1;32mrenderproducts[m[33m)[m HEAD@{46}: checkout: moving from renderproducts to render-globalState-data
+[33m3e960bb[m[33m ([m[1;32mrenderproducts[m[33m)[m HEAD@{47}: checkout: moving from render-globalState-data to renderproducts
+[33m3e960bb[m[33m ([m[1;32mrenderproducts[m[33m)[m HEAD@{48}: checkout: moving from render-globalState-data to render-globalState-data
+[33m3e960bb[m[33m ([m[1;32mrenderproducts[m[33m)[m HEAD@{49}: commit: added a key value to th ProductCarousel component on the Category page
+[33mda93477[m HEAD@{50}: commit: fixed single product page to load the image
+[33m4f10c76[m HEAD@{51}: checkout: moving from main to render-globalState-data
+[33m0bcbce2[m HEAD@{52}: pull origin main: Fast-forward
+[33m05d1761[m[33m ([m[1;31mheroku/main[m[33m)[m HEAD@{53}: checkout: moving from render-globalState-data to main
+[33m4f10c76[m HEAD@{54}: commit: added more proper seeds
+[33m05c30cf[m HEAD@{55}: commit: when category is clicked, only products of that category will show
+[33m1e56ccc[m HEAD@{56}: commit: created selected category function
+[33mb665f99[m HEAD@{57}: commit: fixed rendering of products
+[33m0f1ebe7[m HEAD@{58}: commit: category buttons link to category page
+[33m18e842f[m HEAD@{59}: commit: removed duplicate componnet
+[33m27a27ba[m HEAD@{60}: commit: fixed global state categories, and current category when clicked
+[33m3e81758[m HEAD@{61}: commit: fixed global state categories, and current category when clicked
+[33mc1ca534[m HEAD@{62}: commit: fixed the rendering of categories
+[33mb0ef731[m HEAD@{63}: commit: added more categories to seed
+[33m8a88f61[m HEAD@{64}: checkout: moving from main to render-globalState-data
+[33m05d1761[m[33m ([m[1;31mheroku/main[m[33m)[m HEAD@{65}: checkout: moving from render-globalState-data to main
+[33m8a88f61[m HEAD@{66}: commit: fixed product render
+[33m05d1761[m[33m ([m[1;31mheroku/main[m[33m)[m HEAD@{67}: checkout: moving from main to render-globalState-data
+[33m05d1761[m[33m ([m[1;31mheroku/main[m[33m)[m HEAD@{68}: pull origin main: Fast-forward
+[33m0baf03a[m HEAD@{69}: checkout: moving from mainv2 to main
+[33m4eee277[m[33m ([m[1;31morigin/mainv2[m[33m, [m[1;32mmainv2[m[33m)[m HEAD@{70}: commit: fixed bugs
+[33m4392d28[m HEAD@{71}: checkout: moving from fixGraphqlBugs to mainv2
+[33m59e6756[m[33m ([m[1;32mfixGraphqlBugs[m[33m)[m HEAD@{72}: commit: installed all new packages
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{73}: checkout: moving from categorymenu to fixGraphqlBugs
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{74}: checkout: moving from mainv2 to categorymenu
+[33m4392d28[m HEAD@{75}: checkout: moving from categorymenu to mainv2
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{76}: checkout: moving from mainv2 to categorymenu
+[33m4392d28[m HEAD@{77}: reset: moving to HEAD
+[33m4392d28[m HEAD@{78}: checkout: moving from categorymenu to mainv2
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{79}: checkout: moving from mainv2 to categorymenu
+[33m4392d28[m HEAD@{80}: checkout: moving from categorymenu to mainv2
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{81}: checkout: moving from mainv2 to categorymenu
+[33m4392d28[m HEAD@{82}: commit: bug fixes
+[33m70aac9b[m HEAD@{83}: pull origin main: Fast-forward
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{84}: checkout: moving from main to mainv2
+[33m0baf03a[m HEAD@{85}: checkout: moving from front/home-page to main
+[33m2754b80[m HEAD@{86}: checkout: moving from main to front/home-page
+[33m0baf03a[m HEAD@{87}: pull origin main: Fast-forward
+[33m4d79207[m HEAD@{88}: checkout: moving from categorymenu to main
+[33me15cb38[m[33m ([m[1;31morigin/categorymenu[m[33m, [m[1;32mcategorymenu[m[33m)[m HEAD@{89}: commit: selecting a category will render only products of that category
+[33m4d79207[m HEAD@{90}: checkout: moving from main to categorymenu
+[33m4d79207[m HEAD@{91}: pull origin main: Fast-forward
+[33m6923407[m HEAD@{92}: checkout: moving from fw-feature/more-and-more-bugs to main
+[33m1a87eb8[m HEAD@{93}: commit: rendered single products on page
+[33m8b0e081[m HEAD@{94}: commit: finished reducer, action, global state for updating current item
+[33m9883655[m HEAD@{95}: commit: started on singleItem page
+[33m3689ca3[m HEAD@{96}: commit: created query export for single product
+[33m56c566e[m HEAD@{97}: commit: created resolver and typedefs for single product
+[33m9f894f6[m HEAD@{98}: commit: fixed passing allProducts to the product component
+[33m46fe095[m HEAD@{99}: checkout: moving from fix-product-category-seed to fw-feature/more-and-more-bugs
+[33m7485288[m HEAD@{100}: commit: finished product-category relations
+[33m04116e3[m HEAD@{101}: checkout: moving from main to fix-product-category-seed
+[33m6923407[m HEAD@{102}: pull origin main: Fast-forward
+[33mbb276a0[m HEAD@{103}: checkout: moving from fix-product-category-seed to main
+[33m04116e3[m HEAD@{104}: commit: working on category-product relations
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{105}: checkout: moving from newBugs to fix-product-category-seed
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{106}: checkout: moving from mainv2 to newBugs
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{107}: pull origin newBugsv2: Fast-forward
+[33mbb276a0[m HEAD@{108}: checkout: moving from newBugsv2 to mainv2
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{109}: checkout: moving from mainv2 to newBugsv2
+[33mbb276a0[m HEAD@{110}: checkout: moving from main to mainv2
+[33mbb276a0[m HEAD@{111}: checkout: moving from newBugsv2 to main
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{112}: checkout: moving from newBugs to newBugsv2
+[33m6db0ba1[m[33m ([m[1;31morigin/newBugs[m[33m, [m[1;32mnewBugsv2[m[33m, [m[1;32mnewBugs[m[33m)[m HEAD@{113}: commit: fixed more bugs
+[33m01fd7dd[m HEAD@{114}: commit: fixed category seeds
+[33mbb276a0[m HEAD@{115}: checkout: moving from main to newBugs
+[33mbb276a0[m HEAD@{116}: checkout: moving from main to main
+[33mbb276a0[m HEAD@{117}: pull origin main: Fast-forward
+[33m7f69173[m HEAD@{118}: checkout: moving from merge-conflicts-addToCart to main
+[33m76e5ae3[m[33m ([m[1;32mmerge-conflicts-addToCart[m[33m)[m HEAD@{119}: commit (merge): fixed conflict merge
+[33m7f69173[m HEAD@{120}: checkout: moving from merge-conflicts to merge-conflicts-addToCart
+[33meec20ad[m[33m ([m[1;32mmerge-conflicts[m[33m)[m HEAD@{121}: commit: fixed Query.carts error
+[33m7f69173[m HEAD@{122}: checkout: moving from merge-conflicts-addToCart to merge-conflicts
+[33m7f69173[m HEAD@{123}: checkout: moving from merge-conflicts to merge-conflicts-addToCart
+[33m7f69173[m HEAD@{124}: checkout: moving from main to merge-conflicts
+[33m7f69173[m HEAD@{125}: checkout: moving from cd/Navbar to main
+[33mb9d00e9[m[33m ([m[1;32mcd/Navbar[m[33m)[m HEAD@{126}: checkout: moving from main to cd/Navbar
+[33m7f69173[m HEAD@{127}: pull: Fast-forward
+[33m7a572a8[m HEAD@{128}: checkout: moving from cd/Navbar to main
+[33mb9d00e9[m[33m ([m[1;32mcd/Navbar[m[33m)[m HEAD@{129}: commit (merge): fixed merge conflitcts
+[33mf466b42[m HEAD@{130}: commit (merge): fixed merge conflicts
+[33m53228d8[m HEAD@{131}: checkout: moving from main to cd/Navbar
+[33m7a572a8[m HEAD@{132}: pull: Fast-forward
+[33m0a4cdac[m HEAD@{133}: checkout: moving from typeDef-debug to main
+[33m06d4ac9[m[33m ([m[1;31morigin/typeDef-debug[m[33m, [m[1;32mtypeDef-debug[m[33m)[m HEAD@{134}: checkout: moving from cd/Navbar to typeDef-debug
+[33m53228d8[m HEAD@{135}: commit: installed stripe
+[33ma086ba0[m HEAD@{136}: commit: uninstalled packages not needed
+[33m7166055[m HEAD@{137}: pull origin cd-fix-model-fields: Merge made by the 'ort' strategy.
+[33md377629[m HEAD@{138}: checkout: moving from fw-feature/add-stripe to cd/Navbar
+[33mff6d5e3[m[33m ([m[1;31morigin/fw-feature/add-stripe[m[33m, [m[1;32mfw-feature/add-stripe[m[33m)[m HEAD@{139}: checkout: moving from cd/Navbar to fw-feature/add-stripe
+[33md377629[m HEAD@{140}: commit: reset the current category to epmty string when the home button is clicked
+[33m1e7f907[m HEAD@{141}: commit: fixed currentCategory global state to be an object of Id and name instead of just id
+[33m3fe95a0[m HEAD@{142}: commit: conditionally render the category name when clicked or home if no current category
+[33m95dd58a[m HEAD@{143}: commit: finished rendering all products
+[33m453053b[m HEAD@{144}: checkout: moving from typeDef-debug to cd/Navbar
+[33m06d4ac9[m[33m ([m[1;31morigin/typeDef-debug[m[33m, [m[1;32mtypeDef-debug[m[33m)[m HEAD@{145}: checkout: moving from fw-feature/add-stripe to typeDef-debug
+[33mff6d5e3[m[33m ([m[1;31morigin/fw-feature/add-stripe[m[33m, [m[1;32mfw-feature/add-stripe[m[33m)[m HEAD@{146}: checkout: moving from typeDef-debug to fw-feature/add-stripe
+[33m06d4ac9[m[33m ([m[1;31morigin/typeDef-debug[m[33m, [m[1;32mtypeDef-debug[m[33m)[m HEAD@{147}: checkout: moving from typeDefs to typeDef-debug
+[33m4871a45[m[33m ([m[1;32mtypeDefs[m[33m)[m HEAD@{148}: checkout: moving from cd/addCart to typeDefs
+[33m883b627[m[33m ([m[1;31morigin/cd/addCart[m[33m, [m[1;32mcd/addCart[m[33m)[m HEAD@{149}: checkout: moving from cd-addToCart-to-graphql to cd/addCart
+[33m6840ff4[m[33m ([m[1;32mcd-addToCart-to-graphql[m[33m)[m HEAD@{150}: checkout: moving from cd/Navbar to cd-addToCart-to-graphql
+[33m453053b[m HEAD@{151}: reset: moving to HEAD
+[33m453053b[m HEAD@{152}: checkout: moving from cd/addCart to cd/Navbar
+[33m883b627[m[33m ([m[1;31morigin/cd/addCart[m[33m, [m[1;32mcd/addCart[m[33m)[m HEAD@{153}: checkout: moving from cd/Navbar to cd/addCart
+[33m453053b[m HEAD@{154}: commit: finished dispatch
+[33ma04c284[m HEAD@{155}: commit: started working on dispatching the products data to be updated in the global state;
+[33m319a8b8[m HEAD@{156}: commit: finished logic for categoryMenu
+[33mecae0b2[m HEAD@{157}: commit: started on the Current_Category reducer/action to render a single category
+[33m5ebc47b[m HEAD@{158}: commit: created an onlick function to update the global currentCategory
+[33md8aded6[m HEAD@{159}: commit: set values to the Tabs
+[33m4a1e3b6[m HEAD@{160}: commit: the categoryMenu component renders all the categories from the gobal state
+[33me337b1f[m HEAD@{161}: commit: created reducer and actions to update the global state categories
+[33mbf1484f[m HEAD@{162}: commit: started working on dispatching the categories from the query to the global state
+[33mad8417d[m HEAD@{163}: checkout: moving from cd-addToCart-to-graphql to cd/Navbar
+[33m6840ff4[m[33m ([m[1;32mcd-addToCart-to-graphql[m[33m)[m HEAD@{164}: checkout: moving from cd/Navbar to cd-addToCart-to-graphql
+[33mad8417d[m HEAD@{165}: checkout: moving from cd-fix-model-fields to cd/Navbar

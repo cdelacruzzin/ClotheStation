@@ -325,9 +325,9 @@ const resolvers = {
 
         const user = await User.findById(_id).populate('savedProducts');
 
-        const index = user.savedProducts.findIndex(p => p.product.toString() === (productId && productId.toString()));
+        const index = user.savedProducts.some(p => p.product.toString() === (productId && productId.toString()));
 
-        if (index !== -1) {
+        if (index) {
           try {
             const update = await User.findByIdAndUpdate(
               _id,

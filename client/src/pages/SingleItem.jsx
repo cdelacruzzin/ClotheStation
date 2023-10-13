@@ -28,41 +28,63 @@ function SingleProduct() {
     const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
-        if (queryProduct) {
-            dispatch({
-                type: SET_CURRENT_PRODUCT,
-                selectedProduct: queryProduct.product,
-            })
-        }
-    }, [dispatch, products, queryProduct, selectedProduct]);
 
+    }, [queryProduct]);
 
     useEffect(() => {
-        // already in global store
-        if (products.length) {
-            setCurrentProduct(products.find((product) => product._id === id));
-        }         // // retrieved from server
-        else if (queryProduct) {
-            dispatch({
-                type: UPDATE_PRODUCTS,
-                products: queryProduct.products,
-            });
 
-            queryProduct.products.forEach((product) => {
-                idbPromise('products', 'put', product);
-            });
+        const checkIdb = async () => {
+            if (queryProduct) {
+                const indexedProducts = await idbPromise('products', 'get');
+                return indexedProducts.some(document => document._id === queryProduct.product._id);
+            }
+            return false;
         }
-        // get cache from idb
-        else if (!loading) {
-            idbPromise('products', 'get').then((indexedProducts) => {
+
+        const handleIdb = async () => {
+            const res = await checkIdb()
+            console.log(queryProduct)
+            console.log(res && queryProduct)
+            if (products.length) {
+                setCurrentProduct(products.find((product) => product._id === id));
+                console.log(products.find((product) => product._id === id))
+                idbPromise('products', 'put', products.find((product) => product._id === id));
+            } else if (res) {
+                // console.log(checkIdb)
+                console.log('here')
+                idbPromise('products', 'get').then((indexedProducts) => {
+
+                    console.log(indexedProducts[0])
+                    dispatch({
+                        type: SET_CURRENT_PRODUCT,
+                        selectedProduct: indexedProducts[0]
+                    });
+                    setCurrentProduct(indexedProducts[0])
+                })
+
+            } else if(!res && queryProduct) {
+                console.log('else clause');
+                // console.log(state)
+                console.log(queryProduct.product)
                 dispatch({
-                    type: UPDATE_PRODUCTS,
-                    products: indexedProducts,
+                    type: SET_CURRENT_PRODUCT,
+                    selectedProduct: queryProduct.product,
                 });
-            });
-        }
 
+                setCurrentProduct(queryProduct.product)
+                idbPromise('products', 'put', queryProduct.product);
+
+
+            }
+        }
+        handleIdb();
+       
     }, [products, queryProduct, loading, dispatch, id]);
+
+
+
+
+
 
     function addToCart() {
         const itemInCart = cart.find((cartItem) => cartItem._id === id);
@@ -94,51 +116,51 @@ function SingleProduct() {
     }
 
 
-    const [product2save, {error}] = useMutation(SAVEPRODUCT);
+    const [product2save, { error }] = useMutation(SAVEPRODUCT);
 
 
     async function saveProduct() {
         // const {name, description, price, imageSource} = selectedProduct;
 
-        const {__typename, _id, ...selectedProductNoTypeName } = selectedProduct;
+        const { __typename, _id, ...selectedProductNoTypeName } = selectedProduct;
 
-        
 
-        try {
-            console.log(selectedProduct)
-            const saveProduct = await product2save({
-                variables: {productData: {selectedProductNoTypeName}}
-            })
-            console.log(saveProduct)
-        } catch (error) {
-            console.error(error);
-        }
+        const productData = selectedProductNoTypeName;
+        // try {
+        //     console.log({selectedProductNoTypeName})
+        //     const saveProduct = await product2save({
+        //         variables: {productData: {selectedProductNoTypeName}}
+        //     })
+        //     console.log(saveProduct)
+        // } catch (error) {
+        //     console.error(error);
+        // }
 
     }
     return (
         <>
-            {selectedProduct ? (
+            {currentProduct ? (
                 <div className="single--product-page">
                     <Link to='/products' className="product--page-link"><strong>← Back to Products</strong></Link>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <div className="single-product" style={{ padding: '1em', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '50%', borderRadius: '2em', border: '1px solid #000' }} // #000 is just an example for black
                         >
                             <div>
                                 <img
-                                    src={selectedProduct.imageSource}
-                                    alt={selectedProduct.imageSource}
+                                    src={currentProduct.imageSource}
+                                    alt={currentProduct.imageSource}
                                 ></img>
                             </div>
 
                             <h2>
-                                {selectedProduct.name}
+                                {currentProduct.name}
                             </h2>
                             <p>
-                                {selectedProduct.description}
+                                {currentProduct.description}
                             </p>
                             <p className="product-price">
                                 {' '}
-                                <span>${selectedProduct.price}</span>
+                                <span>${currentProduct.price}</span>
                                 CAD
                             </p>
 

@@ -36,13 +36,13 @@ mutation saveProduct($productData: ProductData!) {
     email
     password
     savedProducts {
-      _id
-      name
-      description
-      price
-      imageSource
-      category {
+      quantity
+      product {
+        _id
         name
+        price
+        description
+        imageSource
       }
     }
   }

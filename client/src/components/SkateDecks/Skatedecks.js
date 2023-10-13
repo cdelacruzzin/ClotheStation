@@ -29,9 +29,12 @@ function Skatedecks() {
     //     }
     // }
 
+
+
     const filteredProducts = products.filter(item => 
         item.category.some(category => category.name.toLowerCase() === "decks")
     );
+    console.log(filteredProducts)
     return (
         <>
             {filteredProducts.map((item) => (
