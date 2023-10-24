@@ -9,9 +9,12 @@ import { UPDATE_PRODUCTS } from '../utils/actions';
 function Products() {
     const [state, dispatch] = useStoreContext();
     const { products, currentCategory } = state;
-    const { loading, data: productData } = useQuery(QUERY_ALL_PRODUCTS);
+    const { loading, data: productData, error } = useQuery(QUERY_ALL_PRODUCTS);
 
     useEffect(() => {
+        if (error) {
+            console.error("GraphQL Error:", error);
+        }
         if (productData) {
             dispatch({
                 type: UPDATE_PRODUCTS,
@@ -23,9 +26,9 @@ function Products() {
 
     return (
         <>
-        <ProductCarousel>
-        {products.map((item) => (
-                
+            <ProductCarousel>
+                {products.map((item) => (
+
                     <ProductItem
                         key={item._id}
                         _id={item._id}
@@ -34,9 +37,9 @@ function Products() {
                         price={item.price}
                         image={item.imageSource}
                     />
-            
 
-            ))}
+
+                ))}
             </ProductCarousel>
         </>
     )
