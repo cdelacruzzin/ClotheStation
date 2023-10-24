@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 3001; //stores the port number from the .env fi
 const server = new ApolloServer({   //initializes a new Apollo Server with the typeDefs, resolver functions and the auth context 
     typeDefs,
     resolvers,
+    persistedQueries: false,
     context: authMiddleware   //before a request is processed by resolvers, it wil pass through this middleware. it checks if the request has a valid jwt, if so, attach it to the request's context.
 })
 
@@ -44,6 +45,11 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (req, res) => {  //defines a router for the "/" endpoint
     res.sendFile(path.join(__dirname, '../client/build/index.html'));   //acts as an entry point. Once hit, send back the "index.html" from the build directopry
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 
 //creates a new instance of the Apollo Server with the graphql schema
 const startApolloServer = async () => { //async function to start the Apollo server and apply its middlewares
